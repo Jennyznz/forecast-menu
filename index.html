@@ -3,9 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Forecast Menu</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    
+    <div id="main-container">
+        <div id="sidebar"></div>
+        <div id="content-area">
+            <div id="search-container">
+                <form id="search-form" action="/search" method="get">
+                    <input id="search-bar" type="search" name="search-bar" placeholder="Search for a city">
+                    <button id="search-btn" type="submit"></button>
+                </form>
+            </div>
+            <h1 id="calendar-label">This Week</h1>
+            <div id="calendar">
+                <div class="day"></div>
+                <div class="day"></div>
+                <div class="day"></div>
+                <div class="day"></div>
+                <div class="day"></div>
+                <div class="day"></div>
+                <div class="day"></div>
+            </div>
+            <div id="not-sure-yet"></div>
+        </div>
+    </div>
 </body>
 </html>
