@@ -1,6 +1,15 @@
 import './styles.css';
+import { weatherData } from './weather.js';
 
 displayContent();
+
+// Fetch from Visual Crossing API when search is submitted (Button or 'Enter' key)
+const form = document.getElementById('search-form');
+const input = form.querySelector('#search-bar');
+form.addEventListener('submit', (e) => {
+    const query = input.value.trim(); // Remove spaces from the input
+    weatherData(query);
+});
 
 function displayContent() {
     // Get main container
