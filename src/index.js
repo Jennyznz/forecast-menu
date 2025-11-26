@@ -1,5 +1,6 @@
 import './styles.css';
 import { weatherData } from './weather.js';
+import { generateRecipes } from './recipes.js';
 
 displayContent();
 
@@ -9,6 +10,7 @@ const input = form.querySelector('#search-bar');
 form.addEventListener('submit', (e) => {
     const query = input.value.trim(); // Remove spaces from the input
     weatherData(query);
+    generateRecipes(); // Should this be async?
 });
 
 function displayContent() {
@@ -74,10 +76,15 @@ function displayCalendar() {
 
         // Add hourly markers to every other div
         if (i % 2 === 0) {
-            if (i < 7) {
-                mark.innerHTML = `${8 + (i / 2)}AM`;
+            let hourIndex = i / 2;
+            let hour = 8 + hourIndex;
+
+            if (hour < 12) {
+                mark.innerHTML = `${hour}AM`;
+            } else if (hour === 12) {
+                mark.innerHTML = '12PM';
             } else {
-                mark.innerHTML = `${1 +((i - 8) / 2)}PM`;
+                mark.innerHTML = `${hour - 12}PM`;
             }
         }
 
