@@ -47,22 +47,16 @@ async function displayRecipes() {
         const bMealBox = document.createElement('div'); // Have it sort of float over the second chunk?
         bMealBox.innerHTML = breakfast.title;
         bMealBox.classList.add('meal-box');
-        bMealBox.style.background = '#000';
-        bMealBox.style.color = 'white';
         chunks[bIndex].append(bMealBox);
 
         const lMealBox = document.createElement('div'); 
         lMealBox.innerHTML = lunch.title;
         lMealBox.classList.add('meal-box');
-        lMealBox.style.background = '#000';
-        lMealBox.style.color = 'white';
         chunks[lIndex].append(lMealBox);
 
         const dMealBox = document.createElement('div'); 
         dMealBox.innerHTML = dinner.title;
         dMealBox.classList.add('meal-box');
-        dMealBox.style.background = '#000';
-        dMealBox.style.color = 'white';
         chunks[dIndex].append(dMealBox);
     }
 }
@@ -92,7 +86,7 @@ function buildRecipeQuery(category) {
         query: randProfile.query,
         type: randProfile.type || undefined, // May not exist
         number: 1,  // Later, 7 at a time so that there's just one API call?
-        apiKey: '02f05fe0fc77446a9ce19853fa35bba0' // Outdated API key
+        apiKey: '5d9ab6262631495fb2bd04564563cdce' // Outdated API key
     }
 
     // URL pieces
