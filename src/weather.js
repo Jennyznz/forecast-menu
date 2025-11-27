@@ -1,16 +1,23 @@
-function weatherData(location) {
-    // Out of date API key
-    fetch(`https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${location}?key=C47UFPAW6FJ4DU4DEY66GPR7F&include=hours`)
-    .then(function(response) {
-        return response.json();
-    }).then(function(data) {
-        displayTemp(data.days);
-    }).catch(function() {
-        // Display a pop up error msg
-    });
+// Color Mapping
+const tempColors = [
+        {range: [85, Infinity], color: '#E97777', label: 'Hot'},
+        {range: [70, 84], color: '#FF9F9F', label: 'Warm'},
+        {range: [55, 69], color: '#EEE9DA', label: 'Average'},
+        {range: [40, 54], color: '#93BFCF', label: 'Cool'},
+        {range: [-Infinity, 39], color: '#6096B4', label: 'Cold'},
+];
+
+// Visual Crossing API call
+async function weatherData(location) {
+    const response = await fetch(`https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${location}?key=BN6KPDLKJW3PNLDB6DEA9DX6M&include=hours`)    // Out of date API key
+    const data = await response.json();
+    displayTemp(data.days); // call in index.js?
+    return data;
+    
+    // Display a pop up error msg if location name doesn't match anything
 }
 
-// Get and display temperature data for 7 days 
+// Display temperature data 
 function displayTemp(data) {
     const days = document.querySelectorAll('.day');
 
@@ -19,33 +26,27 @@ function displayTemp(data) {
             const temp = data[i].hours[j].temp;
             const chunks = days[i].querySelectorAll('.chunk');
 
-            const color = getColor(temp);
+            const category = getTempCategory(temp);
+            const color = category.color;
+            const label = category.label;
+
             chunks[j * 2].style.backgroundColor = color;
             chunks[j * 2 + 1].style.backgroundColor = color;
+
+            chunks[j * 2].dataset.label = label;
+            chunks[j * 2 + 1].dataset.label = label;
         }
     }
 }
 
-function getColor(temp) {
+// Assign a category based of given temperature
+function getTempCategory(temp) {
     temp = Math.floor(temp); // Ensure that temperature value becomes an integer
-
-    const colors = [
-        {range: [85, Infinity], color: '#E97777', label: 'Hot'},
-        {range: [70, 84], color: '#FF9F9F', label: 'Warm'},
-        {range: [55, 69], color: '#EEE9DA', label: 'Average'},
-        {range: [40, 54], color: '#93BFCF', label: 'Cool'},
-        {range: [-Infinity, 39], color: '#6096B4', label: 'Cold'},
-    ];
-
-    for (const c of colors) {
-        if (temp >= c.range[0] && temp <= c.range[1]) return c.color;
-    }
-
-    return '#000' // Return a random default value if color match fails
+    return tempColors.find(color => (temp >= color.range[0] && temp <= color.range[1]));
 }
 
 function getDate() {
 
 }
 
-export { weatherData };
+export { weatherData, tempColors };

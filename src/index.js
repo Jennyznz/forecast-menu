@@ -1,16 +1,24 @@
 import './styles.css';
 import { weatherData } from './weather.js';
-import { generateRecipes } from './recipes.js';
+import { displayRecipes } from './recipes.js';
 
 displayContent();
 
 // Fetch from Visual Crossing API when search is submitted (Button or 'Enter' key)
 const form = document.getElementById('search-form');
 const input = form.querySelector('#search-bar');
-form.addEventListener('submit', (e) => {
+
+console.log("form =", form);
+console.log("search-form exists?", !!document.getElementById('search-form'));
+
+
+form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
     const query = input.value.trim(); // Remove spaces from the input
-    weatherData(query);
-    generateRecipes(); // Should this be async?
+    await weatherData(query);
+    displayRecipes(); 
+    
 });
 
 function displayContent() {
@@ -87,7 +95,6 @@ function displayCalendar() {
                 mark.innerHTML = `${hour - 12}PM`;
             }
         }
-
         timeMarks.append(mark);
     }
     cal.append(timeMarks);
@@ -102,10 +109,8 @@ function displayCalendar() {
             chunk.classList.add('chunk');
             day.append(chunk);
         }
-
         cal.append(day);
     }
-
     return cal;
 }
 
