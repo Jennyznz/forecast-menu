@@ -46,18 +46,21 @@ async function displayRecipes() {
         // Display Recipe object. 
         const bMealBox = document.createElement('div'); // Have it sort of float over the second chunk?
         bMealBox.innerHTML = breakfast.title;
+        bMealBox.classList.add('meal-box');
         bMealBox.style.background = '#000';
         bMealBox.style.color = 'white';
         chunks[bIndex].append(bMealBox);
 
         const lMealBox = document.createElement('div'); 
         lMealBox.innerHTML = lunch.title;
+        lMealBox.classList.add('meal-box');
         lMealBox.style.background = '#000';
         lMealBox.style.color = 'white';
         chunks[lIndex].append(lMealBox);
 
         const dMealBox = document.createElement('div'); 
         dMealBox.innerHTML = dinner.title;
+        dMealBox.classList.add('meal-box');
         dMealBox.style.background = '#000';
         dMealBox.style.color = 'white';
         chunks[dIndex].append(dMealBox);
@@ -89,7 +92,7 @@ function buildRecipeQuery(category) {
         query: randProfile.query,
         type: randProfile.type || undefined, // May not exist
         number: 1,  // Later, 7 at a time so that there's just one API call?
-        apiKey: 'bc220d2b2f684b339881f618aad4e77d' // Outdated API key
+        apiKey: '02f05fe0fc77446a9ce19853fa35bba0' // Outdated API key
     }
 
     // URL pieces
