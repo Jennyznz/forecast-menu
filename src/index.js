@@ -1,5 +1,5 @@
 import './styles.css';
-import { weatherData } from './weather.js';
+import { weatherData, displayTemp } from './weather.js';
 import { displayRecipes } from './recipes.js';
 
 displayContent();
@@ -8,17 +8,13 @@ displayContent();
 const form = document.getElementById('search-form');
 const input = form.querySelector('#search-bar');
 
-console.log("form =", form);
-console.log("search-form exists?", !!document.getElementById('search-form'));
-
-
 form.addEventListener('submit', async (e) => {
     e.preventDefault();
 
     const query = input.value.trim(); // Remove spaces from the input
-    await weatherData(query);
+    const data = await weatherData(query);
+    displayTemp(data.days);
     displayRecipes(); 
-    
 });
 
 function displayContent() {
@@ -55,9 +51,13 @@ function displaySearch() {
     searchBtn.id = 'search-btn';
     searchBtn.type = 'submit';
 
+    // Error message
+    const errorMsg = document.createElement('div');
+    errorMsg.id = 'search-err'
+
     // Appends
-    searchForm.append(searchBar, searchBtn);
-    searchContainer.append(searchForm);
+    searchForm.append(searchBar, searchBtn,);
+    searchContainer.append(searchForm, errorMsg);
 
     return searchContainer;
 }
@@ -65,7 +65,7 @@ function displaySearch() {
 function displayLabel() {
     const calLabel = document.createElement('h1');
     calLabel.id = 'calendar-label';
-    calLabel.innerHTML = "Recommendations";
+    calLabel.innerHTML = 'Daily Picks'; // OR: 'What to Cook'
 
     return calLabel;
 }

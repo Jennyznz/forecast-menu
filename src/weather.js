@@ -9,12 +9,16 @@ const tempColors = [
 
 // Visual Crossing API call
 async function weatherData(location) {
-    const response = await fetch(`https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${location}?key=CMKKX3GL33RUMPKSAJPPLLBQC&include=hours`)    // Out of date API key
-    const data = await response.json();
-    displayTemp(data.days); // call in index.js?
-    return data;
+    try {
+        const response = await fetch(`https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${location}?key=46VPPD3T89D4FXV4EEXMECR6E&include=hours`);    // Out of date API key
+        const data = await response.json();
+        return data;
+    } catch {
+        // Display a pop up error message if location name doesn't match anything
+        const errorMsg = document.getElementById('search-err');
+        errorMsg.innerHTML = 'Search failed. Please enter a valid city name.';
+    }
     
-    // Display a pop up error msg if location name doesn't match anything
 }
 
 // Display temperature data 
@@ -49,4 +53,4 @@ function getDate() {
 
 }
 
-export { weatherData, tempColors };
+export { weatherData, tempColors, displayTemp };

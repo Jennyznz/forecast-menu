@@ -7,7 +7,7 @@ body {
     height: 90vh;
     width: 90vw;
 
-    margin: 0 auto;
+    margin-top: 50px;
     display: grid;
     grid-auto-flow: column;
     grid-template-columns: 1fr 4fr;
@@ -20,6 +20,8 @@ body {
 }
 
 #search-container {
+    display: grid;
+    grid-template-rows: 2fr 1fr;
 }
 
 #search-form {
@@ -51,6 +53,10 @@ body {
     height: 27px;
     background-color: #F5F5F0;
     border-radius: 25px;
+}
+
+#search-err {
+    color: darkred;
 }
 
 #calendar-label {
@@ -89,7 +95,7 @@ body {
     width: 95%; /* Restricts horizontal overflow */
     height: auto;
 
-    background: #5D866C;
+    background: #5D866C; /* Maybe a deeper green */
     color: white; /* Maybe black */
     
     padding: 5px;
