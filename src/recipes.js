@@ -33,10 +33,12 @@ async function displayRecipes() {
             fetchRecipe(buildRecipeQuery(dLabel)),
             ]);
 
-        const breakfastTitle = bRecipe[0]?.title || "No recipe found";
-        const lunchTitle = lRecipe[0]?.title || "No recipe found";
-
-        const dinnerTitle = dRecipe[0]?.title || "No recipe found";
+        // Select random recipes from the results returned by Spoonacular
+        const [randB, randL, randD] = [getRandRecipe(bRecipe), getRandRecipe(lRecipe), getRandRecipe(dRecipe)];
+        
+        const breakfastTitle = randB?.title || "No recipe found";
+        const lunchTitle = randL?.title || "No recipe found";
+        const dinnerTitle = randD?.title || "No recipe found";
 
         // Create recipe objects for each meal
         const breakfast = new Recipe(breakfastTitle); // Search Recipe Info for more info later on?
@@ -88,8 +90,8 @@ function buildRecipeQuery(category) {
     const parameters = { 
         query: randProfile.query,
         type: randProfile.type || undefined, // May not exist
-        number: 1,  // Later, 7 at a time so that there's just one API call?
-        apiKey: '59673a6a3bb84ab88e4a853ca46cb3db' // Outdated API key
+        number: 10,  
+        apiKey: 'd20a6c6b176842699146780873ea40c3', // Outdated API key
     }
 
     // URL pieces
@@ -104,6 +106,14 @@ async function fetchRecipe(url) {
     const response = await fetch(url);
     const data = await response.json();
     return data.results;
+}
+
+// Get the index of a random recipe from the results fetched from the Spoonacular API
+function getRandRecipe(recipe) {
+    if (!recipe || recipe.length === 0 ) return null;
+    const randIndex = Math.floor(Math.random() * recipe.length);
+
+    return recipe[randIndex];
 }
 
 class Recipe {

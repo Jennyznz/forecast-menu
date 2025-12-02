@@ -44,7 +44,7 @@ function displaySearch() {
     searchBar.id = 'search-bar';
     searchBar.type = 'search';
     searchBar.name = 'search-bar';
-    searchBar.placeholder = "Search for a city";
+    searchBar.placeholder = "Enter a city name";
 
     // Button
     const searchBtn = document.createElement('button');
@@ -65,7 +65,7 @@ function displaySearch() {
 function displayLabel() {
     const calLabel = document.createElement('h1');
     calLabel.id = 'calendar-label';
-    calLabel.innerHTML = 'Daily Picks'; // OR: 'What to Cook'
+    calLabel.innerHTML = 'Weekly Picks'; 
 
     return calLabel;
 }
