@@ -47,16 +47,19 @@ async function displayRecipes() {
         const bMealBox = document.createElement('div'); // Have it sort of float over the second chunk?
         bMealBox.innerHTML = breakfast.title;
         bMealBox.classList.add('meal-box');
+        chunks[bIndex].innerHTML = ''; // Clear before adding (User may generate recipes multiple times in a row)
         chunks[bIndex].append(bMealBox);
 
         const lMealBox = document.createElement('div'); 
         lMealBox.innerHTML = lunch.title;
         lMealBox.classList.add('meal-box');
+        chunks[lIndex].innerHTML = '';  // Clear before adding
         chunks[lIndex].append(lMealBox);
 
         const dMealBox = document.createElement('div'); 
         dMealBox.innerHTML = dinner.title;
         dMealBox.classList.add('meal-box');
+        chunks[dIndex].innerHTML = '';  // Clear before adding
         chunks[dIndex].append(dMealBox);
     }
 }
@@ -86,7 +89,7 @@ function buildRecipeQuery(category) {
         query: randProfile.query,
         type: randProfile.type || undefined, // May not exist
         number: 1,  // Later, 7 at a time so that there's just one API call?
-        apiKey: '5d9ab6262631495fb2bd04564563cdce' // Outdated API key
+        apiKey: '59673a6a3bb84ab88e4a853ca46cb3db' // Outdated API key
     }
 
     // URL pieces
@@ -97,6 +100,7 @@ function buildRecipeQuery(category) {
 }
 
 async function fetchRecipe(url) {
+    console.log(url);
     const response = await fetch(url);
     const data = await response.json();
     return data.results;
