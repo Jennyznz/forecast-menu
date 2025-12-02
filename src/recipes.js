@@ -7,8 +7,6 @@ async function displayRecipes() {
     const days = document.querySelectorAll('.day');
 
     // Set meal times
-    // For user input meal times, take the ceiling of the value. 
-    // DO NOT let the user input comes from a text field! Make sure that it's selection-based
     const bTime = '8AM';
     const lTime = '12PM';
     const dTime = '5PM';
@@ -117,7 +115,7 @@ function getRandRecipe(recipe) {
 }
 
 class Recipe {
-    constructor(title) {    // LATER: image, prepTime
+    constructor(title) {   
         this.title = title;
     }
 }
