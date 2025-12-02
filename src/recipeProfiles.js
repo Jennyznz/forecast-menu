@@ -1,59 +1,77 @@
-// Hashmap data structure
-// LATER: expand
+// Weather-based recipe profiles with broad queries
+
 export const weatherRecipeProfiles = {
   Hot: [
-    { query: "fresh light summery", type: "salad" },
-    { query: "smoothie cold drink", type: "drink" },
-    { query: "poke bowl" },
-    { query: "rice paper rolls" },
-    { query: "ceviche" },
+    { query: "salad" },
+    { query: "pasta salad" },
     { query: "cold noodles" },
-    { query: "fruit salad chilled", type: "dessert" },
-    { query: "fresh wraps" }
+    { query: "wraps" },
+    { query: "sandwich" },
+    { query: "smoothie" },
+    { query: "fruit salad" },
+    { query: "ceviche" },
+    { query: "spring rolls" },
+    { query: "gazpacho" },
+    { query: "salsa" },
+    { query: "poke" }
   ],
 
   Warm: [
-    { query: "grilled easy" },
-    { query: "stir fry light" },
-    { query: "balanced bowl", type: "main course" },
-    { query: "mediterranean bowl" },
-    { query: "tacos light" },
-    { query: "pasta primavera" },
-    { query: "grilled fish" },
-    { query: "rice bowl" }
+    { query: "grilled chicken" },
+    { query: "grilled vegetables" },
+    { query: "tacos" },
+    { query: "stir fry" },
+    { query: "rice bowl" },
+    { query: "seafood" },
+    { query: "pasta" },
+    { query: "burrito" },
+    { query: "chicken salad" },
+    { query: "shrimp tacos" },
+    { query: "fried rice" },
+    { query: "quinoa bowl" }
   ],
 
   Average: [
-    { query: "easy dinner bowl", type: "main course" },
-    { query: "simple pasta" },
-    { query: "chicken and rice" },
+    { query: "pasta" },
     { query: "one pot" },
-    { query: "sheet pan dinner" },
-    { query: "sandwich lunch", type: "lunch" },
-    { query: "vegetarian dinner bowl" },
-    { query: "rice noodles stir fry" }
+    { query: "sheet pan" },
+    { query: "rice bowl" },
+    { query: "curry" },
+    { query: "vegetarian" },
+    { query: "stir fry" },
+    { query: "stuffed peppers" },
+    { query: "fried rice" },
+    { query: "enchiladas" },
+    { query: "burrito bowl" },
+    { query: "meatballs" }
   ],
 
   Cool: [
-    { query: "warm soup cozy", type: "soup" },
-    { query: "ramen broth" },
+    { query: "soup" },
+    { query: "ramen" },
     { query: "roasted vegetables" },
     { query: "creamy pasta" },
-    { query: "pan roasted chicken" },
+    { query: "curry" },
+    { query: "roast chicken" },      
+    { query: "gnocchi" },
     { query: "lentil soup" },
-    { query: "comfort food" },
-    { query: "baked potatoes" }
+    { query: "chowder" },
+    { query: "pho" },
+    { query: "risotto" },
   ],
 
   Cold: [
-    { query: "stew hearty winter", type: "soup" },
-    { query: "chili", type: "main course" },
-    { query: "casserole baked", type: "main course" },
-    { query: "beef stew slow cooked" },
+    { query: "stew" },
+    { query: "chili" },
+    { query: "casserole" },
+    { query: "pasta bake" },         
+    { query: "lasagna" },
+    { query: "slow cooker" },
+    { query: "creamy soup" },
+    { query: "pot roast" },
+    { query: "mac and cheese" },
     { query: "shepherds pie" },
-    { query: "baked pasta cheesy", type: "main course" },
-    { query: "risotto creamy" },
-    { query: "slow cooker meals" },
-    { query: "rich soup creamy", type: "soup" }
+    { query: "beef stew" },
+    { query: "pasta casserole" }     
   ]
 };
