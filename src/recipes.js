@@ -90,7 +90,7 @@ function buildRecipeQuery(category) {
     const parameters = { 
         query: randProfile.query,
         type: randProfile.type || undefined, // May not exist
-        number: 10,  
+        number: 20,  
         apiKey: 'd20a6c6b176842699146780873ea40c3', // Outdated API key
     }
 
