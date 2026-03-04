@@ -1,6 +1,6 @@
 body {
-    background-color: #E6D8C3;
-    color: black;
+    background-color: #eff1ed;
+    color: #373d20;
 }
 
 #main-container {
@@ -44,14 +44,14 @@ body {
     padding: .2rem .7rem;
     border-radius: 10px;
 
-    background-color: #F5F5F0;
+    background-color: #eff1ed;
 }
 
 #search-btn {
     background-image: url("../assets/magnify.svg");
     width: 27px;
     height: 27px;
-    background-color: #F5F5F0;
+    background-color: #eff1ed;
     border-radius: 25px;
 }
 
@@ -80,7 +80,7 @@ body {
 }
 
 .chunk {
-    outline: .2px dashed black;
+    outline: .2px dashed #373d20;
     border-radius: 4px;
     
     position: relative;
@@ -95,8 +95,8 @@ body {
     width: 95%; /* Restricts horizontal overflow */
     height: auto;
 
-    background: #5D866C; /* Maybe a deeper green */
-    color: #F5F5F0; /* Maybe black */
+    background: #bcbd8b; /* Maybe a deeper green */
+    color: #373d20;
     
     padding: 5px;
     border-radius: 4px; 
