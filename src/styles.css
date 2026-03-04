@@ -1,6 +1,9 @@
+@import url(https://fonts.bunny.net/css?family=inter:300);
+
 body {
     background-color: #eff1ed;
     color: #373d20;
+    font-family: "Inter", "sans-serif";
 }
 
 #main-container {
@@ -45,6 +48,7 @@ body {
     border-radius: 10px;
 
     background-color: #eff1ed;
+    font-family: "Inter", "sans-serif";
 }
 
 #search-btn {
