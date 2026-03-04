@@ -83,9 +83,6 @@ function mealListener(box) {
     });
 }
 
-
-
-// OK, you can append popup to box.parent, aka the chunk, whose position is already relative! Then adjust the css so that the popup is to the right of the mealbox
 function displayPopup(recipe, box) {
     // Create elements
     const popup = document.createElement('div');
@@ -115,7 +112,6 @@ function displayPopup(recipe, box) {
     chunk.append(popup);
 
     return popup;
-    // DISPLAY HEADER: X, VIEWFULL. CRUD
 }
 
 function removePopup(box) {

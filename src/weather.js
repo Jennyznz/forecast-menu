@@ -1,16 +1,16 @@
 // Color Mapping
 const tempColors = [
-        {range: [85, Infinity], color: '#E97777', label: 'Hot'},
-        {range: [70, 84], color: '#FF9F9F', label: 'Warm'},
-        {range: [55, 69], color: '#EEE9DA', label: 'Average'},
-        {range: [40, 54], color: '#93BFCF', label: 'Cool'},
-        {range: [-Infinity, 39], color: '#6096B4', label: 'Cold'},
+        {range: [85, Infinity], label: 'Hot'},
+        {range: [70, 84], label: 'Warm'},
+        {range: [55, 69], label: 'Average'},
+        {range: [40, 54], label: 'Cool'},
+        {range: [-Infinity, 39], label: 'Cold'},
 ];
 
 // Visual Crossing API call
 async function weatherData(location) {
     try {
-        const response = await fetch(`https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${location}?key=SP7UTNQS2GTYHLKBWCBD8QHLH&include=hours`);    // Out of date API key
+        const response = await fetch(`https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${location}?key=cefc940c19b4473faf0decb5e5306fe9&include=hours`);    // Out of date API key
         const data = await response.json();
         return data;
     } catch {
@@ -31,11 +31,7 @@ function displayTemp(data) {
             const chunks = days[i].querySelectorAll('.chunk');
 
             const category = getTempCategory(temp);
-            const color = category.color;
             const label = category.label;
-
-            chunks[j * 2].style.backgroundColor = color;
-            chunks[j * 2 + 1].style.backgroundColor = color;
 
             chunks[j * 2].dataset.label = label;
             chunks[j * 2 + 1].dataset.label = label;
@@ -43,14 +39,8 @@ function displayTemp(data) {
     }
 }
 
-// Assign a category based of given temperature
-function getTempCategory(temp) {
-    temp = Math.floor(temp); // Ensure that temperature value becomes an integer
-    return tempColors.find(color => (temp >= color.range[0] && temp <= color.range[1]));
-}
-
 function getDate() {
 
 }
 
-export { weatherData, tempColors, displayTemp };
+export { weatherData, displayTemp };
