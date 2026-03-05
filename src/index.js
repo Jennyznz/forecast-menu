@@ -2,7 +2,7 @@ import './styles.css';
 import { weatherData, displayTemp } from './weather.js';
 import { displayRecipes } from './recipes.js';
 
-displayContent();
+displayMain();
 
 // Fetch from Visual Crossing API when search is submitted (Button or 'Enter' key)
 const form = document.getElementById('search-form');
@@ -17,57 +17,87 @@ form.addEventListener('submit', async (e) => {
     displayRecipes(); 
 });
 
+function displayMain() {
+    const main = document.getElementById('main-container');
+    main.append(displayCalendarLabel(), displayContent());
+}
+
+function displayCalendarLabel() {
+    const label = document.createElement('h2');
+    label.id = 'calendar-label';
+    label.textContent = 'Weekly Picks';
+    return label;
+}
+
 function displayContent() {
-    // Get main container
-    const contentArea = document.getElementById('content-area');
-
-    // Attach content
-    contentArea.append(displaySearch());
-    contentArea.append(displayLabel());
-    contentArea.append(displayCalendar());
-    contentArea.append(displayBtns());
+    const contentArea = document.createElement('div');
+    contentArea.id = 'content-area';
+    contentArea.append(displayOverview(), displayCalendar());
+    return contentArea;
 }
 
-function displaySearch() {
-    // Container
-    const searchContainer = document.createElement('div');
-    searchContainer.id = 'search-container';
+// function displayHeader() {
+//     const header = document.getElementById('.header');
+//     header.append(projName);
+//     const projName = document.createElement('div');
+//     projName.id = "project-name";
+//     projName.textContent = 'Forecast Menu';
+// }
 
-    // Form
-    const searchForm = document.createElement('form');
-    searchForm.id = 'search-form';
-    searchForm.action = '/search';
-    searchForm.method = 'get';
+// function displaySearch() {
+//     // Container
+//     const searchContainer = document.createElement('div');
+//     searchContainer.id = 'search-container';
 
-    // Search Bar
-    const searchBar = document.createElement('input');
-    searchBar.id = 'search-bar';
-    searchBar.type = 'search';
-    searchBar.name = 'search-bar';
-    searchBar.placeholder = "Enter a city name";
+//     // Form
+//     const searchForm = document.createElement('form');
+//     searchForm.id = 'search-form';
+//     searchForm.action = '/search';
+//     searchForm.method = 'get';
 
-    // Button
-    const searchBtn = document.createElement('button');
-    searchBtn.id = 'search-btn';
-    searchBtn.type = 'submit';
+//     // Search Bar
+//     const searchBar = document.createElement('input');
+//     searchBar.id = 'search-bar';
+//     searchBar.type = 'search';
+//     searchBar.name = 'search-bar';
+//     searchBar.placeholder = "Enter a city name";
 
-    // Error message
-    const errorMsg = document.createElement('div');
-    errorMsg.id = 'search-err'
+//     // Button
+//     const searchBtn = document.createElement('button');
+//     searchBtn.id = 'search-btn';
+//     searchBtn.type = 'submit';
 
-    // Appends
-    searchForm.append(searchBar, searchBtn,);
-    searchContainer.append(searchForm, errorMsg);
+//     // Error message
+//     const errorMsg = document.createElement('div');
+//     errorMsg.id = 'search-err'
 
-    return searchContainer;
-}
+//     // Appends
+//     searchForm.append(searchBar, searchBtn,);
+//     searchContainer.append(searchForm, errorMsg);
 
-function displayLabel() {
-    const calLabel = document.createElement('h1');
-    calLabel.id = 'calendar-label';
-    calLabel.innerHTML = 'Weekly Picks'; 
+//     return searchContainer;
+// }
 
-    return calLabel;
+// function displayLabel() {
+//     const calLabel = document.createElement('h1');
+//     calLabel.id = 'calendar-label';
+//     calLabel.innerHTML = 'Weekly Picks'; 
+
+//     return calLabel;
+// }
+function displayOverview() {
+    const overview = document.createElement('div');
+    overview.id = 'overview';
+
+    const summary = document.createElement('p');
+    summary.id = 'summary';
+    const regen = document.createElement('button');
+    regen.id = 'regenerate';
+    const shoppingCart = document.createElement('button');
+    shoppingCart.id = 'shopping-cart';
+
+    overview.append(summary, regen, shoppingCart);
+    return overview;
 }
 
 function displayCalendar() {
@@ -114,9 +144,11 @@ function displayCalendar() {
     return cal;
 }
 
-function displayBtns() {
-    const others = document.createElement('div');
-    others.id = 'others';
+// function displayBtns() {
+//     const others = document.createElement('div');
+//     others.id = 'others';
 
-    return others;
-}
+//     return others;
+// }
+
+

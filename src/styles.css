@@ -6,23 +6,73 @@ body {
     font-family: "Inter", "sans-serif";
 }
 
-#main-container {
-    height: 90vh;
-    width: 90vw;
+#header {
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-left: 10px;
+    margin-bottom: 10px;
+}
 
-    margin-top: 50px;
+#main-container {
+    height: 80vh;
+    width: 90vw;
+    margin: 0 auto;
+
     display: grid;
-    grid-auto-flow: column;
-    grid-template-columns: 1fr 4fr;
+    grid-auto-flow: row;
+    grid-template-rows: 1fr 8fr;
 }
 
 #content-area {
     display: grid;
-    grid-template-rows: 1fr 1fr 6fr 1fr;
+    grid-auto-flow: column;
+    grid-template-columns: 1fr 5fr;
     gap: 10px;
 }
 
-#search-container {
+#overview {
+    display: grid;
+    grid-template-rows: 3fr 1fr 1fr;
+    gap: 10px;
+}
+
+#preferences {
+    display: grid;
+    grid-auto-flow: column;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 10px;
+}
+button {
+    background-color: #eff1ed;
+    background-repeat: no-repeat;
+    background-position: center;
+    height: 50px;
+    width: 50px;
+}
+
+#regenerate {
+    background-image: url("../assets/regenerate.svg");
+}
+
+#shopping-cart {
+    background-image: url("../assets/shopping_cart.svg");
+}
+
+#light-dark-mode {
+    background-image: url("../assets/light-mode.svg");
+}
+
+#location {
+     background-image: url("../assets/globe.svg");
+}
+
+#favorites {
+     background-image: url("../assets/heart.svg");
+}
+
+/* #search-container {
     display: grid;
     grid-template-rows: 2fr 1fr;
 }
@@ -34,11 +84,11 @@ body {
 
     width: 100%;
     height: 100%;
-}
+} */
 
 #search-bar {
     /* Remove default Safari styling */
-    -webkit-appearance: none;
+    /* -webkit-appearance: none;
     appearance: none;
 
     flex: 1;
@@ -48,23 +98,25 @@ body {
     border-radius: 10px;
 
     background-color: #eff1ed;
-    font-family: "Inter", "sans-serif";
+    font-family: "Inter", "sans-serif"; */
 }
 
-#search-btn {
+/* #search-btn {
     background-image: url("../assets/magnify.svg");
     width: 27px;
     height: 27px;
     background-color: #eff1ed;
     border-radius: 25px;
-}
-
+} */
+/* 
 #search-err {
     color: darkred;
-}
+} */
 
-#calendar-label {
-}
+/* #calendar-label {
+    margin-top: 0;
+    padding-top: 0;
+} */
 
 #calendar {
     display: grid;

@@ -10,7 +10,7 @@ const tempColors = [
 // Visual Crossing API call
 async function weatherData(location) {
     try {
-        const response = await fetch(`https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${location}?key=cefc940c19b4473faf0decb5e5306fe9&include=hours`);    // Out of date API key
+        const response = await fetch(`https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${location}?key=9a5a5b7aba4c4075b78b6f185fe85442&include=hours`);    // Out of date API key
         const data = await response.json();
         return data;
     } catch {
