@@ -2,11 +2,11 @@ import './styles.css';
 import { weatherData, displayTemp } from './weather.js';
 import { displayRecipes } from './recipes.js';
 
-displayMain();
-
 const breakfastTime = '6:00AM';
 const lunchTime = '1:00PM';
 const dinnerTime = '7:00PM';
+
+displayMain();
 
 function displayMain() {
     const main = document.getElementById('main-container');
@@ -91,7 +91,7 @@ function createBreakfast() {
 
     const bTime = document.createElement('div');
     bTime.classList.add('time');
-    bTime.textContent = '6:00AM';
+    bTime.textContent = breakfastTime;
 
     breakfast.append(recipe, bTime);
     return breakfast;
@@ -107,7 +107,7 @@ function createLunch() {
 
     const lTime = document.createElement('div');
     lTime.classList.add('time');
-    lTime.textContent = '1:00PM';
+    lTime.textContent = lunchTime;
 
     lunch.append(recipe, lTime);
     return lunch;
@@ -123,7 +123,7 @@ function createDinner() {
 
     const dTime = document.createElement('div');
     dTime.classList.add('time');
-    dTime.textContent = '7:00PM';
+    dTime.textContent = dinnerTime;
 
     dinner.append(recipe, dTime);
     return dinner;
