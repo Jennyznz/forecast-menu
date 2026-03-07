@@ -27,11 +27,6 @@ function createToolbar() {
     const backBtn = document.createElement('button');
     backBtn.id = 'back-btn';
     backBtn.textContent = 'Back';
-    backBtn.addEventListener('click', () => {
-        const mainContainer = document.querySelector('#main-container');
-        mainContainer.textContent = '';
-        displayCalendarView();
-    });
 
     toolbarLeft.append(backBtn);
 

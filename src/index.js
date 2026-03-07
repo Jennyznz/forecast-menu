@@ -4,13 +4,14 @@ import './styles.css';
 
 displayCalendarView();
 
-const calendarRecipes = document.querySelectorAll('.calendar-recipe');
-calendarRecipes.forEach(recipe => {
-    recipe.addEventListener('click', () => {
-        // Clear main container
-        const mainContainer = document.querySelector('#main-container');
+const mainContainer = document.querySelector('#main-container');
+mainContainer.addEventListener('click', (e) => {
+    if (e.target.classList.contains('calendar-recipe')) {
+        const recipeId = e.target.dataset.id;   // Parameter for later
         mainContainer.textContent = '';
-        // Navigate to recipe page
-        mainContainer.append(displayRecipe()); // TO ADD: recipe identifier(s)
-    });
+        mainContainer.append(displayRecipe());
+    } else if (e.target.id === 'back-btn') {
+        mainContainer.textContent = '';
+        displayCalendarView();
+    }
 });
