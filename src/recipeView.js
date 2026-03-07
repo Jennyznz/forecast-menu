@@ -1,3 +1,5 @@
+import { displayCalendarView } from "./calendarView";
+
 function displayRecipe() {
     const content = document.createElement('div');
     content.id = 'recipe-view-content';
@@ -25,6 +27,11 @@ function createToolbar() {
     const backBtn = document.createElement('button');
     backBtn.id = 'back-btn';
     backBtn.textContent = 'Back';
+    backBtn.addEventListener('click', () => {
+        const mainContainer = document.querySelector('#main-container');
+        mainContainer.textContent = '';
+        displayCalendarView();
+    });
 
     toolbarLeft.append(backBtn);
 
