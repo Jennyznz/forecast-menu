@@ -11,11 +11,6 @@ async function displayRecipes() {
     const lTime = '12PM';
     const dTime = '5PM';
 
-    // Get .chunk indices of meal times
-    const bIndex = timeToIndex(bTime);
-    const lIndex = timeToIndex(lTime);
-    const dIndex = timeToIndex(dTime);
-
     for (const day of days) {
         const chunks = day.querySelectorAll('.chunk');
        
@@ -33,10 +28,6 @@ async function displayRecipes() {
 
         // Select random recipes from the results returned by Spoonacular
         const [randB, randL, randD] = [getRandRecipe(bRecipe), getRandRecipe(lRecipe), getRandRecipe(dRecipe)];
-        
-        // const breakfastTitle = randB?.title || "No recipe found";
-        // const lunchTitle = randL?.title || "No recipe found";
-        // const dinnerTitle = randD?.title || "No recipe found";
 
         // Create recipe objects for each meal
         const breakfast = new Recipe(randB);
@@ -204,7 +195,6 @@ class Recipe {
 
             this.steps = fullData.analyzedInstructions?.[0]?.steps.map(s => s.step) || [];
         }
-
     }
 }
 
