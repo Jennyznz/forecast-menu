@@ -99,3 +99,32 @@ button {
     display: grid;
     grid-template-rows: auto 1fr;
 }
+
+#recipe-view-content {
+    width: 50vw;
+    margin: 0 auto;
+
+    display: grid;
+    gap: 20px;
+}
+
+#toolbar {
+    display: flex;
+    justify-content: space-between;
+}
+
+#toolbar-right {
+    display: flex;
+    gap: 10px;
+}
+
+#save-btn {
+    background-image: url('../assets/heart.svg');
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+#photo {
+    width: 100px;
+    height: 100px;
+}
