@@ -10,7 +10,38 @@ function displayCalendarView() {
 function displayCalendarLabel() {
     const label = document.createElement('h2');
     label.id = 'calendar-label';
-    label.textContent = 'Weekly Picks';
+
+    const textLabel = document.createElement
+
+    // Find start and end dates of current week
+    const today = new Date();
+    const startOfWeek = new Date(today);
+    startOfWeek.setDate(today.getDate() - today.getDay());
+    const endOfWeek = new Date(startOfWeek);
+    endOfWeek.setDate(startOfWeek.getDate() + 7);
+
+    const months = [
+        "January",
+        "Febuary",
+        "March",
+        "April",
+        "May",
+        "June",
+        "July",
+        "August",
+        "September",
+        "October",
+        "November",
+        "December"
+    ];
+
+    let text = `${months[startOfWeek.getMonth()]}`;
+    if (startOfWeek.getMonth() !== endOfWeek.getMonth()) {
+        text += ` - ${months[endOfWeek.getMonth()]}`;
+    }
+    text += ` ${endOfWeek.getFullYear()}`;
+
+    label.textContent = `Weekly Picks (${text})`;
     return label;
 }
 
@@ -55,9 +86,15 @@ function displayDay(weekday) {
     const day = document.createElement('div');
     day.classList.add('day');
 
+    const dateHeader = document.createElement('div');
+    dateHeader.classList.add('date-header');
+
+    const weekdayLabel = document.createElement('div');
+    weekdayLabel.classList.add('weekday');
     const dateLabel = document.createElement('div');
-    dateLabel.classList.add('date-label');
-    
+    dateLabel.classList.add('date');
+
+    // Display weekday
     const days = [
         "Sunday",
         "Monday",
@@ -67,7 +104,9 @@ function displayDay(weekday) {
         "Friday",
         "Saturday"
     ];
+    weekdayLabel.textContent = days[weekday];
 
+    // Display date
     const today = new Date();
     // Find start date of current week
     const startOfWeek = new Date(today);
@@ -75,15 +114,14 @@ function displayDay(weekday) {
     // Find the current date
     const date = new Date(startOfWeek);
     date.setDate(startOfWeek.getDate() + weekday);
-
     // Mark past days
-    if (date < today.setHours(0,0,0,0)) {
+    if (date < today.setHours(0, 0, 0, 0)) {
         day.classList.add("past");    // Deactivated day display if the date has passed
     }
+    dateLabel.textContent = `${date.getDate()}`;
 
-    // Display the weekday
-    dateLabel.textContent = `${days[weekday]} ${date.getMonth() + 1} / ${date.getDate()}`
-    day.append(dateLabel, createBreakfast(), createLunch(), createDinner());
+    dateHeader.append(weekdayLabel, dateLabel);
+    day.append(dateHeader, createBreakfast(), createLunch(), createDinner());
     return day;
 }
 

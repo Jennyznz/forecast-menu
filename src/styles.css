@@ -87,6 +87,12 @@ button {
     gap: 10px;
 }
 
+.date-header {
+    display: flex;
+    justify-content: start;
+    gap: 10px;
+}
+
 .weather-icon {
     background-image: url('../assets/rainy.svg');
     background-size: no-repeat;
