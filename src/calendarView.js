@@ -45,17 +45,45 @@ function displaySpread() {
     spread.id = 'spread';
 
     for (let i = 0; i < 7; i++) {
-        spread.append(displayDay());
+        spread.append(displayDay(i));
     }
 
     return spread;
 }
 
-function displayDay() {
+function displayDay(weekday) {
     const day = document.createElement('div');
     day.classList.add('day');
 
-    day.append(createDateLabel(), createWeatherInfo(), createBreakfast(), createLunch(), createDinner());
+    const dateLabel = document.createElement('div');
+    dateLabel.classList.add('date-label');
+    
+    const days = [
+        "Sunday",
+        "Monday",
+        "Tuesday",
+        "Wednesday",
+        "Thursday",
+        "Friday",
+        "Saturday"
+    ];
+
+    const today = new Date();
+    // Find start date of current week
+    const startOfWeek = new Date(today);
+    startOfWeek.setDate(today.getDate() - today.getDay());
+    // Find the current date
+    const date = new Date(startOfWeek);
+    date.setDate(startOfWeek.getDate() + weekday);
+
+    // Mark past days
+    if (date < today.setHours(0,0,0,0)) {
+        day.classList.add("past");    // Deactivated day display if the date has passed
+    }
+
+    // Display the weekday
+    dateLabel.textContent = `${days[weekday]} ${date.getMonth() + 1} / ${date.getDate()}`
+    day.append(dateLabel, createBreakfast(), createLunch(), createDinner());
     return day;
 }
 
@@ -63,16 +91,6 @@ function createWeatherInfo() {
     const weather = document.createElement('div');
     weather.classList.add('weather-icon');
     return weather;
-}
-
-function createDateLabel() {
-    const dateLabel = document.createElement('div');
-    dateLabel.classList.add('date-label');
-
-    // Filler content
-    dateLabel.textContent = 'Monday (01/01/26)';
-
-    return dateLabel;
 }
 
 function createBreakfast() {
@@ -121,6 +139,10 @@ function createDinner() {
 
     dinner.append(recipe, dTime);
     return dinner;
+}
+
+function displayWeather() {
+
 }
 
 export { displayCalendarView };
