@@ -93,13 +93,13 @@ button {
     gap: 10px;
 }
 
-.weather-icon {
+/* .weather-icon {
     background-image: url('../assets/rainy.svg');
     background-size: no-repeat;
     background-position: center;
     height: 20px;
     width: 20px;
-}
+} */
 
 .meal {
     display: grid;

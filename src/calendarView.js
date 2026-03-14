@@ -1,17 +1,17 @@
-const breakfastTime = '6:00AM';
-const lunchTime = '1:00PM';
-const dinnerTime = '7:00PM';
+import { getWeatherData, getTempCategory } from "./visualCrossingAPI";
 
-function displayCalendarView() {
+const breakfastTime = '06:00:00';
+const lunchTime = '13:00:00';
+const dinnerTime = '19:00:00';
+
+async function displayCalendarView() {
     const main = document.getElementById('main-container');
-    main.append(displayCalendarLabel(), displayContent());
+    main.append(displayCalendarLabel(), await displayContent());
 }
 
 function displayCalendarLabel() {
     const label = document.createElement('h2');
     label.id = 'calendar-label';
-
-    const textLabel = document.createElement
 
     // Find start and end dates of current week
     const today = new Date();
@@ -45,10 +45,10 @@ function displayCalendarLabel() {
     return label;
 }
 
-function displayContent() {
+async function displayContent() {
     const contentArea = document.createElement('div');
     contentArea.id = 'content-area';
-    contentArea.append(displayOverview(), displaySpread());
+    contentArea.append(displayOverview(), await displaySpread());
     return contentArea;
 }
 
@@ -71,18 +71,20 @@ function displayOverview() {
     return overview;
 }
 
-function displaySpread() {
+async function displaySpread() {
     const spread = document.createElement('div');
     spread.id = 'spread';
 
+    const weatherData = await getWeatherData();
+
     for (let i = 0; i < 7; i++) {
-        spread.append(displayDay(i));
+        spread.append(displayDay(i, weatherData));
     }
 
     return spread;
 }
 
-function displayDay(weekday) {
+function displayDay(weekday, weatherData) {
     const day = document.createElement('div');
     day.classList.add('day');
 
@@ -114,30 +116,42 @@ function displayDay(weekday) {
     // Find the current date
     const date = new Date(startOfWeek);
     date.setDate(startOfWeek.getDate() + weekday);
-    // Mark past days
-    if (date < today.setHours(0, 0, 0, 0)) {
-        day.classList.add("past");    // Deactivated day display if the date has passed
-    }
+    
     dateLabel.textContent = `${date.getDate()}`;
 
     dateHeader.append(weekdayLabel, dateLabel);
-    day.append(dateHeader, createBreakfast(), createLunch(), createDinner());
+    day.append(dateHeader);
+
+    if (date < today.setHours(0, 0, 0, 0)) {
+        day.classList.add("past");    // Deactivated day display if the date has passed
+    } else {
+        const dateString = date.toISOString().split('T')[0];
+        const dayData = weatherData.days.find(d => d.datetime === dateString);
+        // console.log(dayData);
+        // Find temperatures 
+        const breakfastTemp = dayData.hours.find(h => h.datetime === breakfastTime).temp;
+        // console.log(breakfastTemp);
+        const lunchTemp = dayData.hours.find(h => h.datetime === lunchTime).temp;
+        const dinnerTemp = dayData.hours.find(h => h.datetime === dinnerTime).temp;
+        // Get temperature categories
+        const bCategory = getTempCategory(breakfastTemp);
+        // console.log(bCategory);
+        const lCategory = getTempCategory(lunchTemp);
+        const dCategory = getTempCategory(dinnerTemp);
+
+        day.append(createBreakfast(bCategory), createLunch(lCategory), createDinner(dCategory));
+    }
+
     return day;
 }
 
-function createWeatherInfo() {
-    const weather = document.createElement('div');
-    weather.classList.add('weather-icon');
-    return weather;
-}
-
-function createBreakfast() {
+function createBreakfast(category) {
     const breakfast = document.createElement('div');
     breakfast.classList.add('meal');
 
     const recipe = document.createElement('div');
     recipe.classList.add('calendar-recipe');
-    recipe.textContent = 'Oatmeal';
+    recipe.textContent = category;
 
     const bTime = document.createElement('div');
     bTime.classList.add('time');
@@ -147,13 +161,13 @@ function createBreakfast() {
     return breakfast;
 }
 
-function createLunch() {
+function createLunch(category) {
     const lunch = document.createElement('div');
     lunch.classList.add('meal');
 
     const recipe = document.createElement('div');
     recipe.classList.add('calendar-recipe');
-    recipe.textContent = 'Salad';
+    recipe.textContent = category;
 
     const lTime = document.createElement('div');
     lTime.classList.add('time');
@@ -163,13 +177,13 @@ function createLunch() {
     return lunch;
 }
 
-function createDinner() {
+function createDinner(category) {
     const dinner = document.createElement('div');
     dinner.classList.add('meal');
 
     const recipe = document.createElement('div');
     recipe.classList.add('calendar-recipe');
-    recipe.textContent = 'Pasta';
+    recipe.textContent = category;
 
     const dTime = document.createElement('div');
     dTime.classList.add('time');
@@ -179,8 +193,21 @@ function createDinner() {
     return dinner;
 }
 
-function displayWeather() {
+// function displayWeather() {
+//     const weather = document.createElement('div');
+//     weather.classList.add('weather');
 
-}
+//     // Get temp
+
+//     // Get precipation icon4
+
+//     return weather
+// }
+
+// function createWeatherInfo() {
+//     const weather = document.createElement('div');
+//     weather.classList.add('weather-icon');
+//     return weather;
+// }
 
 export { displayCalendarView };
