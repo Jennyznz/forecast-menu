@@ -1,5 +1,16 @@
 import { weatherRecipeProfiles } from "./recipeProfiles";
 
+async function fetchRecipeInfo(id) {
+    console.log("ID: "+ id);
+    const url = `https://api.spoonacular.com/recipes/${id}/information?apiKey=`;
+    const response = await fetch(url);
+    console.log('Res: '+ response);
+    const data = await response.json();
+    console.log(data);
+    const recipe = new Recipe(data);
+    return recipe;
+}
+
 // Return a recipe object with API call data
 async function createRecipe(category, mealType) {
     const url = buildSearchRecipeQuery(category, mealType);
@@ -13,6 +24,7 @@ function buildSearchRecipeQuery(category, mealType) {
     // Pick a random profile under the given category
     const profiles = weatherRecipeProfiles[mealType][category];
     const randProfile = profiles[Math.floor(Math.random() * profiles.length)];
+    console.log(randProfile);
 
     // Build API parameters
     const parameters = { 
@@ -23,12 +35,12 @@ function buildSearchRecipeQuery(category, mealType) {
         addRecipeNutrition: true,
         fillIngredients: true,
         // instructionsRequired: true,
-        apiKey: '-', 
+        apiKey: 'ef4b10ab95994b0d913e21b0e8f8ba71', 
     }
 
     // URL pieces
     const parameterString = new URLSearchParams(parameters).toString();   // Generates key-value pairs, and then, when converted into a string, adds '&' dividers between the parameters
-    const base = `https://api.spoonacular.com/recipes/complexSearch`;
+    const base = 'https://api.spoonacular.com/recipes/complexSearch';
 
     return `${base}?${parameterString}`; 
 }
@@ -63,7 +75,12 @@ class Recipe {
             this.servings = fullData.servings;
             this.readyInMinutes = fullData.readyInMinutes;
             // Store ingredients as strings
-            this.ingredients = fullData.extendedIngredients?.map(i => i.original) || [];
+            this.ingredients = fullData.extendedIngredients?.map(i => ({
+                name: i.name,
+                amount: i.amount,
+                unit: i.unit,
+                original: i.original
+            })) || [];
             // Store important/basic information about available nutrients
             this.nutrients = fullData.nutrition?.nutrients?.map(n => ({
                 name: n.name,
@@ -76,4 +93,4 @@ class Recipe {
     }
 }
 
-export { createRecipe }
+export { createRecipe, fetchRecipeInfo }

@@ -1,16 +1,20 @@
 import { displayCalendarView } from "./calendarView";
+import { fetchRecipeInfo } from "./spoonacularAPI";
 
-function displayRecipe() {
+async function displayRecipe(id) {
     const content = document.createElement('div');
     content.id = 'recipe-view-content';
 
+    const recipe = await fetchRecipeInfo(id);
+
     content.append(
         createToolbar(), 
-        createTitle(), 
-        createPhoto(), 
-        createDescription(), 
-        createIngredients(),
-        createInstructions());
+        createTitle(recipe.title), 
+        createPhoto(recipe.image), 
+        createDescription(recipe.summary), 
+        createIngredients(recipe.ingredients),
+        // createInstructions()
+    );
     return content;
 }
 
@@ -33,40 +37,40 @@ function createToolbar() {
     const saveBtn = document.createElement('button');
     saveBtn.id = 'save-btn';
 
-    const editBtn = document.createElement('button');
-    editBtn.id = 'edit-btn';
-    editBtn.textContent = 'Edit';
+    // const editBtn = document.createElement('button');
+    // editBtn.id = 'edit-btn';
+    // editBtn.textContent = 'Edit';
 
-    toolbarRight.append(saveBtn, editBtn);
+    toolbarRight.append(saveBtn);
 
     toolbar.append(toolbarLeft, toolbarRight);
     return toolbar;
 }
 
-function createTitle() {
+function createTitle(name) {
     const title = document.createElement('h1');
     title.id = 'title';
-    title.textContent = 'Recipe title'; // FILLER
+    title.textContent = name; 
     return title;
 }
 
-function createPhoto() {
+function createPhoto(img) {
     const photo = document.createElement('img');
     photo.id = 'photo';
-    photo.src = '../assets/food.svg'; // FILLER
-    photo.alt = 'Photo of a pie';
+    photo.src = img; 
+    photo.alt = 'Photo of recipe';
 
     return photo;
 }
 
-function createDescription() {
+function createDescription(summary) {
     const description = document.createElement('div');
     description.id = 'description';
-    description.textContent = 'A short description';    // FILLER   
+    description.textContent = summary;   
     return description;
 }
 
-function createIngredients() {
+function createIngredients(ingredients) {
     const container = document.createElement('div');
     container.id = 'ingredients-container';
     
@@ -77,33 +81,35 @@ function createIngredients() {
     const list = document.createElement('ul');
     list.id = 'ingredients-list';
 
-    const ingredient = document.createElement('li');    // FILLER
-    ingredient.classList.add('ingredient');
-    ingredient.textContent = 'Ingredient One';
-    list.append(ingredient);
+    ingredients.forEach(i => {
+        const ingredient = document.createElement('li');  
+        ingredient.classList.add('ingredient');
+        ingredient.textContent = `${i.name} (${i.amount} ${i.unit})`;
+        list.append(ingredient);
+    });
 
     container.append(label, list);
     return container;
 }
 
-function createInstructions() {
-    const container = document.createElement('div');
-    container.id = 'instructions-container';
+// function createInstructions() {
+//     const container = document.createElement('div');
+//     container.id = 'instructions-container';
     
-    const label = document.createElement('h2');
-    label.id = 'instructions-label';
-    label.textContent = 'Instructions: ';
+//     const label = document.createElement('h2');
+//     label.id = 'instructions-label';
+//     label.textContent = 'Instructions: ';
 
-    const list = document.createElement('ol');
-    list.id = 'instructions-list';
+//     const list = document.createElement('ol');
+//     list.id = 'instructions-list';
 
-    const instruction = document.createElement('li');    // FILLER
-    instruction.classList.add('instruction');
-    instruction.textContent = 'Instruction One';
-    list.append(instruction);
+//     const instruction = document.createElement('li');    
+//     instruction.classList.add('instruction');
+//     instruction.textContent = 'Instruction One';
+//     list.append(instruction);
 
-    container.append(label, list);
-    return container;
-}
+//     container.append(label, list);
+//     return container;
+// }
 
 export { displayRecipe };

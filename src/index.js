@@ -2,16 +2,18 @@ import { displayCalendarView } from './calendarView.js';
 import { displayRecipe } from './recipeView.js';
 import './styles.css';
 
-displayCalendarView();
+await displayCalendarView();
 
 const mainContainer = document.querySelector('#main-container');
-mainContainer.addEventListener('click', (e) => {
-    if (e.target.classList.contains('calendar-recipe')) {
-        const recipeId = e.target.dataset.id;   // Parameter for later
+mainContainer.addEventListener('click', async (e) => {
+    const meal = e.target.closest('.meal');
+
+    if (meal) {
+        const recipeId = meal.dataset.id;   
         mainContainer.textContent = '';
-        mainContainer.append(displayRecipe());
+        mainContainer.append(await displayRecipe(recipeId));        
     } else if (e.target.id === 'back-btn') {
         mainContainer.textContent = '';
-        displayCalendarView();
+        await displayCalendarView();
     }
 });

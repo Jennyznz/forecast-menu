@@ -79,7 +79,7 @@ async function displaySpread() {
 
     const weatherData = await getWeatherData();
 
-    for (let i = 0; i < 7; i++) {
+    for (let i = 0; i < 1; i++) {
         spread.append(await displayDay(i, weatherData));
     }
 
@@ -141,8 +141,8 @@ async function displayDay(weekday, weatherData) {
 
         day.append(
             await createBreakfast(breakfastTemp, bCategory), 
-            createLunch(lunchTemp, lCategory), 
-            createDinner(dinnerTemp, dCategory));
+            await createLunch(lunchTemp, lCategory), 
+            await createDinner(dinnerTemp, dCategory));
     }
 
     return day;
@@ -156,10 +156,12 @@ async function createBreakfast(temp, category) {
     editInfo.classList.add('edit-info');
 
     const recipe = await createRecipe(category, 'breakfast');
+    console.log(recipe.id);
+    breakfast.dataset.id = recipe.id;
+    console.log(breakfast.dataset.id);
 
     const recipeTitle = document.createElement('div');
     recipeTitle.classList.add('recipe-title');
-    console.log("Recipe Title: " + recipe.title);
     recipeTitle.textContent = recipe.title;
 
     const readyTimeContainer = document.createElement('div');
@@ -187,58 +189,86 @@ async function createBreakfast(temp, category) {
     return breakfast;
 }
 
-function createLunch(temp, category) {
+async function createLunch(temp, category) {
     const lunch = document.createElement('div');
     lunch.classList.add('meal');
 
     const editInfo = document.createElement('div');
     editInfo.classList.add('edit-info');
 
+    const recipe = await createRecipe(category, 'lunch');
+    lunch.dataset.id = recipe.id;
+
     const recipeTitle = document.createElement('div');
     recipeTitle.classList.add('recipe-title');
-    const recipePrepTime = document.createElement('div');
-    recipePrepTime.classList.add('recipe-prep-time');
+    recipeTitle.textContent = recipe.title;
+
+    const readyTimeContainer = document.createElement('div');
+    readyTimeContainer.classList.add('ready-time-container');
+
+    const clockIcon = document.createElement('img');
+    clockIcon.src = clockImg;
+    clockIcon.classList.add('clock-icon');
+
+    const recipeReadyTime = document.createElement('div');
+    recipeReadyTime.classList.add('recipe-ready-time');
+    recipeReadyTime.textContent = formatReadyTime(recipe.readyInMinutes);
+
+    readyTimeContainer.append(clockIcon, recipeReadyTime);
 
     const weatherInfo = document.createElement('div');
     weatherInfo.classList.add('weather-info');
-    weatherInfo.textContent = temp;
+    weatherInfo.textContent = `${temp}°F` ;
 
     const lTime = document.createElement('div');
     lTime.classList.add('time');
-    lTime.textContent = lunchTime;
+    lTime.textContent = formatMealTime(lunchTime);
 
-    lunch.append(editInfo, recipeTitle, recipePrepTime, weatherInfo, lTime);
+    lunch.append(editInfo, recipeTitle, readyTimeContainer, weatherInfo, lTime);
     return lunch;
 }
 
-function createDinner(temp, category) {
+async function createDinner(temp, category) {
     const dinner = document.createElement('div');
     dinner.classList.add('meal');
 
     const editInfo = document.createElement('div');
     editInfo.classList.add('edit-info');
 
+    const recipe = await createRecipe(category, 'dinner');
+    dinner.dataset.id = recipe.id;
+
     const recipeTitle = document.createElement('div');
     recipeTitle.classList.add('recipe-title');
-    const recipePrepTime = document.createElement('div');
-    recipePrepTime.classList.add('recipe-prep-time');
+    recipeTitle.textContent = recipe.title;
+
+    const readyTimeContainer = document.createElement('div');
+    readyTimeContainer.classList.add('ready-time-container');
+
+    const clockIcon = document.createElement('img');
+    clockIcon.src = clockImg;
+    clockIcon.classList.add('clock-icon');
+
+    const recipeReadyTime = document.createElement('div');
+    recipeReadyTime.classList.add('recipe-ready-time');
+    recipeReadyTime.textContent = formatReadyTime(recipe.readyInMinutes);
+
+    readyTimeContainer.append(clockIcon, recipeReadyTime);
 
     const weatherInfo = document.createElement('div');
     weatherInfo.classList.add('weather-info');
-    weatherInfo.textContent = temp;
-
+    weatherInfo.textContent = `${temp}°F` ;
 
     const dTime = document.createElement('div');
     dTime.classList.add('time');
-    dTime.textContent = dinnerTime;
+    dTime.textContent = formatMealTime(dinnerTime);
 
-    dinner.append(editInfo, recipeTitle, recipePrepTime, weatherInfo, dTime);
+    dinner.append(editInfo, recipeTitle, readyTimeContainer, weatherInfo, dTime);
     return dinner;
 }
 
 // Converts time from minutes to Hh Mm form
 function formatReadyTime(time) {
-    console.log(time);
     const hrs = Math.floor(time / 60);
     const mins = time % 60;
 
