@@ -7,11 +7,18 @@ body {
 }
 
 #header {
-    height: 50px;
+    height: 20px;
     display: flex;
     align-items: center;
     justify-content: space-between;
     margin: 20px;
+}
+
+#project-name {
+    font-size: 1.25rem;
+    font-weight: 700;
+    letter-spacing: -0.02rem;
+    white-space: nowrap;
 }
 
 #main-container {
