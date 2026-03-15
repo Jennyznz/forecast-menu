@@ -164,18 +164,18 @@ async function createBreakfast(temp, category) {
     console.log("Recipe Title: " + recipe.title);
     recipeTitle.textContent = recipe.title;
 
-    const prepContainer = document.createElement('div');
-    prepContainer.classList.add('prep-container');
+    const readyTimeContainer = document.createElement('div');
+    readyTimeContainer.classList.add('ready-time-container');
 
     const clockIcon = document.createElement('img');
     clockIcon.src = clockImg;
     clockIcon.classList.add('clock-icon');
 
-    const recipePrepTime = document.createElement('div');
-    recipePrepTime.classList.add('recipe-prep-time');
-    recipePrepTime.textContent = recipe.readyInMinutes;
+    const recipeReadyTime = document.createElement('div');
+    recipeReadyTime.classList.add('recipe-ready-time');
+    recipeReadyTime.textContent = formatPrepTime(recipe.readyInMinutes);
 
-    prepContainer.append(clockIcon, recipePrepTime);
+    readyTimeContainer.append(clockIcon, recipeReadyTime);
 
     const weatherInfo = document.createElement('div');
     weatherInfo.classList.add('weather-info');
@@ -186,7 +186,7 @@ async function createBreakfast(temp, category) {
     bTime.classList.add('time');
     bTime.textContent = breakfastTime;
 
-    breakfast.append(editInfo, recipeTitle, prepContainer, weatherInfo, bTime);
+    breakfast.append(editInfo, recipeTitle, readyTimeContainer, weatherInfo, bTime);
     return breakfast;
 }
 
@@ -239,6 +239,18 @@ function createDinner(temp, category) {
     return dinner;
 }
 
+// Converts time from minutes to Hh Mm form
+function formatPrepTime(prepTime) {
+    console.log(prepTime);
+    const hrs = Math.floor(prepTime / 60);
+    const mins = prepTime % 60;
+
+    if (hrs === 0) return `${mins}m`;
+    if (mins === 0) return `${hrs}h`;
+
+    return `${hrs}h ${mins}m`;
+
+}
 // function displayWeather() {
 //     const weather = document.createElement('div');
 //     weather.classList.add('weather');
