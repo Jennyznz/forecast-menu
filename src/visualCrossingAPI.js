@@ -1,5 +1,5 @@
 const baseURL = "https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/";
-const apiKey = "-";
+const apiKey = "";
 
 // Temperature category mapping
 const tempCategories = [
@@ -11,7 +11,7 @@ const tempCategories = [
 ];
 
 function getTempCategory(temp) {
-    return tempCategories.find(item => item.range[0] < temp && item.range[1] >= temp).label;
+    return tempCategories.find(item => item.range[0] <= temp && item.range[1] >= temp).label;
 }
 
 async function getWeatherData() {
