@@ -179,8 +179,7 @@ async function createBreakfast(temp, category) {
 
     const weatherInfo = document.createElement('div');
     weatherInfo.classList.add('weather-info');
-    console.log("Temperature: " + temp);
-    weatherInfo.textContent = temp;
+    weatherInfo.textContent = `${temp}°F` ;
 
     const bTime = document.createElement('div');
     bTime.classList.add('time');
@@ -251,21 +250,5 @@ function formatPrepTime(prepTime) {
     return `${hrs}h ${mins}m`;
 
 }
-// function displayWeather() {
-//     const weather = document.createElement('div');
-//     weather.classList.add('weather');
-
-//     // Get temp
-
-//     // Get precipation icon4
-
-//     return weather
-// }
-
-// function createWeatherInfo() {
-//     const weather = document.createElement('div');
-//     weather.classList.add('weather-icon');
-//     return weather;
-// }
 
 export { displayCalendarView };
