@@ -155,7 +155,7 @@ async function createBreakfast(temp, category) {
     const editInfo = document.createElement('div');
     editInfo.classList.add('edit-info');
 
-    const recipe = await createRecipe(category);
+    const recipe = await createRecipe(category, 'breakfast');
 
     const recipeTitle = document.createElement('div');
     recipeTitle.classList.add('recipe-title');

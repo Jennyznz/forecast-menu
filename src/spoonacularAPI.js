@@ -1,17 +1,17 @@
 import { weatherRecipeProfiles } from "./recipeProfiles";
 
 // Return a recipe object with API call data
-async function createRecipe(category) {
-    const url = buildSearchRecipeQuery(category);
+async function createRecipe(category, mealType) {
+    const url = buildSearchRecipeQuery(category, mealType);
     const res = await fetchRecipes(url);
     const rand = randRecipe(res);
     const recipe = new Recipe(rand);
     return recipe;
 }
 
-function buildSearchRecipeQuery(category) {
+function buildSearchRecipeQuery(category, mealType) {
     // Pick a random profile under the given category
-    const profiles = weatherRecipeProfiles[category];
+    const profiles = weatherRecipeProfiles[mealType][category];
     const randProfile = profiles[Math.floor(Math.random() * profiles.length)];
 
     // Build API parameters
