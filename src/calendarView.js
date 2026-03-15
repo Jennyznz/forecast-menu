@@ -1,5 +1,6 @@
 import { createRecipe } from "./spoonacularAPI";
 import { getWeatherData, getTempCategory } from "./visualCrossingAPI";
+import clockImg from "../assets/clock.svg";
 
 const breakfastTime = '06:00:00';
 const lunchTime = '13:00:00';
@@ -163,9 +164,18 @@ async function createBreakfast(temp, category) {
     console.log("Recipe Title: " + recipe.title);
     recipeTitle.textContent = recipe.title;
 
+    const prepContainer = document.createElement('div');
+    prepContainer.classList.add('prep-container');
+
+    const clockIcon = document.createElement('img');
+    clockIcon.src = clockImg;
+    clockIcon.classList.add('clock-icon');
+
     const recipePrepTime = document.createElement('div');
     recipePrepTime.classList.add('recipe-prep-time');
     recipePrepTime.textContent = recipe.readyInMinutes;
+
+    prepContainer.append(clockIcon, recipePrepTime);
 
     const weatherInfo = document.createElement('div');
     weatherInfo.classList.add('weather-info');
@@ -176,7 +186,7 @@ async function createBreakfast(temp, category) {
     bTime.classList.add('time');
     bTime.textContent = breakfastTime;
 
-    breakfast.append(editInfo, recipeTitle, recipePrepTime, weatherInfo, bTime);
+    breakfast.append(editInfo, recipeTitle, prepContainer, weatherInfo, bTime);
     return breakfast;
 }
 

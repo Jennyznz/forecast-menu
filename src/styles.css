@@ -99,17 +99,21 @@ button {
     gap: 10px;
 }
 
-/* .weather-icon {
-    background-image: url('../assets/rainy.svg');
-    background-size: no-repeat;
-    background-position: center;
-    height: 20px;
-    width: 20px;
-} */
-
 .meal {
     display: grid;
     grid-template-rows: 1fr auto 1fr 1fr 1fr;
+}
+
+.prep-container {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 5px;
+}
+
+.clock-icon {
+    width: 15px;
+    height: 15px;
 }
 
 
