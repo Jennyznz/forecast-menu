@@ -1,3 +1,4 @@
+import { createRecipe } from "./spoonacularAPI";
 import { getWeatherData, getTempCategory } from "./visualCrossingAPI";
 
 const breakfastTime = '06:00:00';
@@ -78,13 +79,13 @@ async function displaySpread() {
     const weatherData = await getWeatherData();
 
     for (let i = 0; i < 7; i++) {
-        spread.append(displayDay(i, weatherData));
+        spread.append(await displayDay(i, weatherData));
     }
 
     return spread;
 }
 
-function displayDay(weekday, weatherData) {
+async function displayDay(weekday, weatherData) {
     const day = document.createElement('div');
     day.classList.add('day');
 
@@ -126,70 +127,105 @@ function displayDay(weekday, weatherData) {
         day.classList.add("past");    // Deactivated day display if the date has passed
     } else {
         const dateString = date.toISOString().split('T')[0];
+
         const dayData = weatherData.days.find(d => d.datetime === dateString);
-        // console.log(dayData);
         // Find temperatures 
         const breakfastTemp = dayData.hours.find(h => h.datetime === breakfastTime).temp;
-        // console.log(breakfastTemp);
         const lunchTemp = dayData.hours.find(h => h.datetime === lunchTime).temp;
         const dinnerTemp = dayData.hours.find(h => h.datetime === dinnerTime).temp;
         // Get temperature categories
         const bCategory = getTempCategory(breakfastTemp);
-        // console.log(bCategory);
         const lCategory = getTempCategory(lunchTemp);
         const dCategory = getTempCategory(dinnerTemp);
 
-        day.append(createBreakfast(bCategory), createLunch(lCategory), createDinner(dCategory));
+        day.append(
+            await createBreakfast(breakfastTemp, bCategory), 
+            createLunch(lunchTemp, lCategory), 
+            createDinner(dinnerTemp, dCategory));
     }
 
     return day;
 }
 
-function createBreakfast(category) {
+async function createBreakfast(temp, category) {
     const breakfast = document.createElement('div');
     breakfast.classList.add('meal');
 
-    const recipe = document.createElement('div');
-    recipe.classList.add('calendar-recipe');
-    recipe.textContent = category;
+    const editInfo = document.createElement('div');
+    editInfo.classList.add('edit-info');
+
+    console.log("Hello");
+    const recipe = await createRecipe(category);
+    console.log(recipe);
+
+    const recipeTitle = document.createElement('div');
+    recipeTitle.classList.add('recipe-title');
+    console.log("Recipe Title: " + recipe.title);
+    recipeTitle.textContent = recipe.title;
+
+    const recipePrepTime = document.createElement('div');
+    recipePrepTime.classList.add('recipe-prep-time');
+    recipePrepTime.textContent = recipe.readyInMinutes;
+
+    const weatherInfo = document.createElement('div');
+    weatherInfo.classList.add('weather-info');
+    console.log("Temperature: " + temp);
+    weatherInfo.textContent = temp;
 
     const bTime = document.createElement('div');
     bTime.classList.add('time');
     bTime.textContent = breakfastTime;
 
-    breakfast.append(recipe, bTime);
+    breakfast.append(editInfo, recipeTitle, recipePrepTime, weatherInfo, bTime);
     return breakfast;
 }
 
-function createLunch(category) {
+function createLunch(temp, category) {
     const lunch = document.createElement('div');
     lunch.classList.add('meal');
 
-    const recipe = document.createElement('div');
-    recipe.classList.add('calendar-recipe');
-    recipe.textContent = category;
+    const editInfo = document.createElement('div');
+    editInfo.classList.add('edit-info');
+
+    const recipeTitle = document.createElement('div');
+    recipeTitle.classList.add('recipe-title');
+    const recipePrepTime = document.createElement('div');
+    recipePrepTime.classList.add('recipe-prep-time');
+
+    const weatherInfo = document.createElement('div');
+    weatherInfo.classList.add('weather-info');
+    weatherInfo.textContent = temp;
 
     const lTime = document.createElement('div');
     lTime.classList.add('time');
     lTime.textContent = lunchTime;
 
-    lunch.append(recipe, lTime);
+    lunch.append(editInfo, recipeTitle, recipePrepTime, weatherInfo, lTime);
     return lunch;
 }
 
-function createDinner(category) {
+function createDinner(temp, category) {
     const dinner = document.createElement('div');
     dinner.classList.add('meal');
 
-    const recipe = document.createElement('div');
-    recipe.classList.add('calendar-recipe');
-    recipe.textContent = category;
+    const editInfo = document.createElement('div');
+    editInfo.classList.add('edit-info');
+
+    const recipeTitle = document.createElement('div');
+    recipeTitle.classList.add('recipe-title');
+    const recipePrepTime = document.createElement('div');
+    recipePrepTime.classList.add('recipe-prep-time');
+
+    const weatherInfo = document.createElement('div');
+    weatherInfo.classList.add('weather-info');
+    weatherInfo.textContent = temp;
+
 
     const dTime = document.createElement('div');
     dTime.classList.add('time');
     dTime.textContent = dinnerTime;
 
-    dinner.append(recipe, dTime);
+    dinner.append(editInfo, recipeTitle, recipePrepTime, weatherInfo, dTime);
     return dinner;
 }
 

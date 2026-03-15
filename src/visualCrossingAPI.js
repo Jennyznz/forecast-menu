@@ -1,5 +1,5 @@
 const baseURL = "https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/";
-const apiKey = "N93D5RXHYZBQGUV8UUF6VH98F";
+const apiKey = "-";
 
 // Temperature category mapping
 const tempCategories = [
@@ -21,7 +21,6 @@ async function getWeatherData() {
             throw new Error(`Visual Crossing API error: ${response.status}`);
         }
         const data = await response.json()
-        console.log(data);
         return data;
     } catch (err) {
         console.error("Visual Crossing call failed.", err);

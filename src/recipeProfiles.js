@@ -1,5 +1,5 @@
 // Weather-based recipe profiles with broad queries
-
+// Based on weather and type of meal
 export const weatherRecipeProfiles = {
   Hot: [
     { query: "salad" },
