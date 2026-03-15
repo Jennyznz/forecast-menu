@@ -23,7 +23,7 @@ function buildSearchRecipeQuery(category) {
         addRecipeNutrition: true,
         fillIngredients: true,
         // instructionsRequired: true,
-        apiKey: '-', 
+        apiKey: '66ad949886054f5aaa7da9014163a81b', 
     }
 
     // URL pieces
