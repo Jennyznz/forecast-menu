@@ -35,12 +35,19 @@ body {
     gap: 10px;
 }
 
-button {
+button, 
+button:hover,
+button:active {
     background-color: #eff1ed;
     background-repeat: no-repeat;
     background-position: center;
     height: 50px;
     width: 50px;
+
+    appearance: none;
+    -webkit-appearance: none;
+    border: none;
+    box-shadow: none;
 }
 
 #regenerate {
