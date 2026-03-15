@@ -62,10 +62,6 @@ button:active {
     background-image: url("../assets/light-mode.svg");
 }
 
-#location {
-     background-image: url("../assets/globe.svg");
-}
-
 #favorites {
      background-image: url("../assets/heart.svg");
 }
