@@ -155,9 +155,7 @@ async function createBreakfast(temp, category) {
     const editInfo = document.createElement('div');
     editInfo.classList.add('edit-info');
 
-    console.log("Hello");
     const recipe = await createRecipe(category);
-    console.log(recipe);
 
     const recipeTitle = document.createElement('div');
     recipeTitle.classList.add('recipe-title');
@@ -173,7 +171,7 @@ async function createBreakfast(temp, category) {
 
     const recipeReadyTime = document.createElement('div');
     recipeReadyTime.classList.add('recipe-ready-time');
-    recipeReadyTime.textContent = formatPrepTime(recipe.readyInMinutes);
+    recipeReadyTime.textContent = formatReadyTime(recipe.readyInMinutes);
 
     readyTimeContainer.append(clockIcon, recipeReadyTime);
 
@@ -183,7 +181,7 @@ async function createBreakfast(temp, category) {
 
     const bTime = document.createElement('div');
     bTime.classList.add('time');
-    bTime.textContent = breakfastTime;
+    bTime.textContent = formatMealTime(breakfastTime);
 
     breakfast.append(editInfo, recipeTitle, readyTimeContainer, weatherInfo, bTime);
     return breakfast;
@@ -239,16 +237,27 @@ function createDinner(temp, category) {
 }
 
 // Converts time from minutes to Hh Mm form
-function formatPrepTime(prepTime) {
-    console.log(prepTime);
-    const hrs = Math.floor(prepTime / 60);
-    const mins = prepTime % 60;
+function formatReadyTime(time) {
+    console.log(time);
+    const hrs = Math.floor(time / 60);
+    const mins = time % 60;
 
     if (hrs === 0) return `${mins}m`;
     if (mins === 0) return `${hrs}h`;
 
     return `${hrs}h ${mins}m`;
+}
 
+function formatMealTime(time) {
+    const [hour, min, sec] = time.split(':');
+    const date = new Date();
+    date.setHours(hour, min, sec, 0);
+
+    return new Intl.DateTimeFormat(undefined, { // undefined takes default
+        hour: 'numeric',
+        minute: 'numeric',
+        hour12: true,
+    }).format(date);
 }
 
 export { displayCalendarView };
