@@ -56,7 +56,7 @@ function createTitle(name) {
 
 function createPhoto(img) {
     const photo = document.createElement('img');
-    photo.id = 'photo';
+    photo.id = 'recipe-view-photo';
     photo.src = img; 
     photo.alt = 'Photo of recipe';
 
