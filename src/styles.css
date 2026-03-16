@@ -153,12 +153,22 @@ button:active {
 }
 
 
-#recipe-view-content {
+#recipe-view-container, #faves-view-container {
     width: 50vw;
     margin: 0 auto;
 
     display: grid;
     gap: 20px;
+}
+
+#faves-view-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.faves-view-meal {
+    width: 70%;
 }
 
 #toolbar {

@@ -6,13 +6,18 @@ function displayFavorites() {
     const mainContainer = document.getElementById('main-container');
     mainContainer.textContent = '';
 
+    const favesContainer = document.createElement('div');
+    favesContainer.id = 'faves-view-container';
+
     const header = document.createElement('h1');
-    header.textContent = "Saved Recipes";
+    header.id = 'faves-view-header';
+    header.textContent = "Your Favorites";
     const content = document.createElement('div');
+    content.id = 'faves-view-content';
 
     favorites.forEach(item => {
         const meal = document.createElement('div');
-        meal.classList.add('fav-meal');
+        meal.classList.add('faves-view-meal');
 
         const actions = document.createElement('div');
         actions.classList.add('actions');
@@ -39,7 +44,8 @@ function displayFavorites() {
         content.append(meal);
     });
 
-    mainContainer.append(header, content);
+    favesContainer.append(header, content);
+    mainContainer.append(favesContainer);
 }
 
 export { displayFavorites, favorites }

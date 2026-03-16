@@ -2,12 +2,12 @@ import { displayCalendarView } from "./calendarView";
 import { fetchRecipeInfo } from "./spoonacularAPI";
 
 async function displayRecipe(id) {
-    const content = document.createElement('div');
-    content.id = 'recipe-view-content';
+    const container = document.createElement('div');
+    container.id = 'recipe-view-container';
 
     const recipe = await fetchRecipeInfo(id);
 
-    content.append(
+    container.append(
         createToolbar(), 
         createTitle(recipe.title), 
         createPhoto(recipe.image), 
@@ -15,7 +15,7 @@ async function displayRecipe(id) {
         createIngredients(recipe.ingredients),
         // createInstructions()
     );
-    return content;
+    return container;
 }
 
 function createToolbar() {
