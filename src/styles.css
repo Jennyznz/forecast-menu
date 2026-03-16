@@ -134,6 +134,12 @@ button:active {
     height: 15px;
 }
 
+.favorite {
+    background-image: url('../assets/heart.svg');
+    width: 15px;
+    height: 15px;
+}
+
 .ready-time-container {
     display: flex;
     justify-content: flex-start;

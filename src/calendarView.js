@@ -12,7 +12,7 @@ async function displayCalendarView() {
 }
 
 function displayCalendarLabel() {
-    const label = document.createElement('h2');
+    const label = document.createElement('h1');
     label.id = 'calendar-label';
 
     // Find start and end dates of current week
@@ -181,10 +181,12 @@ async function createBreakfast(temp, category) {
     const regenerate = document.createElement('button');
     regenerate.classList.add('single-regenerate');
     regenerate.dataset.action = 'regenerate';
-    actions.append(regenerate);
+    const favorite = document.createElement('button');
+    favorite.classList.add('favorite');
+    favorite.dataset.action = 'favorite';
+    actions.append(regenerate, favorite);
 
     const recipe = await createRecipe(category, 'breakfast');
-    breakfast.dataset.id = recipe.id;
 
     const recipeTitle = document.createElement('div');
     recipeTitle.classList.add('recipe-title');
@@ -207,6 +209,10 @@ async function createBreakfast(temp, category) {
     const bTime = document.createElement('div');
     bTime.classList.add('time');
     bTime.textContent = formatMealTime(breakfastTime);
+
+    breakfast.dataset.id = recipe.id;
+    breakfast.dataset.title = recipe.title;
+    breakfast.dataset.readyTime = readyTime.textContent;
 
     breakfast.append(actions, recipeTitle, readyTimeContainer, weatherInfo, bTime);
     return breakfast;
@@ -317,4 +323,4 @@ function formatMealTime(time) {
     }).format(date);
 }
 
-export { displayCalendarView, regenerateMealCards, regenerateMeal };
+export { displayCalendarView, regenerateMealCards, regenerateMeal, formatReadyTime };
