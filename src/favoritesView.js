@@ -9,6 +9,15 @@ function displayFavorites() {
     const favesContainer = document.createElement('div');
     favesContainer.id = 'faves-view-container';
 
+    const nav = document.createElement('div');
+    nav.id = 'faves-view-nav-bar';
+
+    const backBtn = document.createElement('button');
+    backBtn.id = 'back-btn';
+    backBtn.textContent = '< Back';
+
+    nav.append(backBtn);
+
     const header = document.createElement('h1');
     header.id = 'faves-view-header';
     header.textContent = "Your Favorites";
@@ -44,7 +53,7 @@ function displayFavorites() {
         content.append(meal);
     });
 
-    favesContainer.append(header, content);
+    favesContainer.append(nav, header, content);
     mainContainer.append(favesContainer);
 }
 

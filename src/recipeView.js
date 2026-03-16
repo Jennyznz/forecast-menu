@@ -30,7 +30,7 @@ function createToolbar() {
     
     const backBtn = document.createElement('button');
     backBtn.id = 'back-btn';
-    backBtn.textContent = 'Back';
+    backBtn.textContent = '< Back';
 
     toolbarLeft.append(backBtn);
 
