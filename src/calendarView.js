@@ -77,22 +77,29 @@ async function regenerateMealCards() {
     const meals = document.querySelectorAll('.meal');
     meals.forEach(async meal => {
         const recipe = await createRecipe(meal.dataset.category, meal.dataset.mealType);
-        
+
         const recipeTitle = meal.querySelector('.recipe-title');
         recipeTitle.textContent = recipe.title;
-
         const readyTime = meal.querySelector('.recipe-ready-time');
         readyTime.textContent = formatReadyTime(recipe.readyInMinutes);
+        
+        meal.dataset.id = recipe.id;
+        meal.dataset.title = recipe.title;
+        meal.dataset.readyTime = formatReadyTime(recipe.readyInMinutes);
     });
 }
 
 async function regenerateMeal(meal) {
     const recipe = await createRecipe(meal.dataset.category, meal.dataset.mealType);
+
     const recipeTitle = meal.querySelector('.recipe-title');
     recipeTitle.textContent = recipe.title;
-
     const readyTime = meal.querySelector('.recipe-ready-time');
     readyTime.textContent = formatReadyTime(recipe.readyInMinutes);
+
+    meal.dataset.id = recipe.id;
+    meal.dataset.title = recipe.title;
+    meal.dataset.readyTime = formatReadyTime(recipe.readyInMinutes);
 }
 
 async function displaySpread() {
@@ -101,7 +108,7 @@ async function displaySpread() {
 
     const weatherData = await getWeatherData();
 
-    for (let i = 0; i < 1; i++) {
+    for (let i = 0; i < 2; i++) {
         spread.append(await displayDay(i, weatherData));
     }
 
