@@ -1,4 +1,4 @@
-import { displayCalendarView, updateMealCards } from './calendarView.js';
+import { displayCalendarView, regenerateMealCards, regenerateMeal } from './calendarView.js';
 import { displayRecipe } from './recipeView.js';
 import './styles.css';
 
@@ -6,8 +6,19 @@ await displayCalendarView();
 
 const mainContainer = document.querySelector('#main-container');
 mainContainer.addEventListener('click', async (e) => {
-    const meal = e.target.closest('.meal');
+    // Meal Card Actions
+    if (e.target.closest('.actions')) {
+        const btn = e.target.closest('button');
+        if (!btn) return;
 
+        if (btn.dataset.action === 'regenerate') {
+            const meal = e.target.closest('.meal');
+            await regenerateMeal(meal);
+        }
+        return;
+    }
+    // Meal Card
+    const meal = e.target.closest('.meal');
     if (meal) {
         const recipeId = meal.dataset.id;   
         mainContainer.textContent = '';
@@ -20,5 +31,5 @@ mainContainer.addEventListener('click', async (e) => {
 
 const regenerateBtn = document.querySelector('#regenerate');
 regenerateBtn.addEventListener('click', async () => {
-    await updateMealCards();
+    await regenerateMealCards();
 });

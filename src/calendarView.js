@@ -73,7 +73,7 @@ function displayOverview() {
     return overview;
 }
 
-async function updateMealCards() {
+async function regenerateMealCards() {
     const meals = document.querySelectorAll('.meal');
     meals.forEach(async meal => {
         const recipe = await createRecipe(meal.dataset.category, meal.dataset.mealType);
@@ -84,6 +84,15 @@ async function updateMealCards() {
         const readyTime = meal.querySelector('.recipe-ready-time');
         readyTime.textContent = formatReadyTime(recipe.readyInMinutes);
     });
+}
+
+async function regenerateMeal(meal) {
+    const recipe = await createRecipe(meal.dataset.category, meal.dataset.mealType);
+    const recipeTitle = meal.querySelector('.recipe-title');
+    recipeTitle.textContent = recipe.title;
+
+    const readyTime = meal.querySelector('.recipe-ready-time');
+    readyTime.textContent = formatReadyTime(recipe.readyInMinutes);
 }
 
 async function displaySpread() {
@@ -167,8 +176,12 @@ async function createBreakfast(temp, category) {
     breakfast.dataset.category = category;
     breakfast.dataset.mealType = 'breakfast';
 
-    const editInfo = document.createElement('div');
-    editInfo.classList.add('edit-info');
+    const actions = document.createElement('div');
+    actions.classList.add('actions');
+    const regenerate = document.createElement('button');
+    regenerate.classList.add('single-regenerate');
+    regenerate.dataset.action = 'regenerate';
+    actions.append(regenerate);
 
     const recipe = await createRecipe(category, 'breakfast');
     breakfast.dataset.id = recipe.id;
@@ -179,15 +192,12 @@ async function createBreakfast(temp, category) {
 
     const readyTimeContainer = document.createElement('div');
     readyTimeContainer.classList.add('ready-time-container');
-
     const clockIcon = document.createElement('img');
     clockIcon.src = clockImg;
     clockIcon.classList.add('clock-icon');
-
     const readyTime = document.createElement('div');
     readyTime.classList.add('recipe-ready-time');
     readyTime.textContent = formatReadyTime(recipe.readyInMinutes);
-
     readyTimeContainer.append(clockIcon, readyTime);
 
     const weatherInfo = document.createElement('div');
@@ -198,7 +208,7 @@ async function createBreakfast(temp, category) {
     bTime.classList.add('time');
     bTime.textContent = formatMealTime(breakfastTime);
 
-    breakfast.append(editInfo, recipeTitle, readyTimeContainer, weatherInfo, bTime);
+    breakfast.append(actions, recipeTitle, readyTimeContainer, weatherInfo, bTime);
     return breakfast;
 }
 
@@ -208,8 +218,8 @@ async function createLunch(temp, category) {
     lunch.dataset.category = category;
     lunch.dataset.mealType = 'lunch';
 
-    const editInfo = document.createElement('div');
-    editInfo.classList.add('edit-info');
+    const actions = document.createElement('div');
+    actions.classList.add('actions');
 
     const recipe = await createRecipe(category, 'lunch');
     lunch.dataset.id = recipe.id;
@@ -239,7 +249,7 @@ async function createLunch(temp, category) {
     lTime.classList.add('time');
     lTime.textContent = formatMealTime(lunchTime);
 
-    lunch.append(editInfo, recipeTitle, readyTimeContainer, weatherInfo, lTime);
+    lunch.append(actions, recipeTitle, readyTimeContainer, weatherInfo, lTime);
     return lunch;
 }
 
@@ -249,8 +259,8 @@ async function createDinner(temp, category) {
     dinner.dataset.category = category;
     dinner.dataset.mealType = 'dinner';
 
-    const editInfo = document.createElement('div');
-    editInfo.classList.add('edit-info');
+    const actions = document.createElement('div');
+    actions.classList.add('actions');
 
     const recipe = await createRecipe(category, 'dinner');
     dinner.dataset.id = recipe.id;
@@ -274,13 +284,13 @@ async function createDinner(temp, category) {
 
     const weatherInfo = document.createElement('div');
     weatherInfo.classList.add('weather-info');
-    weatherInfo.textContent = `${temp}°F` ;
+    weatherInfo.textContent = `${temp}°F`;
 
     const dTime = document.createElement('div');
     dTime.classList.add('time');
     dTime.textContent = formatMealTime(dinnerTime);
 
-    dinner.append(editInfo, recipeTitle, readyTimeContainer, weatherInfo, dTime);
+    dinner.append(actions, recipeTitle, readyTimeContainer, weatherInfo, dTime);
     return dinner;
 }
 
@@ -307,4 +317,4 @@ function formatMealTime(time) {
     }).format(date);
 }
 
-export { displayCalendarView, updateMealCards };
+export { displayCalendarView, regenerateMealCards, regenerateMeal };
