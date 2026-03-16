@@ -82,9 +82,8 @@ async function updateMealCards() {
         recipeTitle.textContent = recipe.title;
 
         const readyTime = meal.querySelector('.recipe-ready-time');
-        readyTime.textContent = recipe.readyInMinutes;
+        readyTime.textContent = formatReadyTime(recipe.readyInMinutes);
     });
-
 }
 
 async function displaySpread() {
