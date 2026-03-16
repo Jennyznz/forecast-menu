@@ -1,4 +1,4 @@
-import { displayCalendarView } from './calendarView.js';
+import { displayCalendarView, updateMealCards } from './calendarView.js';
 import { displayRecipe } from './recipeView.js';
 import './styles.css';
 
@@ -16,4 +16,9 @@ mainContainer.addEventListener('click', async (e) => {
         mainContainer.textContent = '';
         await displayCalendarView();
     }
+});
+
+const regenerateBtn = document.querySelector('#regenerate');
+regenerateBtn.addEventListener('click', async () => {
+    await updateMealCards();
 });
