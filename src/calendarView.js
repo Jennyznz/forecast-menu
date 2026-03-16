@@ -8,6 +8,7 @@ const dinnerTime = '19:00:00';
 
 async function displayCalendarView() {
     const main = document.getElementById('main-container');
+    main.textContent = '';
     main.append(displayCalendarLabel(), await displayContent());
 }
 

@@ -2,6 +2,9 @@ import { displayCalendarView } from "./calendarView";
 import { fetchRecipeInfo } from "./spoonacularAPI";
 
 async function displayRecipe(id) {
+    const main = document.getElementById('main-container');
+    main.textContent = '';
+
     const container = document.createElement('div');
     container.id = 'recipe-view-container';
 
@@ -15,7 +18,8 @@ async function displayRecipe(id) {
         createIngredients(recipe.ingredients),
         // createInstructions()
     );
-    return container;
+    
+    main.append(container);
 }
 
 function createToolbar() {

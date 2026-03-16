@@ -22,24 +22,22 @@ mainContainer.addEventListener('click', async (e) => {
         }
         return;
     }
-    // Meal card
+    // Meal card in calendarView
     if (e.target.closest('.meal')) {
         const meal = e.target.closest('.meal')
         const recipeId = meal.dataset.id;   
-        mainContainer.textContent = '';
-        mainContainer.append(await displayRecipe(recipeId));     
+        await displayRecipe(recipeId);     
         return;   
     } 
     // Back button from recipeView
     if (e.target.id === 'back-btn') {
-        mainContainer.textContent = '';
-        await displayCalendarView();
+         await displayCalendarView();
     }
-    if (e.target.closest('.fav-meal')) {
+    // Meal card in favoritesView
+    if (e.target.closest('.fav-meal')) {    // *
         const meal = e.target.closest('.meal')
         const recipeId = meal.dataset.id;   
-        mainContainer.textContent = '';
-        mainContainer.append(await displayRecipe(recipeId));   
+        await displayRecipe(recipeId);   
     }
 });
 
