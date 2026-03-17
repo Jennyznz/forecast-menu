@@ -234,9 +234,15 @@ async function createLunch(temp, category) {
 
     const actions = document.createElement('div');
     actions.classList.add('actions');
+    const regenerate = document.createElement('button');
+    regenerate.classList.add('single-regenerate');
+    regenerate.dataset.action = 'regenerate';
+    const favorite = document.createElement('button');
+    favorite.classList.add('favorite');
+    favorite.dataset.action = 'favorite';
+    actions.append(regenerate, favorite);
 
     const recipe = await createRecipe(category, 'lunch');
-    lunch.dataset.id = recipe.id;
 
     const recipeTitle = document.createElement('div');
     recipeTitle.classList.add('recipe-title');
@@ -244,15 +250,12 @@ async function createLunch(temp, category) {
 
     const readyTimeContainer = document.createElement('div');
     readyTimeContainer.classList.add('ready-time-container');
-
     const clockIcon = document.createElement('img');
     clockIcon.src = clockImg;
     clockIcon.classList.add('clock-icon');
-
     const readyTime = document.createElement('div');
     readyTime.classList.add('recipe-ready-time');
     readyTime.textContent = formatReadyTime(recipe.readyInMinutes);
-
     readyTimeContainer.append(clockIcon, readyTime);
 
     const weatherInfo = document.createElement('div');
@@ -262,6 +265,10 @@ async function createLunch(temp, category) {
     const lTime = document.createElement('div');
     lTime.classList.add('time');
     lTime.textContent = formatMealTime(lunchTime);
+
+    lunch.dataset.id = recipe.id;
+    lunch.dataset.title = recipe.title;
+    lunch.dataset.readyTime = readyTime.textContent;
 
     lunch.append(actions, recipeTitle, readyTimeContainer, weatherInfo, lTime);
     return lunch;
@@ -275,9 +282,15 @@ async function createDinner(temp, category) {
 
     const actions = document.createElement('div');
     actions.classList.add('actions');
+    const regenerate = document.createElement('button');
+    regenerate.classList.add('single-regenerate');
+    regenerate.dataset.action = 'regenerate';
+    const favorite = document.createElement('button');
+    favorite.classList.add('favorite');
+    favorite.dataset.action = 'favorite';
+    actions.append(regenerate, favorite);
 
     const recipe = await createRecipe(category, 'dinner');
-    dinner.dataset.id = recipe.id;
 
     const recipeTitle = document.createElement('div');
     recipeTitle.classList.add('recipe-title');
@@ -285,15 +298,12 @@ async function createDinner(temp, category) {
 
     const readyTimeContainer = document.createElement('div');
     readyTimeContainer.classList.add('ready-time-container');
-
     const clockIcon = document.createElement('img');
     clockIcon.src = clockImg;
     clockIcon.classList.add('clock-icon');
-
     const readyTime = document.createElement('div');
     readyTime.classList.add('recipe-ready-time');
     readyTime.textContent = formatReadyTime(recipe.readyInMinutes);
-
     readyTimeContainer.append(clockIcon, readyTime);
 
     const weatherInfo = document.createElement('div');
@@ -303,6 +313,10 @@ async function createDinner(temp, category) {
     const dTime = document.createElement('div');
     dTime.classList.add('time');
     dTime.textContent = formatMealTime(dinnerTime);
+
+    dinner.dataset.id = recipe.id;
+    dinner.dataset.title = recipe.title;
+    dinner.dataset.readyTime = readyTime.textContent;
 
     dinner.append(actions, recipeTitle, readyTimeContainer, weatherInfo, dTime);
     return dinner;
