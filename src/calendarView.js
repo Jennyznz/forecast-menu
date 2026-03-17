@@ -87,6 +87,13 @@ async function regenerateMealCards() {
         meal.dataset.id = recipe.id;
         meal.dataset.title = recipe.title;
         meal.dataset.readyTime = formatReadyTime(recipe.readyInMinutes);
+    
+        if (meal.dataset.favorite === 'true') {
+            const faveBtn = document.querySelector('.filled-favorite');
+            faveBtn.classList.remove('filled-favorite');
+            faveBtn.classList.add('favorite');
+        }
+        meal.dataset.favorite = 'false';
     });
 }
 
@@ -101,6 +108,13 @@ async function regenerateMeal(meal) {
     meal.dataset.id = recipe.id;
     meal.dataset.title = recipe.title;
     meal.dataset.readyTime = formatReadyTime(recipe.readyInMinutes);
+
+    if (meal.dataset.favorite === 'true') {
+        const faveBtn = document.querySelector('.filled-favorite');
+        faveBtn.classList.remove('filled-favorite');
+        faveBtn.classList.add('favorite');
+    }
+    meal.dataset.favorite = 'false';
 }
 
 async function displaySpread() {
