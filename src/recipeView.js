@@ -1,17 +1,21 @@
 import { displayCalendarView } from "./calendarView";
 import { fetchRecipeInfo } from "./spoonacularAPI";
 
-async function displayRecipe(id) {
+async function displayRecipe(meal) {
     const main = document.getElementById('main-container');
     main.textContent = '';
 
-    const container = document.createElement('div');
-    container.id = 'recipe-view-container';
+    const recipeContainer = document.createElement('div');
+    recipeContainer.id = 'recipe-view-container';
+    recipeContainer.dataset.id = meal.dataset.id;
+    recipeContainer.dataset.title = meal.dataset.title;
+    recipeContainer.dataset.readyTime = meal.dataset.readyTime;
+    recipeContainer.dataset.favorite = meal.dataset.favorite;
 
-    const recipe = await fetchRecipeInfo(id);
+    const recipe = await fetchRecipeInfo(meal.dataset.id);
 
-    container.append(
-        createToolbar(), 
+    recipeContainer.append(
+        createToolbar(meal.dataset.favorite), 
         createTitle(recipe.title), 
         createPhoto(recipe.image), 
         createDescription(recipe.summary), 
@@ -19,10 +23,10 @@ async function displayRecipe(id) {
         // createInstructions()
     );
     
-    main.append(container);
+    main.append(recipeContainer);
 }
 
-function createToolbar() {
+function createToolbar(favorite) {
     const toolbar = document.createElement('div');
     toolbar.id = 'toolbar';
 
@@ -39,7 +43,12 @@ function createToolbar() {
     toolbarLeft.append(backBtn);
 
     const saveBtn = document.createElement('button');
-    saveBtn.id = 'save-btn';
+    saveBtn.id = 'recipe-view-fave-btn';
+    if (favorite === 'true') {
+        saveBtn.classList.add('filled-favorite');
+    } else {
+        saveBtn.classList.add('favorite');
+    }
 
     // const editBtn = document.createElement('button');
     // editBtn.id = 'edit-btn';

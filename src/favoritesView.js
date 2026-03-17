@@ -1,6 +1,5 @@
 import clockI from "../assets/clock.svg";
-
-const favorites = [];
+import { favorites } from ".";
 
 function displayFavorites() {
     const mainContainer = document.getElementById('main-container');
@@ -26,13 +25,12 @@ function displayFavorites() {
 
     favorites.forEach(item => {
         const meal = document.createElement('div');
-        meal.classList.add('faves-view-meal');
-        meal.dataset.id = item.id;
+        meal.classList.add('meal');
 
         const actions = document.createElement('div');
         actions.classList.add('actions');
         const favorite = document.createElement('button');
-        favorite.classList.add('favorite');
+        favorite.classList.add('filled-favorite');
         favorite.dataset.action = 'favorite';
         actions.append(favorite);
 
@@ -49,6 +47,11 @@ function displayFavorites() {
         readyTime.classList.add('recipe-ready-time');
         readyTime.textContent = item.readyTime;
         readyTimeContainer.append(clockIcon, readyTime);
+
+        meal.dataset.id = item.id;
+        meal.dataset.title = item.title;
+        meal.dataset.readyTime = item.readyTime;
+        meal.dataset.favorite = 'true';
     
         meal.append(actions, recipeTitle, readyTimeContainer);
         content.append(meal);

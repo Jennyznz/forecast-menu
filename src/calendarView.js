@@ -221,6 +221,7 @@ async function createBreakfast(temp, category) {
     breakfast.dataset.id = recipe.id;
     breakfast.dataset.title = recipe.title;
     breakfast.dataset.readyTime = readyTime.textContent;
+    breakfast.dataset.favorite = 'false';
 
     breakfast.append(actions, recipeTitle, readyTimeContainer, weatherInfo, bTime);
     return breakfast;
@@ -269,6 +270,7 @@ async function createLunch(temp, category) {
     lunch.dataset.id = recipe.id;
     lunch.dataset.title = recipe.title;
     lunch.dataset.readyTime = readyTime.textContent;
+    lunch.dataset.favorite = 'false';
 
     lunch.append(actions, recipeTitle, readyTimeContainer, weatherInfo, lTime);
     return lunch;
@@ -317,6 +319,7 @@ async function createDinner(temp, category) {
     dinner.dataset.id = recipe.id;
     dinner.dataset.title = recipe.title;
     dinner.dataset.readyTime = readyTime.textContent;
+    dinner.dataset.favorite = 'false';
 
     dinner.append(actions, recipeTitle, readyTimeContainer, weatherInfo, dTime);
     return dinner;
