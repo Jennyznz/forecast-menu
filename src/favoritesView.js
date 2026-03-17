@@ -27,6 +27,7 @@ function displayFavorites() {
     favorites.forEach(item => {
         const meal = document.createElement('div');
         meal.classList.add('faves-view-meal');
+        meal.dataset.id = item.id;
 
         const actions = document.createElement('div');
         actions.classList.add('actions');
@@ -37,7 +38,7 @@ function displayFavorites() {
 
         const recipeTitle = document.createElement('div');
         recipeTitle.classList.add('recipe-title');
-        recipeTitle.textContent = item.dataset.title;
+        recipeTitle.textContent = item.title;
     
         const readyTimeContainer = document.createElement('div');
         readyTimeContainer.classList.add('ready-time-container');
@@ -46,7 +47,7 @@ function displayFavorites() {
         clockIcon.classList.add('clock-icon');
         const readyTime = document.createElement('div');
         readyTime.classList.add('recipe-ready-time');
-        readyTime.textContent = item.dataset.readyTime;
+        readyTime.textContent = item.readyTime;
         readyTimeContainer.append(clockIcon, readyTime);
     
         meal.append(actions, recipeTitle, readyTimeContainer);

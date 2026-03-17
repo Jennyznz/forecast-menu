@@ -18,7 +18,12 @@ mainContainer.addEventListener('click', async (e) => {
         if (btn.dataset.action === 'regenerate') {
             await regenerateMeal(meal);
         } else if (btn.dataset.action === 'favorite') {
-            favorites.push(meal);
+            const basicInfo = {
+                id: meal.dataset.id,
+                title: meal.dataset.title,
+                readyTime: meal.dataset.readyTime
+            };
+            favorites.push(basicInfo);
         }
         return;
     }
@@ -32,12 +37,14 @@ mainContainer.addEventListener('click', async (e) => {
     // Back button from recipeView
     if (e.target.id === 'back-btn') {
          await displayCalendarView();
+         return
     }
     // Meal card in favoritesView
     if (e.target.closest('.fav-meal')) {    // *
         const meal = e.target.closest('.meal')
         const recipeId = meal.dataset.id;   
         await displayRecipe(recipeId);   
+        return
     }
 });
 
