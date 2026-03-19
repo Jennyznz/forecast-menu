@@ -3,15 +3,15 @@ const apiKey = "";
 
 // Temperature category mapping
 const tempCategories = [
-        {range: [85, Infinity], label: 'Hot'},
-        {range: [70, 84], label: 'Warm'},
-        {range: [55, 69], label: 'Average'},
-        {range: [40, 54], label: 'Cool'},
-        {range: [-Infinity, 39], label: 'Cold'},
+        { min: 85, label: 'Hot'},
+        { min: 70, label: 'Warm'},
+        { min: 55, label: 'Average'},
+        { min: 40, label: 'Cool'},
+        { min: -Infinity, label: 'Cold'},
 ];
 
 function getTempCategory(temp) {
-    return tempCategories.find(item => item.range[0] <= temp && item.range[1] >= temp).label;
+    return tempCategories.find(category => temp >= category.min).label;
 }
 
 async function getWeatherData() {
