@@ -79,7 +79,7 @@ function createPhoto(img) {
 function createDescription(summary) {
     const description = document.createElement('div');
     description.id = 'description';
-    description.textContent = summary;   
+    description.innerHTML = summary;   
     return description;
 }
 
