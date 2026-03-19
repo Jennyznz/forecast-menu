@@ -1,22 +1,38 @@
 import { weatherRecipeProfiles } from "./recipeProfiles";
 
 async function fetchRecipeInfo(id) {
-    console.log("ID: "+ id);
     const url = `https://api.spoonacular.com/recipes/${id}/information?apiKey=`;
     const response = await fetch(url);
-    console.log('Res: '+ response);
     const data = await response.json();
-    console.log(data);
     const recipe = new Recipe(data);
     return recipe;
 }
 
 // Return a recipe object with API call data
 async function createRecipe(category, mealType) {
-    const url = buildSearchRecipeQuery(category, mealType);
-    const res = await fetchRecipes(url);
-    const rand = randRecipe(res);
-    const recipe = new Recipe(rand);
+    let url = buildSearchRecipeQuery(category, mealType);
+    let res = await fetchRecipes(url);
+    let rand = randRecipe(res);
+    let recipe = new Recipe(rand);
+
+    let attempts = 0;
+    const maxAttempts = 5;
+
+    // If recipe not found, make another call
+    while (recipe.title === 'No recipes found' && attempts < maxAttempts) {
+        url = buildSearchRecipeQuery(category, mealType);
+        res = await fetchRecipes(url);
+        rand = randRecipe(res);
+        recipe = new Recipe(rand);
+
+        console.log('recipe not found');
+        attempts++;
+    }
+
+    if (recipe.title === 'No recipes found') {
+        console.log('recipe not found after 5 attempts');
+    }
+
     return recipe;
 }
 
@@ -24,7 +40,7 @@ function buildSearchRecipeQuery(category, mealType) {
     // Pick a random profile under the given category
     const profiles = weatherRecipeProfiles[mealType][category];
     const randProfile = profiles[Math.floor(Math.random() * profiles.length)];
-    console.log(randProfile);
+    console.log(mealType, randProfile);
 
     // Build API parameters
     const parameters = { 
@@ -35,7 +51,7 @@ function buildSearchRecipeQuery(category, mealType) {
         addRecipeNutrition: true,
         fillIngredients: true,
         // instructionsRequired: true,
-        apiKey: 'ef4b10ab95994b0d913e21b0e8f8ba71', 
+        apiKey: '', 
     }
 
     // URL pieces
@@ -63,7 +79,7 @@ class Recipe {
     constructor(fullData) {   
         if (!fullData) {
             this.id = null;
-            this.title = "No recipe found";
+            this.title = "No recipes found";
             this.ingredients = [];
             this.steps = [];
             return;
