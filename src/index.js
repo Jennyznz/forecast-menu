@@ -1,11 +1,11 @@
 import { displayFavorites } from './favoritesView.js';
-import { displayCalendarView, regenerateMealCards, regenerateMeal } from './calendarView.js';
+import { createCalendarView, regenerateMealCards, regenerateMeal } from './calendarView.js';
 import { displayRecipe } from './recipeView.js';
 import './styles.css';
 
 let favorites = [];
 
-await displayCalendarView();
+await createCalendarView();
 
 const mainContainer = document.querySelector('#main-container');
 mainContainer.addEventListener('click', async (e) => {
@@ -25,7 +25,8 @@ mainContainer.addEventListener('click', async (e) => {
                 const basicInfo = {
                     id: meal.dataset.id,
                     title: meal.dataset.title,
-                    readyTime: meal.dataset.readyTime
+                    readyTime: meal.dataset.readyTime,
+                    favorite: 'true'
                 };
                 favorites.push(basicInfo);
                 const faveBtn = meal.querySelector('.favorite');
@@ -49,10 +50,10 @@ mainContainer.addEventListener('click', async (e) => {
         await displayRecipe(meal);     
         return;   
     } 
-    // Back button from recipeView
+    // Back button from recipeView and favoritesView
     if (e.target.id === 'back-btn') {
-         await displayCalendarView();
-         return;
+        displayCalendarView();
+        return;
     }
     // Favorite button in recipeView
     if (e.target.id === 'recipe-view-fave-btn') {

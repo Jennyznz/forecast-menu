@@ -6,10 +6,13 @@ const breakfastTime = '06:00:00';
 const lunchTime = '13:00:00';
 const dinnerTime = '19:00:00';
 
-async function displayCalendarView() {
+let weeklyRecipes = [];
+
+async function createCalendarView() {
     const main = document.getElementById('main-container');
     main.textContent = '';
-    main.append(displayCalendarLabel(), await displayContent());
+    main.append(displayCalendarLabel(), await createContent());
+    console.log(weeklyRecipes);
 }
 
 function displayCalendarLabel() {
@@ -48,22 +51,21 @@ function displayCalendarLabel() {
     return label;
 }
 
-async function displayContent() {
+async function createContent() {
     const contentArea = document.createElement('div');
     contentArea.id = 'content-area';
-    contentArea.append(displayOverview(), await displaySpread());
+    contentArea.append(createOverview(), await createSpread());
     return contentArea;
 }
 
-function displayOverview() {
+function createOverview() {
     const overview = document.createElement('div');
     overview.id = 'overview';
 
     const summary = document.createElement('p');
     summary.id = 'summary';
-
-    // Filler
-    summary.textContent = "Rainy day recipes."
+    // FILLER
+    summary.textContent = "";
 
     const regen = document.createElement('button');
     regen.id = 'regenerate';
@@ -76,25 +78,36 @@ function displayOverview() {
 
 async function regenerateMealCards() {
     const meals = document.querySelectorAll('.meal');
-    meals.forEach(async meal => {
+    meals.forEach(async (meal, i) => {
         const recipe = await createRecipe(meal.dataset.category, meal.dataset.mealType);
 
         const recipeTitle = meal.querySelector('.recipe-title');
         recipeTitle.textContent = recipe.title;
         const readyTime = meal.querySelector('.recipe-ready-time');
         readyTime.textContent = formatReadyTime(recipe.readyInMinutes);
-        
+
         meal.dataset.id = recipe.id;
         meal.dataset.title = recipe.title;
         meal.dataset.readyTime = formatReadyTime(recipe.readyInMinutes);
-    
         if (meal.dataset.favorite === 'true') {
             const faveBtn = document.querySelector('.filled-favorite');
             faveBtn.classList.remove('filled-favorite');
             faveBtn.classList.add('favorite');
         }
         meal.dataset.favorite = 'false';
+
+        // Update recipe in weeklyRecipes
+        weeklyRecipes[i] = {
+            id: meal.dataset.id,
+            title: meal.dataset.title,
+            readyTime: meal.dataset.readyTime,
+            temp: meal.dataset.temp,
+            favorite: meal.dataset.favorite,
+            category: meal.dataset.category,
+            mealType: meal.dataset.mealType,
+        };
     });
+    console.log(weeklyRecipes);
 }
 
 async function regenerateMeal(meal) {
@@ -105,32 +118,59 @@ async function regenerateMeal(meal) {
     const readyTime = meal.querySelector('.recipe-ready-time');
     readyTime.textContent = formatReadyTime(recipe.readyInMinutes);
 
+    let indexToAdd = 0;
+    switch (meal.dataset.mealType) {
+        case 'breakfast':
+            break;
+        case 'lunch':
+            indexToAdd = 1;
+            break;
+        case 'dinner':
+            indexToAdd = 2;
+            break;
+    }
+
+    // Find index of recipe in weeklyRecipes
+    const index = Number(meal.dataset.weekDay) * 3 + indexToAdd;
+
     meal.dataset.id = recipe.id;
     meal.dataset.title = recipe.title;
     meal.dataset.readyTime = formatReadyTime(recipe.readyInMinutes);
-
     if (meal.dataset.favorite === 'true') {
         const faveBtn = document.querySelector('.filled-favorite');
         faveBtn.classList.remove('filled-favorite');
         faveBtn.classList.add('favorite');
     }
     meal.dataset.favorite = 'false';
+
+    // console.log('Writing to index:', index, 'array length:', weeklyRecipes.length);
+    // Update recipe in weeklyRecipes
+    weeklyRecipes[index] = {
+        id: meal.dataset.id,
+        title: meal.dataset.title,
+        readyTime: meal.dataset.readyTime,
+        temp: meal.dataset.temp,
+        favorite: meal.dataset.favorite,
+        category: meal.dataset.category,
+        mealType: meal.dataset.mealType,
+    };
+    // console.log(weeklyRecipes);
 }
 
-async function displaySpread() {
+async function createSpread() {
     const spread = document.createElement('div');
     spread.id = 'spread';
 
     const weatherData = await getWeatherData();
 
-    for (let i = 0; i < 2; i++) {
-        spread.append(await displayDay(i, weatherData));
+    for (let i = 0; i < 4; i++) {
+        spread.append(await createDay(i, weatherData));
     }
 
     return spread;
 }
 
-async function displayDay(weekday, weatherData) {
+async function createDay(weekday, weatherData) {
     const day = document.createElement('div');
     day.classList.add('day');
 
@@ -184,15 +224,15 @@ async function displayDay(weekday, weatherData) {
         const dCategory = getTempCategory(dinnerTemp);
 
         day.append(
-            await createBreakfast(breakfastTemp, bCategory), 
-            await createLunch(lunchTemp, lCategory), 
-            await createDinner(dinnerTemp, dCategory));
+            await createBreakfast(breakfastTemp, bCategory, weekday), 
+            await createLunch(lunchTemp, lCategory, weekday), 
+            await createDinner(dinnerTemp, dCategory, weekday));
     }
 
     return day;
 }
 
-async function createBreakfast(temp, category) {
+async function createBreakfast(temp, category, weekday) {
     const breakfast = document.createElement('div');
     breakfast.classList.add('meal');
     breakfast.dataset.category = category;
@@ -236,12 +276,24 @@ async function createBreakfast(temp, category) {
     breakfast.dataset.title = recipe.title;
     breakfast.dataset.readyTime = readyTime.textContent;
     breakfast.dataset.favorite = 'false';
+    breakfast.dataset.weekDay = weekday;
 
+    const basicInfo = {
+        id: recipe.id,
+        title: recipe.title,
+        readyTime: readyTime.textContent,
+        favorite: 'false',
+        temp: temp,
+        category: category,
+        mealType: 'breakfast',
+        weekDay: weekday,
+    };
+    weeklyRecipes.push(basicInfo);
     breakfast.append(actions, recipeTitle, readyTimeContainer, weatherInfo, bTime);
     return breakfast;
 }
 
-async function createLunch(temp, category) {
+async function createLunch(temp, category, weekday) {
     const lunch = document.createElement('div');
     lunch.classList.add('meal');
     lunch.dataset.category = category;
@@ -286,11 +338,23 @@ async function createLunch(temp, category) {
     lunch.dataset.readyTime = readyTime.textContent;
     lunch.dataset.favorite = 'false';
 
+    const basicInfo = {
+        id: recipe.id,
+        title: recipe.title,
+        readyTime: readyTime.textContent,
+        favorite: 'false',
+        temp: temp,
+        category: category,
+        mealType: 'breakfast',
+        weekDay: weekday,
+    };
+    weeklyRecipes.push(basicInfo);
+
     lunch.append(actions, recipeTitle, readyTimeContainer, weatherInfo, lTime);
     return lunch;
 }
 
-async function createDinner(temp, category) {
+async function createDinner(temp, category, weekday) {
     const dinner = document.createElement('div');
     dinner.classList.add('meal');
     dinner.dataset.category = category;
@@ -335,6 +399,19 @@ async function createDinner(temp, category) {
     dinner.dataset.readyTime = readyTime.textContent;
     dinner.dataset.favorite = 'false';
 
+    const basicInfo = {
+        id: recipe.id,
+        title: recipe.title,
+        readyTime: readyTime.textContent,
+        favorite: 'false',
+        temp: temp,
+        category: category,
+        mealType: 'breakfast',
+        weekDay: weekday,
+
+    };
+    weeklyRecipes.push(basicInfo);
+
     dinner.append(actions, recipeTitle, readyTimeContainer, weatherInfo, dTime);
     return dinner;
 }
@@ -362,4 +439,221 @@ function formatMealTime(time) {
     }).format(date);
 }
 
-export { displayCalendarView, regenerateMealCards, regenerateMeal, formatReadyTime };
+// Returning to calendarView from 'back' buttons
+function displayCalendarView() {
+    const main = document.getElementById('main-container');
+    main.textContent = '';
+    main.append(displayCalendarLabel(), displayContent());
+}
+
+function displayContent() {
+    const contentArea = document.createElement('div');
+    contentArea.id = 'content-area';
+    contentArea.append(createOverview(), displaySpread());
+    return contentArea;
+}
+
+function displaySpread() {
+    const spread = document.createElement('div');
+    spread.id = 'spread';
+    for (let i = 0; i < 2; i++) {
+        spread.append(createDay(i));
+    }
+    return spread;
+}
+
+function displayDay(weekday) {
+    const day = document.createElement('div');
+    day.classList.add('day');
+    
+    const dateHeader = document.createElement('div');
+    dateHeader.classList.add('date-header');
+
+    const weekdayLabel = document.createElement('div');
+    weekdayLabel.classList.add('weekday');
+    const dateLabel = document.createElement('div');
+    dateLabel.classList.add('date');
+
+    // Display weekday
+    const days = [
+        "Sunday",
+        "Monday",
+        "Tuesday",
+        "Wednesday",
+        "Thursday",
+        "Friday",
+        "Saturday"
+    ];
+    weekdayLabel.textContent = days[weekday];
+
+    // Display date
+    const today = new Date();
+    // Find start date of current week
+    const startOfWeek = new Date(today);
+    startOfWeek.setDate(today.getDate() - today.getDay());
+    // Find the current date
+    const date = new Date(startOfWeek);
+    date.setDate(startOfWeek.getDate() + weekday);
+    
+    dateLabel.textContent = `${date.getDate()}`;
+
+    dateHeader.append(weekdayLabel, dateLabel);
+    day.append(dateHeader);
+
+    if (date < today.setHours(0, 0, 0, 0)) {
+        day.classList.add("past");    // Deactivated day display if the date has passed
+    } else {
+        day.append(createBreakfast(weekday), createLunch(weekday), createDinner(weekday));
+    }
+
+    return day;
+}
+
+function displayBreakfast(weekday) {
+    const breakfast = document.createElement('div');
+    breakfast.classList.add('meal');
+
+    const actions = document.createElement('div');
+    actions.classList.add('actions');
+    const regenerate = document.createElement('button');
+    regenerate.classList.add('single-regenerate');
+    regenerate.dataset.action = 'regenerate';
+    const favorite = document.createElement('button');
+    favorite.classList.add('favorite');
+    favorite.dataset.action = 'favorite';
+    actions.append(regenerate, favorite);
+
+    const recipe = weeklyRecipes[weekday * 3];
+
+    breakfast.dataset.id = recipe.id;
+    breakfast.dataset.title = recipe.title;
+    breakfast.dataset.readyTime = recipe.readyTime;
+    breakfast.dataset.favorite = recipe.favorite;
+    breakfast.dataset.category = recipe.category;
+    breakfast.dataset.mealType = recipe.mealType;
+
+    const recipeTitle = document.createElement('div');
+    recipeTitle.classList.add('recipe-title');
+    recipeTitle.textContent = recipe.title;
+
+    const readyTimeContainer = document.createElement('div');
+    readyTimeContainer.classList.add('ready-time-container');
+    const clockIcon = document.createElement('img');
+    clockIcon.src = clockImg;
+    clockIcon.classList.add('clock-icon');
+    const readyTime = document.createElement('div');
+    readyTime.classList.add('recipe-ready-time');
+    readyTime.textContent = recipe.readyTime;
+    readyTimeContainer.append(clockIcon, readyTime);
+
+    const weatherInfo = document.createElement('div');
+    weatherInfo.classList.add('weather-info');
+    weatherInfo.textContent = `${recipe.temp}°F` ;
+
+    const bTime = document.createElement('div');
+    bTime.classList.add('time');
+    bTime.textContent = formatMealTime(breakfastTime);
+
+    breakfast.append(actions, recipeTitle, readyTimeContainer, weatherInfo, bTime);
+    return breakfast;
+}
+
+function displayLunch(weekday) {
+    const lunch = document.createElement('div');
+    lunch.classList.add('meal');
+
+    const actions = document.createElement('div');
+    actions.classList.add('actions');
+    const regenerate = document.createElement('button');
+    regenerate.classList.add('single-regenerate');
+    regenerate.dataset.action = 'regenerate';
+    const favorite = document.createElement('button');
+    favorite.classList.add('favorite');
+    favorite.dataset.action = 'favorite';
+    actions.append(regenerate, favorite);
+
+    const recipe = weeklyRecipes[weekday * 3 + 1];
+
+    lunch.dataset.id = recipe.id;
+    lunch.dataset.title = recipe.title;
+    lunch.dataset.readyTime = recipe.readyTime;
+    lunch.dataset.favorite = recipe.favorite;
+    lunch.dataset.category = recipe.category;
+    lunch.dataset.mealType = recipe.mealType;
+
+    const recipeTitle = document.createElement('div');
+    recipeTitle.classList.add('recipe-title');
+    recipeTitle.textContent = recipe.title;
+
+    const readyTimeContainer = document.createElement('div');
+    readyTimeContainer.classList.add('ready-time-container');
+    const clockIcon = document.createElement('img');
+    clockIcon.src = clockImg;
+    clockIcon.classList.add('clock-icon');
+    const readyTime = document.createElement('div');
+    readyTime.classList.add('recipe-ready-time');
+    readyTime.textContent = recipe.readyTime;
+    readyTimeContainer.append(clockIcon, readyTime);
+
+    const weatherInfo = document.createElement('div');
+    weatherInfo.classList.add('weather-info');
+    weatherInfo.textContent = `${recipe.temp}°F` ;
+
+    const lTime = document.createElement('div');
+    lTime.classList.add('time');
+    lTime.textContent = formatMealTime(lunchTime);
+
+    lunch.append(actions, recipeTitle, readyTimeContainer, weatherInfo, lTime);
+    return lunch;
+}
+
+function displayDinner(weekday) {
+    const dinner = document.createElement('div');
+    dinner.classList.add('meal');
+
+    const actions = document.createElement('div');
+    actions.classList.add('actions');
+    const regenerate = document.createElement('button');
+    regenerate.classList.add('single-regenerate');
+    regenerate.dataset.action = 'regenerate';
+    const favorite = document.createElement('button');
+    favorite.classList.add('favorite');
+    favorite.dataset.action = 'favorite';
+    actions.append(regenerate, favorite);
+
+    const recipe = weeklyRecipes[weekday * 3 + 2];
+
+    dinner.dataset.id = recipe.id;
+    dinner.dataset.title = recipe.title;
+    dinner.dataset.readyTime = recipe.readyTime;
+    dinner.dataset.favorite = recipe.favorite;
+    dinner.dataset.category = recipe.category;
+    dinner.dataset.mealType = recipe.mealType;
+
+    const recipeTitle = document.createElement('div');
+    recipeTitle.classList.add('recipe-title');
+    recipeTitle.textContent = recipe.title;
+
+    const readyTimeContainer = document.createElement('div');
+    readyTimeContainer.classList.add('ready-time-container');
+    const clockIcon = document.createElement('img');
+    clockIcon.src = clockImg;
+    clockIcon.classList.add('clock-icon');
+    const readyTime = document.createElement('div');
+    readyTime.classList.add('recipe-ready-time');
+    readyTime.textContent = recipe.readyTime;
+    readyTimeContainer.append(clockIcon, readyTime);
+
+    const weatherInfo = document.createElement('div');
+    weatherInfo.classList.add('weather-info');
+    weatherInfo.textContent = `${recipe.temp}°F` ;
+
+    const dTime = document.createElement('div');
+    dTime.classList.add('time');
+    dTime.textContent = formatMealTime(dinnerTime);
+
+    dinner.append(actions, recipeTitle, readyTimeContainer, weatherInfo, dTime);
+    return dinner;
+}
+
+export { createCalendarView, displayCalendarView, regenerateMealCards, regenerateMeal, formatReadyTime };
