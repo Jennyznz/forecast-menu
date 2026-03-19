@@ -55,6 +55,7 @@ async function createContent() {
     const contentArea = document.createElement('div');
     contentArea.id = 'content-area';
     contentArea.append(createOverview(), await createSpread());
+
     return contentArea;
 }
 
@@ -64,15 +65,18 @@ function createOverview() {
 
     const summary = document.createElement('p');
     summary.id = 'summary';
-    // FILLER
-    summary.textContent = "";
+ 
+    summary.innerHTML = "<p>The weather decides the mood. <br>The mood decides the meal. <br>Rainy day soup. <br>Sunny day salad. <br>We've got you covered.</p>";
 
     const regen = document.createElement('button');
     regen.id = 'regenerate';
     const shoppingCart = document.createElement('button');
     shoppingCart.id = 'shopping-cart';
 
-    overview.append(summary, regen, shoppingCart);
+    overview.append(
+        summary, 
+        regen, 
+        shoppingCart);
     return overview;
 }
 
@@ -163,10 +167,9 @@ async function createSpread() {
 
     const weatherData = await getWeatherData();
 
-    for (let i = 0; i < 4; i++) {
+    for (let i = 0; i < 5; i++) {
         spread.append(await createDay(i, weatherData));
     }
-
     return spread;
 }
 
@@ -210,15 +213,15 @@ async function createDay(weekday, weatherData) {
 
     if (date < today.setHours(0, 0, 0, 0)) {
         day.classList.add("past");    // Deactivated day display if the date has passed
-        // Add 3 filler meals to weeklyRecipes
-        const fillerObj = {}
-        weeklyRecipes.push(fillerObj);
-        weeklyRecipes.push(fillerObj);
-        weeklyRecipes.push(fillerObj);
+        // Add 3 placeholder meals to weeklyRecipes
+        const obj = {}
+        weeklyRecipes.push(obj);
+        weeklyRecipes.push(obj);
+        weeklyRecipes.push(obj);
     } else {
         const dateString = date.toISOString().split('T')[0];
-
         const dayData = weatherData.days.find(d => d.datetime === dateString);
+    
         // Find temperatures 
         const breakfastTemp = dayData.hours.find(h => h.datetime === breakfastTime).temp;
         const lunchTemp = dayData.hours.find(h => h.datetime === lunchTime).temp;
@@ -227,7 +230,7 @@ async function createDay(weekday, weatherData) {
         const bCategory = getTempCategory(breakfastTemp);
         const lCategory = getTempCategory(lunchTemp);
         const dCategory = getTempCategory(dinnerTemp);
-
+//
         day.append(
             await createBreakfast(breakfastTemp, bCategory, weekday), 
             await createLunch(lunchTemp, lCategory, weekday), 
@@ -464,7 +467,7 @@ function displayContent() {
 function displaySpread() {
     const spread = document.createElement('div');
     spread.id = 'spread';
-    for (let i = 0; i < 4; i++) {
+    for (let i = 0; i < 5; i++) {
         spread.append(displayDay(i));
     }
     return spread;
