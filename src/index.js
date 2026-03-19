@@ -1,5 +1,5 @@
 import { displayFavorites } from './favoritesView.js';
-import { createCalendarView, regenerateMealCards, regenerateMeal } from './calendarView.js';
+import { createCalendarView, displayCalendarView, regenerateMealCards, regenerateMeal } from './calendarView.js';
 import { displayRecipe } from './recipeView.js';
 import './styles.css';
 

@@ -143,7 +143,7 @@ async function regenerateMeal(meal) {
     }
     meal.dataset.favorite = 'false';
 
-    // console.log('Writing to index:', index, 'array length:', weeklyRecipes.length);
+    console.log('Writing to index:', index, 'array length:', weeklyRecipes.length);
     // Update recipe in weeklyRecipes
     weeklyRecipes[index] = {
         id: meal.dataset.id,
@@ -154,7 +154,7 @@ async function regenerateMeal(meal) {
         category: meal.dataset.category,
         mealType: meal.dataset.mealType,
     };
-    // console.log(weeklyRecipes);
+    console.log(weeklyRecipes);
 }
 
 async function createSpread() {
@@ -210,6 +210,11 @@ async function createDay(weekday, weatherData) {
 
     if (date < today.setHours(0, 0, 0, 0)) {
         day.classList.add("past");    // Deactivated day display if the date has passed
+        // Add 3 filler meals to weeklyRecipes
+        const fillerObj = {}
+        weeklyRecipes.push(fillerObj);
+        weeklyRecipes.push(fillerObj);
+        weeklyRecipes.push(fillerObj);
     } else {
         const dateString = date.toISOString().split('T')[0];
 
@@ -337,6 +342,8 @@ async function createLunch(temp, category, weekday) {
     lunch.dataset.title = recipe.title;
     lunch.dataset.readyTime = readyTime.textContent;
     lunch.dataset.favorite = 'false';
+    lunch.dataset.weekDay = weekday;
+
 
     const basicInfo = {
         id: recipe.id,
@@ -345,7 +352,7 @@ async function createLunch(temp, category, weekday) {
         favorite: 'false',
         temp: temp,
         category: category,
-        mealType: 'breakfast',
+        mealType: 'lunch',
         weekDay: weekday,
     };
     weeklyRecipes.push(basicInfo);
@@ -398,6 +405,7 @@ async function createDinner(temp, category, weekday) {
     dinner.dataset.title = recipe.title;
     dinner.dataset.readyTime = readyTime.textContent;
     dinner.dataset.favorite = 'false';
+    dinner.dataset.weekDay = weekday;
 
     const basicInfo = {
         id: recipe.id,
@@ -406,7 +414,7 @@ async function createDinner(temp, category, weekday) {
         favorite: 'false',
         temp: temp,
         category: category,
-        mealType: 'breakfast',
+        mealType: 'dinner',
         weekDay: weekday,
 
     };
@@ -456,8 +464,8 @@ function displayContent() {
 function displaySpread() {
     const spread = document.createElement('div');
     spread.id = 'spread';
-    for (let i = 0; i < 2; i++) {
-        spread.append(createDay(i));
+    for (let i = 0; i < 4; i++) {
+        spread.append(displayDay(i));
     }
     return spread;
 }
@@ -503,7 +511,7 @@ function displayDay(weekday) {
     if (date < today.setHours(0, 0, 0, 0)) {
         day.classList.add("past");    // Deactivated day display if the date has passed
     } else {
-        day.append(createBreakfast(weekday), createLunch(weekday), createDinner(weekday));
+        day.append(displayBreakfast(weekday), displayLunch(weekday), displayDinner(weekday));
     }
 
     return day;
