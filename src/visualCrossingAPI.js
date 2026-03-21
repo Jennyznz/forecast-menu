@@ -1,5 +1,5 @@
 const baseURL = "https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/";
-const apiKey = "";
+const apiKey = process.env.VISUAL_CROSSING_API_KEY;
 
 // Temperature category mapping
 const tempCategories = [

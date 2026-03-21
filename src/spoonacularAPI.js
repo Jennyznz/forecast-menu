@@ -1,7 +1,9 @@
 import { weatherRecipeProfiles } from "./recipeProfiles";
 
+const apiKey = process.env.SPOONACULAR_API_KEY;
+
 async function fetchRecipeInfo(id) {
-    const url = `https://api.spoonacular.com/recipes/${id}/information?apiKey=`;
+    const url = `https://api.spoonacular.com/recipes/${id}/information?apiKey=${apiKey}`;
     const response = await fetch(url);
     const data = await response.json();
     const recipe = new Recipe(data);
@@ -51,7 +53,7 @@ function buildSearchRecipeQuery(category, mealType) {
         addRecipeNutrition: true,
         fillIngredients: true,
         // instructionsRequired: true,
-        apiKey: '', 
+        apiKey,     // shorthand property syntax
     }
 
     // URL pieces
