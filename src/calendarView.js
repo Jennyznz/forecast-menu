@@ -65,7 +65,6 @@ function createOverview() {
 
     const summary = document.createElement('p');
     summary.id = 'summary';
- 
     summary.innerHTML = "<p>The weather decides the mood. <br>The mood decides the meal. <br>Rainy day soup. <br>Sunny day salad. <br>We've got you covered.</p>";
 
     const regen = document.createElement('button');
@@ -167,7 +166,7 @@ async function createSpread() {
 
     const weatherData = await getWeatherData();
 
-    for (let i = 0; i < 5; i++) {
+    for (let i = 0; i < 7; i++) {
         spread.append(await createDay(i, weatherData));
     }
     return spread;
@@ -467,7 +466,7 @@ function displayContent() {
 function displaySpread() {
     const spread = document.createElement('div');
     spread.id = 'spread';
-    for (let i = 0; i < 5; i++) {
+    for (let i = 0; i < 7; i++) {
         spread.append(displayDay(i));
     }
     return spread;
@@ -524,24 +523,27 @@ function displayBreakfast(weekday) {
     const breakfast = document.createElement('div');
     breakfast.classList.add('meal');
 
-    const actions = document.createElement('div');
-    actions.classList.add('actions');
-    const regenerate = document.createElement('button');
-    regenerate.classList.add('single-regenerate');
-    regenerate.dataset.action = 'regenerate';
-    const favorite = document.createElement('button');
-    favorite.classList.add('favorite');
-    favorite.dataset.action = 'favorite';
-    actions.append(regenerate, favorite);
-
     const recipe = weeklyRecipes[weekday * 3];
-
     breakfast.dataset.id = recipe.id;
     breakfast.dataset.title = recipe.title;
     breakfast.dataset.readyTime = recipe.readyTime;
     breakfast.dataset.favorite = recipe.favorite;
     breakfast.dataset.category = recipe.category;
     breakfast.dataset.mealType = recipe.mealType;
+
+    const actions = document.createElement('div');
+    actions.classList.add('actions');
+    const regenerate = document.createElement('button');
+    regenerate.classList.add('single-regenerate');
+    regenerate.dataset.action = 'regenerate';
+    const favorite = document.createElement('button');
+    if (breakfast.dataset.favorite === 'true') {
+        favorite.classList.add('filled-favorite');
+    } else {
+        favorite.classList.add('favorite');
+    }
+    favorite.dataset.action = 'favorite';
+    actions.append(regenerate, favorite);
 
     const recipeTitle = document.createElement('div');
     recipeTitle.classList.add('recipe-title');
@@ -573,24 +575,27 @@ function displayLunch(weekday) {
     const lunch = document.createElement('div');
     lunch.classList.add('meal');
 
-    const actions = document.createElement('div');
-    actions.classList.add('actions');
-    const regenerate = document.createElement('button');
-    regenerate.classList.add('single-regenerate');
-    regenerate.dataset.action = 'regenerate';
-    const favorite = document.createElement('button');
-    favorite.classList.add('favorite');
-    favorite.dataset.action = 'favorite';
-    actions.append(regenerate, favorite);
-
     const recipe = weeklyRecipes[weekday * 3 + 1];
-
     lunch.dataset.id = recipe.id;
     lunch.dataset.title = recipe.title;
     lunch.dataset.readyTime = recipe.readyTime;
     lunch.dataset.favorite = recipe.favorite;
     lunch.dataset.category = recipe.category;
     lunch.dataset.mealType = recipe.mealType;
+
+    const actions = document.createElement('div');
+    actions.classList.add('actions');
+    const regenerate = document.createElement('button');
+    regenerate.classList.add('single-regenerate');
+    regenerate.dataset.action = 'regenerate';
+    const favorite = document.createElement('button');
+    if (lunch.dataset.favorite === 'true') {
+        favorite.classList.add('filled-favorite');
+    } else {
+        favorite.classList.add('favorite');
+    }
+    favorite.dataset.action = 'favorite';
+    actions.append(regenerate, favorite);
 
     const recipeTitle = document.createElement('div');
     recipeTitle.classList.add('recipe-title');
@@ -622,24 +627,27 @@ function displayDinner(weekday) {
     const dinner = document.createElement('div');
     dinner.classList.add('meal');
 
-    const actions = document.createElement('div');
-    actions.classList.add('actions');
-    const regenerate = document.createElement('button');
-    regenerate.classList.add('single-regenerate');
-    regenerate.dataset.action = 'regenerate';
-    const favorite = document.createElement('button');
-    favorite.classList.add('favorite');
-    favorite.dataset.action = 'favorite';
-    actions.append(regenerate, favorite);
-
     const recipe = weeklyRecipes[weekday * 3 + 2];
-
     dinner.dataset.id = recipe.id;
     dinner.dataset.title = recipe.title;
     dinner.dataset.readyTime = recipe.readyTime;
     dinner.dataset.favorite = recipe.favorite;
     dinner.dataset.category = recipe.category;
     dinner.dataset.mealType = recipe.mealType;
+
+    const actions = document.createElement('div');
+    actions.classList.add('actions');
+    const regenerate = document.createElement('button');
+    regenerate.classList.add('single-regenerate');
+    regenerate.dataset.action = 'regenerate';
+    const favorite = document.createElement('button');
+    if (dinner.dataset.favorite === 'true') {
+        favorite.classList.add('filled-favorite');
+    } else {
+        favorite.classList.add('favorite');
+    }
+    favorite.dataset.action = 'favorite';
+    actions.append(regenerate, favorite);
 
     const recipeTitle = document.createElement('div');
     recipeTitle.classList.add('recipe-title');
@@ -667,4 +675,12 @@ function displayDinner(weekday) {
     return dinner;
 }
 
-export { createCalendarView, displayCalendarView, regenerateMealCards, regenerateMeal, formatReadyTime };
+// Change favorite status of all recipes in weeklyRecipes that match the provided meal ID
+function updateFavoriteStatus(id, status) {
+    const meals = weeklyRecipes.filter(meal => meal.id === id);
+    meals.forEach(meal => {
+        meal.favorite = status;
+    });
+}
+
+export { createCalendarView, displayCalendarView, regenerateMealCards, regenerateMeal, formatReadyTime, updateFavoriteStatus };

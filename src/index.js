@@ -1,5 +1,5 @@
 import { displayFavorites } from './favoritesView.js';
-import { createCalendarView, displayCalendarView, regenerateMealCards, regenerateMeal } from './calendarView.js';
+import { createCalendarView, displayCalendarView, regenerateMealCards, regenerateMeal, updateFavoriteStatus } from './calendarView.js';
 import { displayRecipe } from './recipeView.js';
 import './styles.css';
 
@@ -28,11 +28,15 @@ mainContainer.addEventListener('click', async (e) => {
                     readyTime: meal.dataset.readyTime,
                     favorite: 'true'
                 };
+                // Update favorites array
                 favorites.push(basicInfo);
                 const faveBtn = meal.querySelector('.favorite');
                 faveBtn.classList.remove('favorite');
                 faveBtn.classList.add('filled-favorite');
                 meal.dataset.favorite = 'true';
+                // Update weeklyRecipes array
+                updateFavoriteStatus(Number(meal.dataset.id), 'true');  // Dataset values are always strings!
+
             } else {
                 // Remove from Favorites
                 favorites = favorites.filter(item => item.id !== meal.dataset.id);
@@ -40,6 +44,8 @@ mainContainer.addEventListener('click', async (e) => {
                 faveBtn.classList.remove('filled-favorite');
                 faveBtn.classList.add('favorite');
                 meal.dataset.favorite = 'false';
+                // Update weeklyRecipes array
+                updateFavoriteStatus(Number(meal.dataset.id), 'false');
             }
         }
         return;
@@ -60,11 +66,13 @@ mainContainer.addEventListener('click', async (e) => {
         const container = e.target.closest('#recipe-view-container');
         const faveBtn = e.target;
         if (container.dataset.favorite === 'true') {
-            // Remove from favorites
+            // Remove from favorites array
             favorites = favorites.filter(item => item.id !== container.dataset.id);
             faveBtn.classList.remove('filled-favorite');
             faveBtn.classList.add('favorite');
             container.dataset.favorite = 'false'
+            // Update weeklyRecipes array
+            updateFavoriteStatus(Number(container.dataset.id), 'false');
         } else {
             // Add to favorites
             const basicInfo = {
@@ -76,6 +84,8 @@ mainContainer.addEventListener('click', async (e) => {
             faveBtn.classList.remove('favorite');
             faveBtn.classList.add('filled-favorite');
             container.dataset.favorite = 'true'
+            // Update weeklyRecipes array
+            updateFavoriteStatus(Number(container.dataset.id), 'true');  
         }
         return;
     }
