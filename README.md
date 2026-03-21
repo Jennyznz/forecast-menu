@@ -16,8 +16,14 @@ Forecast Menu is a weather-aware recipe recommendation app that suggests meals t
 (Full Week)
 
 (Recipes are not generated for the days of the week that have passed)
+<img width="1440" height="820" alt="Screenshot 2026-03-20 at 11 36 38 PM" src="https://github.com/user-attachments/assets/9e45353d-1015-4377-9988-f975dc984ec5" />
+
 ### Detailed Recipe View
+https://github.com/user-attachments/assets/00c0b93b-37f0-4f24-9360-34fdd24d9c6f
+
 ### Favorite Recipes Feature
+https://github.com/user-attachments/assets/f6668c4d-f318-41e7-a58e-ad3f4a75945e
+
 ### User Profile
 ### Shopping Cart Generator
 
