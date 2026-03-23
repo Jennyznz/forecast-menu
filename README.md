@@ -14,21 +14,23 @@ Forecast Menu is a weather-aware recipe recommendation app that suggests meals t
 ## Demo
 ### Weekly Recommendations
 (Full Week)
+<img width="1440" height="820" alt="Screenshot 2026-03-20 at 11 36 38 PM" src="https://github.com/user-attachments/assets/8751ae01-4515-4465-9949-73b316050031" />
 
 (Recipes are not generated for the days of the week that have passed)
 <img width="1440" height="820" alt="Screenshot 2026-03-20 at 11 36 38 PM" src="https://github.com/user-attachments/assets/9e45353d-1015-4377-9988-f975dc984ec5" />
 
 ### Detailed Recipe View
-https://github.com/user-attachments/assets/00c0b93b-37f0-4f24-9360-34fdd24d9c6f
+https://github.com/user-attachments/assets/39ad6edc-017a-45c6-94e0-d9ff0069402a
 
 ### Favorite Recipes Feature
-https://github.com/user-attachments/assets/f6668c4d-f318-41e7-a58e-ad3f4a75945e
+https://github.com/user-attachments/assets/e335cea0-0f65-4f24-ae1f-31ba97928392
 
-### User Profile
-### Shopping Cart Generator
+### Regenerate
+https://github.com/user-attachments/assets/c5f6006f-c08a-4cd1-a170-e3a2295f82ab
 
 
 ## Getting Started
+### Setup
 ```bash
 npm install
 npx webpack
