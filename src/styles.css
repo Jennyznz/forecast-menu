@@ -47,6 +47,13 @@ body {
     grid-auto-flow: column;
     grid-template-columns: 1fr 1fr 1fr;
     gap: 10px;
+    align-items: center;
+}
+
+#user-profile {
+    background-image: url("../assets/user-profile.svg");
+    height: 35px;
+    width: 35px;
 }
 
 button, 
@@ -112,7 +119,8 @@ button:active {
     grid-auto-flow: row;
     grid-template-columns: 1fr 1fr 1fr 1fr;
     grid-template-rows: auto auto;
-    gap: 10px;
+    column-gap: 10px;
+    row-gap: 50px;
     margin-bottom: 40px;
 }
 
@@ -164,7 +172,7 @@ button:active {
     height: 15px;
 }
 
-.filled-favorite {
+.filled.favorite {
     background-image: url('../assets/filled-heart.svg');
     width: 15px;
     height: 15px;

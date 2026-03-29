@@ -31,21 +31,19 @@ mainContainer.addEventListener('click', async (e) => {
                 // Update favorites array
                 favorites.push(basicInfo);
                 const faveBtn = meal.querySelector('.favorite');
-                faveBtn.classList.remove('favorite');
-                faveBtn.classList.add('filled-favorite');
+                faveBtn.classList.add('filled');
                 meal.dataset.favorite = 'true';
                 // Update weeklyRecipes array
                 updateFavoriteStatus(Number(meal.dataset.id), 'true');  // Dataset values are always strings!
-
             } else {
                 // Remove from Favorites
                 favorites = favorites.filter(item => item.id !== meal.dataset.id);
                 const faveBtn = meal.querySelector('.favorite');
-                faveBtn.classList.remove('filled-favorite');
-                faveBtn.classList.add('favorite');
+                faveBtn.classList.remove('filled');
                 meal.dataset.favorite = 'false';
                 // Update weeklyRecipes array
                 updateFavoriteStatus(Number(meal.dataset.id), 'false');
+                
             }
         }
         return;
@@ -68,8 +66,7 @@ mainContainer.addEventListener('click', async (e) => {
         if (container.dataset.favorite === 'true') {
             // Remove from favorites array
             favorites = favorites.filter(item => item.id !== container.dataset.id);
-            faveBtn.classList.remove('filled-favorite');
-            faveBtn.classList.add('favorite');
+            faveBtn.classList.remove('filled');
             container.dataset.favorite = 'false'
             // Update weeklyRecipes array
             updateFavoriteStatus(Number(container.dataset.id), 'false');
@@ -81,8 +78,7 @@ mainContainer.addEventListener('click', async (e) => {
                     readyTime: container.dataset.readyTime
                 };
             favorites.push(basicInfo);
-            faveBtn.classList.remove('favorite');
-            faveBtn.classList.add('filled-favorite');
+            faveBtn.classList.add('filled');
             container.dataset.favorite = 'true'
             // Update weeklyRecipes array
             updateFavoriteStatus(Number(container.dataset.id), 'true');  
@@ -96,7 +92,6 @@ mainContainer.addEventListener('click', async (e) => {
         await displayRecipe(meal);   
         return;
     }
-
 });
 
 const regenerateBtn = document.querySelector('#regenerate');
@@ -108,5 +103,10 @@ const favoritesBtn = document.querySelector('#all-favorites');
 favoritesBtn.addEventListener('click', () => {
     displayFavorites();
 });
+
+// const userProfileBtn = document.querySelector('#user-profile');
+// userProfileBtn.addEventListener('click', () => {
+//     displayForms();
+// });
 
 export { favorites }

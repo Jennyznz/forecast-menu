@@ -93,9 +93,8 @@ async function regenerateMealCards() {
         meal.dataset.title = recipe.title;
         meal.dataset.readyTime = formatReadyTime(recipe.readyInMinutes);
         if (meal.dataset.favorite === 'true') {
-            const faveBtn = document.querySelector('.filled-favorite');
-            faveBtn.classList.remove('filled-favorite');
-            faveBtn.classList.add('favorite');
+            const faveBtn = document.querySelector('.favorite');
+            faveBtn.classList.remove('filled');
         }
         meal.dataset.favorite = 'false';
 
@@ -140,9 +139,8 @@ async function regenerateMeal(meal) {
     meal.dataset.title = recipe.title;
     meal.dataset.readyTime = formatReadyTime(recipe.readyInMinutes);
     if (meal.dataset.favorite === 'true') {
-        const faveBtn = document.querySelector('.filled-favorite');
-        faveBtn.classList.remove('filled-favorite');
-        faveBtn.classList.add('favorite');
+        const faveBtn = document.querySelector('.favorite');
+        faveBtn.classList.remove('filled');
     }
     meal.dataset.favorite = 'false';
 
@@ -537,10 +535,9 @@ function displayBreakfast(weekday) {
     regenerate.classList.add('single-regenerate');
     regenerate.dataset.action = 'regenerate';
     const favorite = document.createElement('button');
+    favorite.classList.add('favorite');
     if (breakfast.dataset.favorite === 'true') {
-        favorite.classList.add('filled-favorite');
-    } else {
-        favorite.classList.add('favorite');
+        favorite.classList.add('filled');
     }
     favorite.dataset.action = 'favorite';
     actions.append(regenerate, favorite);
@@ -589,11 +586,10 @@ function displayLunch(weekday) {
     regenerate.classList.add('single-regenerate');
     regenerate.dataset.action = 'regenerate';
     const favorite = document.createElement('button');
+    favorite.classList.add('favorite');
     if (lunch.dataset.favorite === 'true') {
-        favorite.classList.add('filled-favorite');
-    } else {
-        favorite.classList.add('favorite');
-    }
+        favorite.classList.add('filled');
+    } 
     favorite.dataset.action = 'favorite';
     actions.append(regenerate, favorite);
 
@@ -641,10 +637,9 @@ function displayDinner(weekday) {
     regenerate.classList.add('single-regenerate');
     regenerate.dataset.action = 'regenerate';
     const favorite = document.createElement('button');
+    favorite.classList.add('favorite');
     if (dinner.dataset.favorite === 'true') {
-        favorite.classList.add('filled-favorite');
-    } else {
-        favorite.classList.add('favorite');
+        favorite.classList.add('filled');
     }
     favorite.dataset.action = 'favorite';
     actions.append(regenerate, favorite);

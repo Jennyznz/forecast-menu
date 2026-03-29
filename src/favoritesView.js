@@ -30,7 +30,8 @@ function displayFavorites() {
         const actions = document.createElement('div');
         actions.classList.add('actions');
         const favorite = document.createElement('button');
-        favorite.classList.add('filled-favorite');
+        favorite.classList.add('filled');
+        favorite.classList.add('favorite');
         favorite.dataset.action = 'favorite';
         actions.append(favorite);
 
