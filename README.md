@@ -37,8 +37,8 @@ npx webpack
 open dist/index.html
 ```
 ### Get API keys:
-Visual Crossing: https://www.visualcrossing.com/sign-up/
-Spoonacular: https://spoonacular.com/food-api/console#Dashboard
+- Visual Crossing: https://www.visualcrossing.com/sign-up/
+- Spoonacular: https://spoonacular.com/food-api/console#Dashboard
 
 ## Built With
 - HTML/CSS
