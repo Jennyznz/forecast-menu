@@ -108,6 +108,13 @@ favoritesBtn.addEventListener('click', () => {
     displayFavorites();
 });
 
+const lightDarkBtn = document.querySelector('#light-dark-mode');
+const root = document.documentElement;
+lightDarkBtn.addEventListener('click', () => {
+    const currentTheme = root.getAttribute('data-theme');
+    const nextTheme = currentTheme === 'dark' ? 'light' : 'dark';
+    root.setAttribute('data-theme', nextTheme);
+});
 // const userProfileBtn = document.querySelector('#user-profile');
 // userProfileBtn.addEventListener('click', () => {
 //     displayForms();
