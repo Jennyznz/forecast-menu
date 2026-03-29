@@ -28,8 +28,10 @@ mainContainer.addEventListener('click', async (e) => {
                     readyTime: meal.dataset.readyTime,
                     favorite: 'true'
                 };
-                // Update favorites array
-                favorites.push(basicInfo);
+                // Update favorites array if the recipe is not already favorited
+                if (!favorites.some(item => item.id == basicInfo.id)) {
+                    favorites.push(basicInfo);
+                }
                 const faveBtn = meal.querySelector('.favorite');
                 faveBtn.classList.add('filled');
                 meal.dataset.favorite = 'true';
@@ -77,7 +79,9 @@ mainContainer.addEventListener('click', async (e) => {
                     title: container.dataset.title,
                     readyTime: container.dataset.readyTime
                 };
-            favorites.push(basicInfo);
+            if (!favorites.some(item => item.id == basicInfo.id)) {
+                favorites.push(basicInfo);
+            }
             faveBtn.classList.add('filled');
             container.dataset.favorite = 'true'
             // Update weeklyRecipes array
