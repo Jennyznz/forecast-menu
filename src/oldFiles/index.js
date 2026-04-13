@@ -1,6 +1,6 @@
 import { displayFavorites } from './favoritesView.js';
 import { createCalendarView, displayCalendarView, regenerateMealCards, regenerateMeal, updateFavoriteStatus } from './calendarView.js';
-import { displayRecipe } from './recipeView.js';
+import { displayRecipe } from '../recipeView.js';
 import './styles.css';
 
 let favorites = [];

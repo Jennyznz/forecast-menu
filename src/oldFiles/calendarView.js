@@ -164,7 +164,7 @@ async function createSpread() {
 
     const weatherData = await getWeatherData();
 
-    for (let i = 0; i < 7; i++) {
+    for (let i = 0; i < 1; i++) {
         spread.append(await createDay(i, weatherData));
     }
     return spread;
@@ -464,7 +464,7 @@ function displayContent() {
 function displaySpread() {
     const spread = document.createElement('div');
     spread.id = 'spread';
-    for (let i = 0; i < 7; i++) {
+    for (let i = 0; i < 1; i++) {
         spread.append(displayDay(i));
     }
     return spread;
@@ -522,6 +522,7 @@ function displayBreakfast(weekday) {
     breakfast.classList.add('meal');
 
     const recipe = weeklyRecipes[weekday * 3];
+    console.log('hey');
     breakfast.dataset.id = recipe.id;
     breakfast.dataset.title = recipe.title;
     breakfast.dataset.readyTime = recipe.readyTime;
@@ -529,6 +530,7 @@ function displayBreakfast(weekday) {
     breakfast.dataset.category = recipe.category;
     breakfast.dataset.mealType = recipe.mealType;
 
+    
     const actions = document.createElement('div');
     actions.classList.add('actions');
     const regenerate = document.createElement('button');
@@ -541,7 +543,6 @@ function displayBreakfast(weekday) {
     }
     favorite.dataset.action = 'favorite';
     actions.append(regenerate, favorite);
-
     const recipeTitle = document.createElement('div');
     recipeTitle.classList.add('recipe-title');
     recipeTitle.textContent = recipe.title;
@@ -571,8 +572,7 @@ function displayBreakfast(weekday) {
 function displayLunch(weekday) {
     const lunch = document.createElement('div');
     lunch.classList.add('meal');
-
-    const recipe = weeklyRecipes[weekday * 3 + 1];
+    const recipe = weeklyRecipes[(weekday * 3) + 1];
     lunch.dataset.id = recipe.id;
     lunch.dataset.title = recipe.title;
     lunch.dataset.readyTime = recipe.readyTime;
@@ -622,8 +622,7 @@ function displayLunch(weekday) {
 function displayDinner(weekday) {
     const dinner = document.createElement('div');
     dinner.classList.add('meal');
-
-    const recipe = weeklyRecipes[weekday * 3 + 2];
+    const recipe = weeklyRecipes[(weekday * 3) + 2];
     dinner.dataset.id = recipe.id;
     dinner.dataset.title = recipe.title;
     dinner.dataset.readyTime = recipe.readyTime;

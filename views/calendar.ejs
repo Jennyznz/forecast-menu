@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include('./partials/head.ejs') %>
+</head>
+<body>
+    <%- include('./partials/header.ejs') %>
+    <div id="main-container">
+        <h1 id="calendar-label">Weekly Picks <!-- ADD --> (<%= weekStartToEnd %>)</h1>
+        <div id="content-area">
+            <div id="overview">
+                <p id="summary">
+                    The weather decides the mood. <br>
+                    The mood decides the meal. <br>
+                    Rainy day soup. <br>
+                    Sunny day salad. <br>
+                    We've got you covered.
+                </p>
+                <button id="regenerate"></button>
+                <button id="shopping-cart"></button>
+            </div>
+            <div id="spread">
+                <!-- ADD: for i=0 < 7, create a day partial. within a day partial, create 3 meal partials 
+                  using information from imported array. mealcards prob also need variable of the meal times
+                -->
+            </div>
+        </div>
+    </div>
+</body>
+</html>

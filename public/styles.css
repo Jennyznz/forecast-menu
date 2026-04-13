@@ -12,8 +12,8 @@
     --highlight-color: #3a4228;
 }
 
-svg *:not([fill="none"]) {
-  fill: var(--text-color);
+[data-theme="dark"] button {
+  color:  var(--text-color);;
 }
 
 body {
