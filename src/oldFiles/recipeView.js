@@ -20,7 +20,6 @@ async function displayRecipe(meal) {
         createPhoto(recipe.image), 
         createDescription(recipe.summary), 
         createIngredients(recipe.ingredients),
-        // createInstructions()
     );
     
     main.append(recipeContainer);
@@ -49,10 +48,6 @@ function createToolbar(favorite) {
     } else {
         saveBtn.classList.add('favorite');
     }
-
-    // const editBtn = document.createElement('button');
-    // editBtn.id = 'edit-btn';
-    // editBtn.textContent = 'Edit';
 
     toolbarRight.append(saveBtn);
 
@@ -104,25 +99,5 @@ function createIngredients(ingredients) {
     container.append(label, list);
     return container;
 }
-
-// function createInstructions() {
-//     const container = document.createElement('div');
-//     container.id = 'instructions-container';
-    
-//     const label = document.createElement('h2');
-//     label.id = 'instructions-label';
-//     label.textContent = 'Instructions: ';
-
-//     const list = document.createElement('ol');
-//     list.id = 'instructions-list';
-
-//     const instruction = document.createElement('li');    
-//     instruction.classList.add('instruction');
-//     instruction.textContent = 'Instruction One';
-//     list.append(instruction);
-
-//     container.append(label, list);
-//     return container;
-// }
 
 export { displayRecipe };
