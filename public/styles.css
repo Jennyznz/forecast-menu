@@ -67,7 +67,7 @@ body {
 }
 
 #user-profile {
-    background-image: url("../assets/user-profile.svg");
+    background-image: url("./images/user-profile.svg");
     height: 35px;
     width: 35px;
 }
@@ -88,25 +88,25 @@ button:active {
 }
 
 #regenerate {
-    background-image: url("../assets/regenerate.svg");
+    background-image: url("./images/regenerate.svg");
     height: 30px;
     width: 30px;
 }
 
 #shopping-cart {
-    background-image: url("../assets/shopping_cart.svg");
+    background-image: url("./images/shopping_cart.svg");
     height: 30px;
     width: 30px;
 }
 
 #light-dark-mode {
-    background-image: url("../assets/light-mode.svg");
+    background-image: url("./images/light-mode.svg");
     height: 20px;
     width: 20px;
 }
 
 #all-favorites {
-    background-image: url("../assets/heart.svg");
+    background-image: url("./images/heart.svg");
     height: 20px;
     width: 20px;
 }
@@ -178,19 +178,19 @@ button:active {
 }
 
 .single-regenerate {
-    background-image: url("../assets/regenerate.svg");
+    background-image: url("./images/regenerate.svg");
     width: 15px;
     height: 15px;
 }
 
 .favorite {
-    background-image: url('../assets/heart.svg');
+    background-image: url('./images/heart.svg');
     width: 15px;
     height: 15px;
 }
 
 .filled.favorite {
-    background-image: url('../assets/filled-heart.svg');
+    background-image: url('./images/filled-heart.svg');
     width: 15px;
     height: 15px;
 }
