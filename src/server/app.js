@@ -12,6 +12,14 @@ app.set('view engine', 'ejs');
 // Middleware and static files
 app.use(express.static('public'));
 
+// Mount page routes
+app.use('/', viewRoutes);
+// Mount API routes
+app.use('/api', apiRoutes);
+
+
 app.get('/', (req, res) => {
     res.render('calendar');
 });
+
+
