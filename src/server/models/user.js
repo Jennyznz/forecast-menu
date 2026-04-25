@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-const Schema = mongoose.Schema; // Defines structure of docs in collection
+const Schema = mongoose.Schema;
 
 const userSchema = new Schema({
     id: {

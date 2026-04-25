@@ -1,23 +1,26 @@
+import 'dotenv/config';
+
 import express from 'express';
-// import { renderCalendar } from './controllers/recipeController.js';
+import { renderCalendar } from './controllers/recipeController.js';
 import mongoose from 'mongoose';
 import morgan from 'morgan';
-import { User } from '../models/users.js';
 
 // Express app
 const app = express();
-
-// Listen for requests
-app.listen(3000, () => {
-    console.log('Server is running on http://localhost:3000');
-});
 
 // Register view engine
 app.set('view engine', 'ejs');
 
 // Connect to Database
-const dbURI = MONGODB_URI;
-mongoose.connect(dbURI)
+const dbURI = process.env.MONGODB_URI;
+// Exit app if URI is missing
+if (!dbURI) {
+  console.error('Error: MONGODB_URI is not defined in the environment variables.');
+  process.exit(1); 
+}
+
+mongoose.connect(dbURI, {serverSelectionTimeoutMS: 5000 // Force fail after 5 seconds
+  })
   .then((result) => {
     console.log('Connected to Database');
     // Listen for requests only after database is connected
@@ -32,9 +35,6 @@ app.use(express.static('public'));
 app.use(morgan('dev'));
 
 
-// app.get('/', renderCalendar);
-// get user. deal w this later
-// getWeeklyPlan
-// call ejs with the result
+app.get('/', renderCalendar);
 
-export { app };
+
