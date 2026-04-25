@@ -182,59 +182,59 @@ async function createDay(weekday, weatherData) {
     const dateLabel = document.createElement('div');
     dateLabel.classList.add('date');
 
-    // Display weekday
-    const days = [
-        "Sunday",
-        "Monday",
-        "Tuesday",
-        "Wednesday",
-        "Thursday",
-        "Friday",
-        "Saturday"
-    ];
-    weekdayLabel.textContent = days[weekday];
+    // // Display weekday
+    // const days = [
+    //     "Sunday",
+    //     "Monday",
+    //     "Tuesday",
+    //     "Wednesday",
+    //     "Thursday",
+    //     "Friday",
+    //     "Saturday"
+    // ];
+    // weekdayLabel.textContent = days[weekday];
 
-    // Display date
-    const today = new Date();
-    // Find start date of current week
-    const startOfWeek = new Date(today);
-    startOfWeek.setDate(today.getDate() - today.getDay());
-    // Find the current date
-    const date = new Date(startOfWeek);
-    date.setDate(startOfWeek.getDate() + weekday);
+    // // Display date
+    // const today = new Date();
+    // // Find start date of current week
+    // const startOfWeek = new Date(today);
+    // startOfWeek.setDate(today.getDate() - today.getDay());
+    // // Find the current date
+    // const date = new Date(startOfWeek);
+    // date.setDate(startOfWeek.getDate() + weekday);
     
-    dateLabel.textContent = `${date.getDate()}`;
+//     dateLabel.textContent = `${date.getDate()}`;
 
-    dateHeader.append(weekdayLabel, dateLabel);
-    day.append(dateHeader);
+//     dateHeader.append(weekdayLabel, dateLabel);
+//     day.append(dateHeader);
 
-    if (date < today.setHours(0, 0, 0, 0)) {
-        day.classList.add("past");    // Deactivated day display if the date has passed
-        // Add 3 placeholder meals to weeklyRecipes
-        const obj = {}
-        weeklyRecipes.push(obj);
-        weeklyRecipes.push(obj);
-        weeklyRecipes.push(obj);
-    } else {
-        const dateString = date.toISOString().split('T')[0];
-        const dayData = weatherData.days.find(d => d.datetime === dateString);
+//     if (date < today.setHours(0, 0, 0, 0)) {
+//         day.classList.add("past");    // Deactivated day display if the date has passed
+//         // Add 3 placeholder meals to weeklyRecipes
+//         const obj = {}
+//         weeklyRecipes.push(obj);
+//         weeklyRecipes.push(obj);
+//         weeklyRecipes.push(obj);
+//     } else {
+//         const dateString = date.toISOString().split('T')[0];
+//         const dayData = weatherData.days.find(d => d.datetime === dateString);
     
-        // Find temperatures 
-        const breakfastTemp = dayData.hours.find(h => h.datetime === breakfastTime).temp;
-        const lunchTemp = dayData.hours.find(h => h.datetime === lunchTime).temp;
-        const dinnerTemp = dayData.hours.find(h => h.datetime === dinnerTime).temp;
-        // Get temperature categories
-        const bCategory = getTempCategory(breakfastTemp);
-        const lCategory = getTempCategory(lunchTemp);
-        const dCategory = getTempCategory(dinnerTemp);
-//
-        day.append(
-            await createBreakfast(breakfastTemp, bCategory, weekday), 
-            await createLunch(lunchTemp, lCategory, weekday), 
-            await createDinner(dinnerTemp, dCategory, weekday));
-    }
+//         // Find temperatures 
+//         const breakfastTemp = dayData.hours.find(h => h.datetime === breakfastTime).temp;
+//         const lunchTemp = dayData.hours.find(h => h.datetime === lunchTime).temp;
+//         const dinnerTemp = dayData.hours.find(h => h.datetime === dinnerTime).temp;
+//         // Get temperature categories
+//         const bCategory = getTempCategory(breakfastTemp);
+//         const lCategory = getTempCategory(lunchTemp);
+//         const dCategory = getTempCategory(dinnerTemp);
+// //
+//         day.append(
+//             await createBreakfast(breakfastTemp, bCategory, weekday), 
+//             await createLunch(lunchTemp, lCategory, weekday), 
+//             await createDinner(dinnerTemp, dCategory, weekday));
+//     }
 
-    return day;
+//     return day;
 }
 
 async function createBreakfast(temp, category, weekday) {

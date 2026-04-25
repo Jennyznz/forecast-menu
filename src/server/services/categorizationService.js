@@ -1,5 +1,5 @@
 export const searchCategory = {
-  breakfast: {
+  Breakfast: {
     Hot: [
       { query: "smoothie bowl" },
       { query: "overnight oats" },
@@ -72,7 +72,7 @@ export const searchCategory = {
     ]
   },
 
-  lunch: {
+  Lunch: {
     Hot: [
       { query: "cold noodle salad" },
       { query: "gazpacho" },
@@ -145,7 +145,7 @@ export const searchCategory = {
     ]
   },
 
-  dinner: {
+  Dinner: {
     Hot: [
       { query: "cold sesame noodles" },
       { query: "sashimi" },

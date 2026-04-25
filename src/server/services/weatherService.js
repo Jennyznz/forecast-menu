@@ -16,6 +16,7 @@ function getTempCategory(temp) {
 
 async function getWeatherData() {
     try {
+        const apiKey = process.env.VISUAL_CROSSING_API_KEY;
         const response = await fetch(`${baseURL}london/next7days?include=hours&key=${apiKey}`);   
         if (!response.ok) {
             throw new Error(`Visual Crossing API error: ${response.status}`);

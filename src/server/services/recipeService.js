@@ -1,5 +1,5 @@
-import Recipe from '../models/Recipe';
-import { searchCategory } from './categorizationService';
+import Recipe from '../models/Recipe.js';
+import { searchCategory } from './categorizationService.js';
 
 const apiKey = process.env.SPOONACULAR_API_KEY;
 
@@ -41,8 +41,10 @@ async function createRecipe(category, mealType) {
 }
 
 function buildSearchRecipeQuery(category, mealType) {
-    // Pick a random profile under the given category
-    const profiles = weatherRecipeProfiles[mealType][category];
+    console.log('category:', category);
+    console.log('meal type:', mealType);
+    // Fetch a random search category
+    const profiles = searchCategory[mealType][category];
     const randProfile = profiles[Math.floor(Math.random() * profiles.length)];
 
     // Build API parameters
