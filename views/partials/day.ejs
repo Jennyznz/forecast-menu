@@ -1,6 +1,16 @@
+<%
+    // Check if the injected date has passed
+    const isPast = new Date(weekDate) < new Date().setHours(0, 0, 0, 0); // Compared to midnight
+%>
+
 <div class="day">
-    <div class="date-header">
-        <div class="weekday"> <!-- ADD --> </div>
-        <div class="date"> <!-- ADD --> </div>
+    <div class="date-header <%= isPast ? 'past' : ''%>">
+        <div class="weekday"> <%= weekDay %> </div>
+        <div class="date"> <%= new Date(weekDate).getDate() %> </div>
     </div>
-</div>
+        <% if (!isPast) { %>
+            <%- include('./meal.ejs', { meal: breakfast }) %>
+            <%- include('./meal.ejs', { meal: lunch }) %>
+            <%- include('./meal.ejs', { meal: dinner }) %>
+        <% } %>
+</div> 

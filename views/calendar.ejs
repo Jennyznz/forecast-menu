@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <%- include('./partials/head.ejs') %>
+    <%- include('./partials/head.ejs', { title: "Weekly Picks"}) %>
 </head>
 <body>
     <%- include('./partials/header.ejs') %>
     <div id="main-container">
-        <h1 id="calendar-label">Weekly Picks <!-- ADD --> </h1>
+        <h1 id="calendar-label">Weekly Picks (<%= weekLabel %>) </h1>
         <div id="content-area">
             <div id="overview">
                 <p id="summary">
@@ -20,9 +20,22 @@
                 <button id="shopping-cart"></button>
             </div>
             <div id="spread">
-                <!-- ADD -->
+                <% 
+                    for (let i = 0; i < weekDays.length; i++) {  
+                        const weekDay = weekDays[i];
+                %>
+                        <%- include('./partials/day.ejs', { 
+                                weekDay,
+                                weekDate: weekDates[i],
+                                breakfast: mealPlan[weekDay]["Breakfast"],
+                                lunch: mealPlan[weekDay]["Lunch"],
+                                dinner: mealPlan[weekDay]["Dinner"]
+                            }) 
+                        %>
+                <% } %>
+
             </div>
         </div>
     </div>
 </body>
-</html>
+</html> 

@@ -1,14 +1,15 @@
-<div class="meal">
-    <div class="actions">
-        <button class="single-regenerate" data-action="regenerate"></button>
-        <button class="favorite" data-action="favorite"></button>
+<% if (meal.recipe_id !== null) { %>
+    <div class="meal">
+        <div class="actions">
+            <button class="single-regenerate" data-action="regenerate"></button>
+            <button class="favorite" data-action="favorite"></button>
+        </div>
+        <div class="recipe-title"> <%= meal.recipe_title %> </div>
+        <div class="ready-time-container">
+            <button class="clock-icon"> </button>
+            <div class="recipe-ready-time"> <%= meal.recipe_ready_time %> </div>
+        </div>
+        <div class="weather-info"> <%= meal.temp %> °F</div>
+        <div class="time"> <%= meal.meal_time %> </div>
     </div>
-
-    <div class="recipe-title"></div>
-    <div class="ready-time-container">
-        <img src="../../public/images/clock.svg" alt="Clock icon" class="clock-icon">
-        <div class="recipe-ready-time"></div>
-    </div>
-    <div class="weather-info"> <!-- ADD --> °F</div>
-    <div class="time"> <!-- ADD--> </div>
-</div>
+<% } %>

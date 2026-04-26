@@ -8,48 +8,48 @@ const dinnerTime = '19:00:00';
 
 let weeklyRecipes = [];
 
-async function createCalendarView() {
-    const main = document.getElementById('main-container');
-    main.textContent = '';
-    main.append(displayCalendarLabel(), await createContent());
-    console.log(weeklyRecipes);
-}
+// async function createCalendarView() {
+//     const main = document.getElementById('main-container');
+//     main.textContent = '';
+//     main.append(displayCalendarLabel(), await createContent());
+//     console.log(weeklyRecipes);
+// }
 
-function displayCalendarLabel() {
-    const label = document.createElement('h1');
-    label.id = 'calendar-label';
+// function displayCalendarLabel() {
+//     const label = document.createElement('h1');
+//     label.id = 'calendar-label';
 
-    // Find start and end dates of current week
-    const today = new Date();
-    const startOfWeek = new Date(today);
-    startOfWeek.setDate(today.getDate() - today.getDay());
-    const endOfWeek = new Date(startOfWeek);
-    endOfWeek.setDate(startOfWeek.getDate() + 7);
+//     // // Find start and end dates of current week
+//     // const today = new Date();
+//     // const startOfWeek = new Date(today);
+//     // startOfWeek.setDate(today.getDate() - today.getDay());
+//     // const endOfWeek = new Date(startOfWeek);
+//     // endOfWeek.setDate(startOfWeek.getDate() + 7);
 
-    const months = [
-        "January",
-        "Febuary",
-        "March",
-        "April",
-        "May",
-        "June",
-        "July",
-        "August",
-        "September",
-        "October",
-        "November",
-        "December"
-    ];
+//     // const months = [
+//     //     "January",
+//     //     "Febuary",
+//     //     "March",
+//     //     "April",
+//     //     "May",
+//     //     "June",
+//     //     "July",
+//     //     "August",
+//     //     "September",
+//     //     "October",
+//     //     "November",
+//     //     "December"
+//     // ];
 
-    let text = `${months[startOfWeek.getMonth()]}`;
-    if (startOfWeek.getMonth() !== endOfWeek.getMonth()) {
-        text += ` - ${months[endOfWeek.getMonth()]}`;
-    }
-    text += ` ${endOfWeek.getFullYear()}`;
+//     // let text = `${months[startOfWeek.getMonth()]}`;
+//     // if (startOfWeek.getMonth() !== endOfWeek.getMonth()) {
+//     //     text += ` - ${months[endOfWeek.getMonth()]}`;
+//     // }
+//     // text += ` ${endOfWeek.getFullYear()}`;
 
-    label.textContent = `Weekly Picks (${text})`;
-    return label;
-}
+//     label.textContent = `Weekly Picks (${text})`;
+//     return label;
+// }
 
 async function createContent() {
     const contentArea = document.createElement('div');
@@ -59,25 +59,25 @@ async function createContent() {
     return contentArea;
 }
 
-function createOverview() {
-    const overview = document.createElement('div');
-    overview.id = 'overview';
+// function createOverview() {
+//     const overview = document.createElement('div');
+//     overview.id = 'overview';
 
-    const summary = document.createElement('p');
-    summary.id = 'summary';
-    summary.innerHTML = "<p>The weather decides the mood. <br>The mood decides the meal. <br>Rainy day soup. <br>Sunny day salad. <br>We've got you covered.</p>";
+//     const summary = document.createElement('p');
+//     summary.id = 'summary';
+//     summary.innerHTML = "<p>The weather decides the mood. <br>The mood decides the meal. <br>Rainy day soup. <br>Sunny day salad. <br>We've got you covered.</p>";
 
-    const regen = document.createElement('button');
-    regen.id = 'regenerate';
-    const shoppingCart = document.createElement('button');
-    shoppingCart.id = 'shopping-cart';
+//     const regen = document.createElement('button');
+//     regen.id = 'regenerate';
+//     const shoppingCart = document.createElement('button');
+//     shoppingCart.id = 'shopping-cart';
 
-    overview.append(
-        summary, 
-        regen, 
-        shoppingCart);
-    return overview;
-}
+//     overview.append(
+//         summary, 
+//         regen, 
+//         shoppingCart);
+//     return overview;
+// }
 
 async function regenerateMealCards() {
     const meals = document.querySelectorAll('.meal');
@@ -471,42 +471,42 @@ function displaySpread() {
 }
 
 function displayDay(weekday) {
-    const day = document.createElement('div');
-    day.classList.add('day');
+    // const day = document.createElement('div');
+    // day.classList.add('day');
     
-    const dateHeader = document.createElement('div');
-    dateHeader.classList.add('date-header');
+    // const dateHeader = document.createElement('div');
+    // dateHeader.classList.add('date-header');
 
-    const weekdayLabel = document.createElement('div');
-    weekdayLabel.classList.add('weekday');
-    const dateLabel = document.createElement('div');
-    dateLabel.classList.add('date');
+    // const weekdayLabel = document.createElement('div');
+    // weekdayLabel.classList.add('weekday');
+    // const dateLabel = document.createElement('div');
+    // dateLabel.classList.add('date');
 
-    // Display weekday
-    const days = [
-        "Sunday",
-        "Monday",
-        "Tuesday",
-        "Wednesday",
-        "Thursday",
-        "Friday",
-        "Saturday"
-    ];
-    weekdayLabel.textContent = days[weekday];
+    // // Display weekday
+    // const days = [
+    //     "Sunday",
+    //     "Monday",
+    //     "Tuesday",
+    //     "Wednesday",
+    //     "Thursday",
+    //     "Friday",
+    //     "Saturday"
+    // ];
+    // weekdayLabel.textContent = days[weekday];
 
-    // Display date
-    const today = new Date();
-    // Find start date of current week
-    const startOfWeek = new Date(today);
-    startOfWeek.setDate(today.getDate() - today.getDay());
-    // Find the current date
-    const date = new Date(startOfWeek);
-    date.setDate(startOfWeek.getDate() + weekday);
+    // // Display date
+    // const today = new Date();
+    // // Find start date of current week
+    // const startOfWeek = new Date(today);
+    // startOfWeek.setDate(today.getDate() - today.getDay());
+    // // Find the current date
+    // const date = new Date(startOfWeek);
+    // date.setDate(startOfWeek.getDate() + weekday);
     
-    dateLabel.textContent = `${date.getDate()}`;
+    // dateLabel.textContent = `${date.getDate()}`;
 
-    dateHeader.append(weekdayLabel, dateLabel);
-    day.append(dateHeader);
+    // dateHeader.append(weekdayLabel, dateLabel);
+    // day.append(dateHeader);
 
     if (date < today.setHours(0, 0, 0, 0)) {
         day.classList.add("past");    // Deactivated day display if the date has passed
@@ -514,7 +514,7 @@ function displayDay(weekday) {
         day.append(displayBreakfast(weekday), displayLunch(weekday), displayDinner(weekday));
     }
 
-    return day;
+    // return day;
 }
 
 function displayBreakfast(weekday) {
@@ -531,42 +531,42 @@ function displayBreakfast(weekday) {
     breakfast.dataset.mealType = recipe.mealType;
 
     
-    const actions = document.createElement('div');
-    actions.classList.add('actions');
-    const regenerate = document.createElement('button');
-    regenerate.classList.add('single-regenerate');
-    regenerate.dataset.action = 'regenerate';
-    const favorite = document.createElement('button');
-    favorite.classList.add('favorite');
+    // const actions = document.createElement('div');
+    // actions.classList.add('actions');
+    // const regenerate = document.createElement('button');
+    // regenerate.classList.add('single-regenerate');
+    // regenerate.dataset.action = 'regenerate';
+    // const favorite = document.createElement('button');
+    // favorite.classList.add('favorite');
     if (breakfast.dataset.favorite === 'true') {
         favorite.classList.add('filled');
     }
-    favorite.dataset.action = 'favorite';
-    actions.append(regenerate, favorite);
-    const recipeTitle = document.createElement('div');
-    recipeTitle.classList.add('recipe-title');
-    recipeTitle.textContent = recipe.title;
+    // favorite.dataset.action = 'favorite';
+    // // actions.append(regenerate, favorite);
+    // const recipeTitle = document.createElement('div');
+    // recipeTitle.classList.add('recipe-title');
+    // recipeTitle.textContent = recipe.title;
 
-    const readyTimeContainer = document.createElement('div');
-    readyTimeContainer.classList.add('ready-time-container');
-    const clockIcon = document.createElement('img');
-    clockIcon.src = clockImg;
-    clockIcon.classList.add('clock-icon');
-    const readyTime = document.createElement('div');
-    readyTime.classList.add('recipe-ready-time');
-    readyTime.textContent = recipe.readyTime;
-    readyTimeContainer.append(clockIcon, readyTime);
+    // const readyTimeContainer = document.createElement('div');
+    // readyTimeContainer.classList.add('ready-time-container');
+    // const clockIcon = document.createElement('img');
+    // clockIcon.src = clockImg;
+    // clockIcon.classList.add('clock-icon');
+    // const readyTime = document.createElement('div');
+    // readyTime.classList.add('recipe-ready-time');
+    // readyTime.textContent = recipe.readyTime;
+    // readyTimeContainer.append(clockIcon, readyTime);
 
-    const weatherInfo = document.createElement('div');
-    weatherInfo.classList.add('weather-info');
-    weatherInfo.textContent = `${recipe.temp}°F` ;
+    // const weatherInfo = document.createElement('div');
+    // weatherInfo.classList.add('weather-info');
+    // weatherInfo.textContent = `${recipe.temp}°F` ;
 
-    const bTime = document.createElement('div');
-    bTime.classList.add('time');
-    bTime.textContent = formatMealTime(breakfastTime);
+    // const bTime = document.createElement('div');
+    // bTime.classList.add('time');
+    // bTime.textContent = formatMealTime(breakfastTime);
 
-    breakfast.append(actions, recipeTitle, readyTimeContainer, weatherInfo, bTime);
-    return breakfast;
+    // breakfast.append(actions, recipeTitle, readyTimeContainer, weatherInfo, bTime);
+    // return breakfast;
 }
 
 function displayLunch(weekday) {

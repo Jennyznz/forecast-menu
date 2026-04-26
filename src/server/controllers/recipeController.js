@@ -14,9 +14,21 @@ async function getRecipeByID(req, res) {
     }
 };
 
+function formatMealTime(time) {
+    const [hour, min, sec] = time.split(':');
+    const date = new Date();
+    date.setHours(hour, min, sec, 0);
+
+    return new Intl.DateTimeFormat(undefined, { // undefined takes default
+        hour: 'numeric',
+        minute: 'numeric',
+        hour12: true,
+    }).format(date);
+}
+
 async function renderCalendar(req, res) {
     try {
-        const userId = 1;
+        const userId = 4;
         const weekDays = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
         const mealTypes = ['Breakfast', 'Lunch', 'Dinner'];
 
@@ -37,9 +49,9 @@ async function renderCalendar(req, res) {
         // Populate weekDates array
         const dateTracker= new Date(startOfWeek);
         for (let i = 0; i < weekDays.length; i++) {
-            weekDates[i] = dateTracker.setDate(
-                startOfWeek.getDate() + i
-            ).toLocaleString('en-US');
+            dateTracker.setDate(startOfWeek.getDate() + i);
+            weekDates[i] = dateTracker.toISOString();
+            //.toLocaleString('en-US');
         }
 
         // Fetch current plan from MongoDB
@@ -68,14 +80,20 @@ async function renderCalendar(req, res) {
                         m.day_name === dayName && m.meal_type === mealType
                     );
 
+                    const mealTime = mealTimes[mealType];
+
                     if (!exists) {
                         if (isPastDay) {
                             // Push a dummy placeholder for past days
                             weeklyPlan.meals.push({
                                 day_name: dayName,
                                 meal_type: mealType,
-                                recipe_id: null // Acts as a flag
-                                // Omit title, prep time, and temp
+                                meal_time: mealTime,
+                                recipe_id: null, // Acts as a flag
+                                recipe_title: "None",
+                                recipe_ready_time: "None",
+                                temp: "0"
+
                             });
                         // Generate recipes for current and future days
                         } else {   
@@ -84,7 +102,6 @@ async function renderCalendar(req, res) {
                             const dayForecast = weatherData.days.find(d => d.datetime === dateString);
 
                             // Find temperature for the time of the meal
-                            const mealTime = mealTimes[mealType];
                             const temp = dayForecast.hours.find(h => h.datetime === mealTime).temp;
                             const tempCategory = getTempCategory(temp);
 
@@ -93,9 +110,10 @@ async function renderCalendar(req, res) {
                             weeklyPlan.meals.push({
                                 day_name: dayName,
                                 meal_type: mealType,
+                                meal_time: formatMealTime(mealTime),
                                 recipe_id: recipe.id,
                                 recipe_title: recipe.title,
-                                recipe_prep_time: recipe.readyInMinutes,
+                                recipe_ready_time: recipe.readyInMinutes,
                                 temp: temp
                             });
                         }
@@ -118,7 +136,38 @@ async function renderCalendar(req, res) {
             formattedPlan[meal.day_name][meal.meal_type] = meal;
         });
 
+        console.log(formattedPlan);
+
+        // Find the end date of current week
+        const endOfWeek = new Date(startOfWeek);
+        endOfWeek.setDate(startOfWeek.getDate() + 7);
+
+        const months = [
+            "January",
+            "Febuary",
+            "March",
+            "April",
+            "May",
+            "June",
+            "July",
+            "August",
+            "September",
+            "October",
+            "November",
+            "December"
+        ];
+
+        // Create text containing the start and end dates of the week
+        let text = `${months[startOfWeek.getMonth()]}`;
+        if (startOfWeek.getMonth() !== endOfWeek.getMonth()) {
+            // Ex: Full text becomes Jan - Feb 2026 if the week spans multiple months
+            text += ` - ${months[endOfWeek.getMonth()]}`;
+        }
+        // Otherwise, ex: Jan 2026
+        text += ` ${endOfWeek.getFullYear()}`;
+
         res.render('calendar', { 
+            weekLabel: text,
             weekDays: weekDays, 
             weekDates: weekDates, 
             mealPlan: formattedPlan 
