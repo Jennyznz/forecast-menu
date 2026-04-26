@@ -150,8 +150,7 @@ button:active {
 
 .past {
     align-self: start;
-    min-height: 100px;
-    background-color: gray; */
+    background-color: gray; 
     opacity: 0.4;
 }
 
@@ -161,6 +160,10 @@ button:active {
     display: flex;
     justify-content: space-between;
     margin-bottom: 5px;
+}
+
+.meals {
+    grid-template-rows: repeat(3, 1fr);
 }
 
 .meal {

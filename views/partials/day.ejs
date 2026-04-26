@@ -8,9 +8,9 @@
         <div class="weekday"> <%= weekDay %> </div>
         <div class="date"> <%= new Date(weekDate).getDate() %> </div>
     </div>
-        <% if (!isPast) { %>
-            <%- include('./meal.ejs', { meal: breakfast }) %>
-            <%- include('./meal.ejs', { meal: lunch }) %>
-            <%- include('./meal.ejs', { meal: dinner }) %>
-        <% } %>
+    <div class="meals">
+        <%- include('./meal.ejs', { meal: breakfast }) %>
+        <%- include('./meal.ejs', { meal: lunch }) %>
+        <%- include('./meal.ejs', { meal: dinner }) %>  
+    </div>
 </div> 

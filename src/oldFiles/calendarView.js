@@ -158,29 +158,29 @@ async function regenerateMeal(meal) {
     console.log(weeklyRecipes);
 }
 
-async function createSpread() {
-    const spread = document.createElement('div');
-    spread.id = 'spread';
+// async function createSpread() {
+//     const spread = document.createElement('div');
+//     spread.id = 'spread';
 
-    const weatherData = await getWeatherData();
+//     const weatherData = await getWeatherData();
 
-    for (let i = 0; i < 1; i++) {
-        spread.append(await createDay(i, weatherData));
-    }
-    return spread;
-}
+//     for (let i = 0; i < 1; i++) {
+//         spread.append(await createDay(i, weatherData));
+//     }
+//     return spread;
+// }
 
 async function createDay(weekday, weatherData) {
-    const day = document.createElement('div');
-    day.classList.add('day');
+    // const day = document.createElement('div');
+    // day.classList.add('day');
 
-    const dateHeader = document.createElement('div');
-    dateHeader.classList.add('date-header');
+    // const dateHeader = document.createElement('div');
+    // dateHeader.classList.add('date-header');
 
-    const weekdayLabel = document.createElement('div');
-    weekdayLabel.classList.add('weekday');
-    const dateLabel = document.createElement('div');
-    dateLabel.classList.add('date');
+    // const weekdayLabel = document.createElement('div');
+    // weekdayLabel.classList.add('weekday');
+    // const dateLabel = document.createElement('div');
+    // dateLabel.classList.add('date');
 
     // // Display weekday
     // const days = [
