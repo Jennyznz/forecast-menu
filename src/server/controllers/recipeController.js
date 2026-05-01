@@ -3,16 +3,16 @@ import { createRecipe, fetchRecipeInfo } from "../services/recipeService.js";
 import { getWeatherData, getTempCategory } from "../services/weatherService.js";
 
 
-async function getRecipeByID(req, res) {
-    try {
-    const recipeId = req.params.id;
-    const recipe = await fetchRecipeInfo(recipeId);
-    res.render('recipe', { recipe });
-    } catch (err) {
-    console.log('Error loading recipe: ', err);
-    res.status(500).send('Could not load recipe');
-    }
-};
+// async function getRecipeByID(req, res) {
+//     try {
+//     const recipeId = req.params.id;
+//     const recipe = await fetchRecipeInfo(recipeId);
+//     res.render('recipe', { recipe });
+//     } catch (err) {
+//     console.log('Error loading recipe: ', err);
+//     res.status(500).send('Could not load recipe');
+//     }
+// };
 
 function formatMealTime(time) {
     const [hour, min, sec] = time.split(':');
@@ -179,48 +179,50 @@ async function renderCalendar(req, res) {
     }
 }
 
-async function getRecipeDetails(req, res) {
+async function renderRecipeDetails(req, res) {
     try {
-        const id = req.query;
+        const id  = req.params.id;
         const fullRecipeDetails = await fetchRecipeInfo(id);
 
         // Render the EJS view using the fully populated Recipe object
+        console.log("Clicked on this recipe:", fullRecipeDetails);
         res.render('recipe', { recipe: fullRecipeDetails });
     } catch (error) {
-        console.error("Error generating recipe:", error);
-        res.status(500).send("Error generating recipe.");
+        console.error("Error generating recipe:", error);   // Descriptive error message for development
+        res.status(500).send("Error generating recipe.");   // Message for user's browser
     }
 };
 
-async function regenerateFullWeek(req, res) {
-    try {
-        const userId = req.session.userId;
-        // Delete all rows for this user
-        await WeeklyPlan.clearEntirePlan(userId);
-        // Redirect to the main route, which will see the plan is empty and re-generate
-        res.redirect('/');
-    } catch (err) {
-        res.status(500).send("Failed to reset week.");
-    }
-};
+// async function regenerateFullWeek(req, res) {
+//     try {
+//         const userId = req.session.userId;
+//         // Delete all rows for this user
+//         await WeeklyPlan.clearEntirePlan(userId);
+//         // Redirect to the main route, which will see the plan is empty and re-generate
+//         res.redirect('/');
+//     } catch (err) {
+//         res.status(500).send("Failed to reset week.");
+//     }
+// };
 
-async function regenerateIndividualMeal(req, res) {
-    try {
-    const userId = req.session.userId;
-    const { day, mealType } = req.body; // Sent via a form or fetch request
+// async function regenerateIndividualMeal(req, res) {
+//     try {
+//     const userId = req.session.userId;
+//     const { day, mealType } = req.body; // Sent via a form or fetch request
 
-    const weather = await getCurrentWeather('New York');
-    const recipe = await createRecipe('random', mealType);
-    await WeeklyPlan.saveMeal(userId, day, mealType, recipe, weather.temp);
-    res.redirect('/');
-} catch (err) {
-    res.status(500).send("Failed to update meal.");
-}
-};
+//     const weather = await getCurrentWeather('New York');
+//     const recipe = await createRecipe('random', mealType);
+//     await WeeklyPlan.saveMeal(userId, day, mealType, recipe, weather.temp);
+//     res.redirect('/');
+// } catch (err) {
+//     res.status(500).send("Failed to update meal.");
+// }
+// };
 
-export { getRecipeByID,
+export { 
+    // getRecipeByID,
     renderCalendar,
-    getRecipeDetails,
-    regenerateFullWeek,
-    regenerateIndividualMeal
+    renderRecipeDetails,
+    // regenerateFullWeek,
+    // regenerateIndividualMeal
 }

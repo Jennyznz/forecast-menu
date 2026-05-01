@@ -1,7 +1,7 @@
 import 'dotenv/config';
 
 import express from 'express';
-import { renderCalendar } from './controllers/recipeController.js';
+import { renderCalendar, renderRecipeDetails } from './controllers/recipeController.js';
 import mongoose from 'mongoose';
 import morgan from 'morgan';
 
@@ -36,5 +36,5 @@ app.use(morgan('dev'));
 
 
 app.get('/', renderCalendar);
-
+app.get('/recipe/:id', renderRecipeDetails);
 
