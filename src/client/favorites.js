@@ -11,13 +11,10 @@ mainContainer.addEventListener('click', async (e) => {
     // Capture clicks on action buttons within each recipe
     const btn = e.target.closest('.actions button');
     if (btn) {
-
         const meal = e.target.closest('.meal');
         const recipeId = meal.dataset.id;
 
          if (btn.dataset.action === 'favorite') {
-            // const faveBtn = meal.querySelector('.favorite');
-
             // Check if it's currently favorited by looking at the UI
             const isCurrentlyFavorited = btn.classList.contains('filled');
             

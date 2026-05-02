@@ -161,6 +161,12 @@ async function renderCalendar(req, res) {
             await favoritesList.save();
         }
 
+        // Update favorite status for each meal in user's weekly plan based on whether it's present in user's favorite list
+        weeklyPlan.meals.forEach(meal => {
+            meal.favorite = favoritesList.meals.some(fav => fav.recipe_id === meal.recipe_id);
+        });
+        await weeklyPlan.save();
+
         res.render('calendar', { 
             weekLabel: text,
             weekDays: weekDays, 
@@ -179,9 +185,10 @@ async function renderRecipeDetails(req, res) {
         const id  = req.params.id;
         const fullRecipeDetails = await fetchRecipeInfo(id);
 
-        // Find recipe in user's weekly plan to find favorite status
-        let userPlan = await WeeklyPlan.findOne({ userId: USER_ID });
-        let isFavorited = userPlan?.meals.find(meal => meal.recipe_id === id)?.favorite;
+        // Check if recipe is in favorites
+        const userFavorites = await FavoritesList.findOne({ userId: USER_ID });
+        const isFavorited = userFavorites?.meals.some(meal => meal.recipe_id === Number(id));
+
         // Render the EJS view using the fully populated Recipe object        
         res.render('recipe', { recipe: fullRecipeDetails, isFavorited: isFavorited });
     } catch (error) {
