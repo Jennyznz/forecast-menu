@@ -1,18 +1,10 @@
+import { FavoritesList } from "../models/favorite.js";
 import { WeeklyPlan } from "../models/weeklyPlan.js";
 import { createRecipe, fetchRecipeInfo } from "../services/recipeService.js";
 import { getWeatherData, getTempCategory } from "../services/weatherService.js";
 
-
-// async function getRecipeByID(req, res) {
-//     try {
-//     const recipeId = req.params.id;
-//     const recipe = await fetchRecipeInfo(recipeId);
-//     res.render('recipe', { recipe });
-//     } catch (err) {
-//     console.log('Error loading recipe: ', err);
-//     res.status(500).send('Could not load recipe');
-//     }
-// };
+// DEV
+const testing = 4;
 
 function formatMealTime(time) {
     const [hour, min, sec] = time.split(':');
@@ -28,7 +20,7 @@ function formatMealTime(time) {
 
 async function renderCalendar(req, res) {
     try {
-        const userId = 4;
+        const userId = testing;
         const weekDays = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
         const mealTypes = ['Breakfast', 'Lunch', 'Dinner'];
 
@@ -166,6 +158,13 @@ async function renderCalendar(req, res) {
         // Otherwise, ex: Jan 2026
         text += ` ${endOfWeek.getFullYear()}`;
 
+        // Create a favorites list for user if it doesn't currently exist
+        let favoritesList = await FavoritesList.findOne({ userId: userId });
+        if (!favoritesList) {
+            favoritesList = new FavoritesList({ userId: userId, meals: [] });
+            await favoritesList.save();
+        }
+
         res.render('calendar', { 
             weekLabel: text,
             weekDays: weekDays, 
@@ -192,6 +191,18 @@ async function renderRecipeDetails(req, res) {
         res.status(500).send("Error generating recipe.");   // Message for user's browser
     }
 };
+
+async function renderFavoritesList(req, res) {
+    try {
+        const userId = testing;
+        // Fetch favorites list from MongoDB
+        let favoritesList = await FavoritesList.findOne({ userId: userId });
+        res.render('favorites', { favorites: favoritesList ? favoritesList.meals : []});
+    } catch (err) {
+        console.error('Error loading favorites list:', err);
+        res.status(500).send('Could not load favorites list.');
+    }
+}
 
 // async function regenerateFullWeek(req, res) {
 //     try {
@@ -220,9 +231,9 @@ async function renderRecipeDetails(req, res) {
 // };
 
 export { 
-    // getRecipeByID,
     renderCalendar,
     renderRecipeDetails,
+    renderFavoritesList,
     // regenerateFullWeek,
     // regenerateIndividualMeal
 }

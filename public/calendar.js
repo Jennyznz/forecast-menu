@@ -103,10 +103,14 @@ mainContainer.addEventListener('click', async (e) => {
 //     await regenerateMealCards();
 // });
 
-// const favoritesBtn = document.querySelector('#all-favorites');
-// favoritesBtn.addEventListener('click', () => {
-//     displayFavorites();
-// });
+const favoritesBtn = document.querySelector('#all-favorites');
+favoritesBtn.addEventListener('click', () => {
+    try {
+        window.location.href = ('/favorites');
+    } catch (err) {
+        console.error("Failed to load favorites page. ", err);
+    }
+});
 
 const lightDarkBtn = document.querySelector('#light-dark-mode');
 const root = document.documentElement;

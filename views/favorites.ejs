@@ -1,18 +1,34 @@
 <!DOCTYPE html>
 <html lang="en">
-    <%- include('./partials/head.ejs')%>
+    <%- include('./partials/head.ejs', { title: "Your Favorites" })%>
 <body>
     <%- include('./partials/header.ejs') %>
     <div id="main-container">
-        <div id="faves-container">
+        <div id="faves-view-container">
             <div id="faves-view-nav-bar">
                 <button id="back-btn">< Back</button>
             </div>
-            <h1 id="faves-view-header">Your Favorite Recipes</h1>
+            <h1 id="faves-view-header">Your Favorites</h1>
             <div id="faves-view-content">
-                <!-- ADD: meal paritals containing favorites array data-->
+                <% favorites.forEach(recipe => {    %>
+                    <div class="meal">
+                        <div class="actions">
+                            <div class="favorite" data-action="favorite"></div>
+                        </div>
+                        <div class="recipe-title">
+                            <% recipe.title %>
+                        </div>
+                        <div class="ready-time-container">
+                            <img src="../public/images/clock.svg" alt="Clock Icon" class="clock-icon">
+                            <div class="recipe-ready-time">
+                                <% recipe.readyTime %>
+                            </div>
+                        </div>
+                    </div> 
+                <% })%>
             </div>
         </div>
     </div>
+    <script src="/favorites.js"></script>
 </body>
 </html>

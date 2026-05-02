@@ -1,7 +1,7 @@
 import 'dotenv/config';
 
 import express from 'express';
-import { renderCalendar, renderRecipeDetails } from './controllers/recipeController.js';
+import { renderCalendar, renderRecipeDetails, renderFavoritesList } from './controllers/recipeController.js';
 import mongoose from 'mongoose';
 import morgan from 'morgan';
 
@@ -37,4 +37,5 @@ app.use(morgan('dev'));
 
 app.get('/', renderCalendar);
 app.get('/recipe/:id', renderRecipeDetails);
+app.get('/favorites', renderFavoritesList);
 
