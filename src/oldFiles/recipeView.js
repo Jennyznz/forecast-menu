@@ -1,9 +1,9 @@
 import { displayCalendarView } from "./oldFiles/calendarView";
 import { fetchRecipeInfo } from "./spoonacularAPI";
 
-async function displayRecipe(meal) {
-    const main = document.getElementById('main-container');
-    main.textContent = '';
+// async function displayRecipe(meal) {
+//     const main = document.getElementById('main-container');
+//     main.textContent = '';
 
     const recipeContainer = document.createElement('div');
     recipeContainer.id = 'recipe-view-container';
@@ -12,34 +12,34 @@ async function displayRecipe(meal) {
     recipeContainer.dataset.readyTime = meal.dataset.readyTime;
     recipeContainer.dataset.favorite = meal.dataset.favorite;
 
-    const recipe = await fetchRecipeInfo(meal.dataset.id);
+    // const recipe = await fetchRecipeInfo(meal.dataset.id);
 
-    recipeContainer.append(
-        createToolbar(meal.dataset.favorite), 
-        createTitle(recipe.title), 
-        createPhoto(recipe.image), 
-        createDescription(recipe.summary), 
-        createIngredients(recipe.ingredients),
-    );
+    // recipeContainer.append(
+    //     createToolbar(meal.dataset.favorite), 
+    //     createTitle(recipe.title), 
+    //     createPhoto(recipe.image), 
+    //     createDescription(recipe.summary), 
+    //     createIngredients(recipe.ingredients),
+    // );
     
-    main.append(recipeContainer);
-}
+//     main.append(recipeContainer);
+// }
 
 function createToolbar(favorite) {
-    const toolbar = document.createElement('div');
-    toolbar.id = 'toolbar';
+    // const toolbar = document.createElement('div');
+    // toolbar.id = 'toolbar';
 
-    const toolbarLeft = document.createElement('div');
-    toolbarLeft.id = 'toolbar-left'
+    // const toolbarLeft = document.createElement('div');
+    // toolbarLeft.id = 'toolbar-left'
 
-    const toolbarRight= document.createElement('div');
-    toolbarRight.id = 'toolbar-right'
+    // const toolbarRight= document.createElement('div');
+    // toolbarRight.id = 'toolbar-right'
     
-    const backBtn = document.createElement('button');
-    backBtn.id = 'back-btn';
-    backBtn.textContent = '< Back';
+    // const backBtn = document.createElement('button');
+    // backBtn.id = 'back-btn';
+    // backBtn.textContent = '< Back';
 
-    toolbarLeft.append(backBtn);
+    // toolbarLeft.append(backBtn);
 
     const saveBtn = document.createElement('button');
     saveBtn.id = 'recipe-view-fave-btn';
@@ -55,49 +55,49 @@ function createToolbar(favorite) {
     return toolbar;
 }
 
-function createTitle(name) {
-    const title = document.createElement('h1');
-    title.id = 'title';
-    title.textContent = name; 
-    return title;
-}
+// function createTitle(name) {
+//     const title = document.createElement('h1');
+//     title.id = 'title';
+//     title.textContent = name; 
+//     return title;
+// }
 
-function createPhoto(img) {
-    const photo = document.createElement('img');
-    photo.id = 'recipe-view-photo';
-    photo.src = img; 
-    photo.alt = 'Photo of recipe';
+// function createPhoto(img) {
+//     const photo = document.createElement('img');
+//     photo.id = 'recipe-view-photo';
+//     photo.src = img; 
+//     photo.alt = 'Photo of recipe';
 
-    return photo;
-}
+//     return photo;
+// }
 
-function createDescription(summary) {
-    const description = document.createElement('div');
-    description.id = 'description';
-    description.innerHTML = summary;   
-    return description;
-}
+// function createDescription(summary) {
+//     const description = document.createElement('div');
+//     description.id = 'description';
+//     description.innerHTML = summary;   
+//     return description;
+// }
 
-function createIngredients(ingredients) {
-    const container = document.createElement('div');
-    container.id = 'ingredients-container';
+// function createIngredients(ingredients) {
+//     const container = document.createElement('div');
+//     container.id = 'ingredients-container';
     
-    const label = document.createElement('h2');
-    label.id = 'ingredients-label';
-    label.textContent = 'Ingredients: ';
+//     const label = document.createElement('h2');
+//     label.id = 'ingredients-label';
+//     label.textContent = 'Ingredients: ';
 
-    const list = document.createElement('ul');
-    list.id = 'ingredients-list';
+//     const list = document.createElement('ul');
+//     list.id = 'ingredients-list';
 
-    ingredients.forEach(i => {
-        const ingredient = document.createElement('li');  
-        ingredient.classList.add('ingredient');
-        ingredient.textContent = `${i.name} (${i.amount} ${i.unit})`;
-        list.append(ingredient);
-    });
+//     ingredients.forEach(i => {
+//         const ingredient = document.createElement('li');  
+//         ingredient.classList.add('ingredient');
+//         ingredient.textContent = `${i.name} (${i.amount} ${i.unit})`;
+//         list.append(ingredient);
+//     });
 
-    container.append(label, list);
-    return container;
-}
+//     container.append(label, list);
+//     return container;
+// }
 
-export { displayRecipe };
+// export { displayRecipe };

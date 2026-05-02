@@ -1,6 +1,3 @@
-// Client side JS file
-console.log("Client side JS!")
-
 const mainContainer = document.querySelector('#main-container');
 mainContainer.addEventListener('click', async (e) => {
     // // Meal card actions in calendarView and favoritesView
