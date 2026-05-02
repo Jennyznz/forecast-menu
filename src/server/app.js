@@ -1,15 +1,18 @@
 import 'dotenv/config';
 
 import express from 'express';
-import { renderCalendar, renderRecipeDetails, renderFavoritesList } from './controllers/recipeController.js';
 import mongoose from 'mongoose';
 import morgan from 'morgan';
+
+// Import router
+import mainRoutes from './routes/index.js';
 
 // Express app
 const app = express();
 
 // Register view engine
 app.set('view engine', 'ejs');
+app.set('views', 'src/server/views')
 
 // Connect to Database
 const dbURI = process.env.MONGODB_URI;
@@ -31,11 +34,10 @@ mongoose.connect(dbURI, {serverSelectionTimeoutMS: 5000 // Force fail after 5 se
   .catch((err) => (console.log(err)));
 
 // Middleware
-app.use(express.static('public'));
+app.use(express.static('public'));  // Images and CSS
+app.use(express.static('dist'));  // Bundled frontend JS
 app.use(morgan('dev'));
+app.use(express.json()); // Allows Express to read JSON sent from client
 
-
-app.get('/', renderCalendar);
-app.get('/recipe/:id', renderRecipeDetails);
-app.get('/favorites', renderFavoritesList);
-
+// Routing
+app.use('/', mainRoutes);

@@ -2,13 +2,14 @@ import mongoose from "mongoose";
 const Schema = mongoose.Schema; 
 
 const mealSchema = new Schema({
-    day_name: { type: String, required: false }, // Ex: "Monday"
-    meal_type: { type: String, required: false },    // Ex: "Breakfast"
-    meal_time: { type: String, required: false },
-    recipe_id: { type: Number, required: false },
-    recipe_title: { type: String, required: false },    
-    recipe_ready_time: { type: String, required: false},
-    temp: { type: Number, required: false }                    // Stores the temp used for recipe generation
+    day_name: { type: String }, // Ex: "Monday"
+    meal_type: { type: String },    // Ex: "Breakfast"
+    meal_time: { type: String },
+    recipe_id: { type: Number },
+    recipe_title: { type: String },    
+    recipe_ready_time: { type: String },
+    temp: { type: Number },                    // Stores the temp used for recipe generation
+    favorite: { type: Boolean }
 });
 
 const weeklyPlanSchema = new Schema({

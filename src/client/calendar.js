@@ -1,46 +1,48 @@
+// import { FavoritesList } from "../server/models/favorite.js";
+// import { WeeklyPlan } from "../server/models/weeklyPlan.js";
+
+const testing = 5;
+
 const mainContainer = document.querySelector('#main-container');
 mainContainer.addEventListener('click', async (e) => {
     // // Meal card actions in calendarView and favoritesView
-    // if (e.target.closest('.actions')) {
+    if (e.target.closest('.actions')) {
 
     //     const btn = e.target.closest('button');
     //     if (!btn) return;
 
     //     const meal = e.target.closest('.meal');
     //     if (btn.dataset.action === 'regenerate') {
-    //         await regenerateMeal(meal);
+    // //         await regenerateMeal(meal);
             
     //     } else if (btn.dataset.action === 'favorite') {
-    //         if (meal.dataset.favorite != 'true') {
-    //             // Add to Favorites
-    //             const basicInfo = {
-    //                 id: meal.dataset.id,
-    //                 title: meal.dataset.title,
-    //                 readyTime: meal.dataset.readyTime,
-    //                 favorite: 'true'
-    //             };
-    //             // Update favorites array if the recipe is not already favorited
-    //             if (!favorites.some(item => item.id == basicInfo.id)) {
-    //                 favorites.push(basicInfo);
-    //             }
+    //         console.log("HEY");
+    //         const recipeId = meal.dataset.id;
+
+    //         const userPlan = await WeeklyPlan.findOne({ userId: testing });
+    //         const userFavorites = await FavoritesList.findOne({ userId: testing });
+
+    //         const mealFromPlan = await userPlan.findOne({ 'meals.recipe_id' : recipeId });
+    //         const isFavorite = await userFavorites.findOne({ 'meals.recipe_id': recipeId });
+            
+    //         if (!isFavorite) {
+    //             // Add to Favorites database
+    //             userFavorites.meals.push({ mealFromPlan });
+    //             await userFavorites.save()
+    //             // Fill the favorite icon in the view
     //             const faveBtn = meal.querySelector('.favorite');
     //             faveBtn.classList.add('filled');
-    //             meal.dataset.favorite = 'true';
-    //             // Update weeklyRecipes array
-    //             updateFavoriteStatus(Number(meal.dataset.id), 'true');  // Dataset values are always strings!
     //         } else {
-    //             // Remove from Favorites
-    //             favorites = favorites.filter(item => item.id !== meal.dataset.id);
+    //             // Remove from Favorites database
+    //             userFavorites.meals.pull({ mealFromPlan });
+    //             await userFavorites.save()
+    //             // Empty the favorite icon in the view
     //             const faveBtn = meal.querySelector('.favorite');
     //             faveBtn.classList.remove('filled');
-    //             meal.dataset.favorite = 'false';
-    //             // Update weeklyRecipes array
-    //             updateFavoriteStatus(Number(meal.dataset.id), 'false');
-                
     //         }
     //     }
     //     return;
-    // }
+    }
 
     // Meal card in calendarView
     if (e.target.closest('.meal')) {

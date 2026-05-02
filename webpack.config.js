@@ -1,31 +1,25 @@
-const path = require("path");
-const HtmlWebpackPlugin = require("html-webpack-plugin");
-const Dotenv = require('dotenv-webpack');
+import path from "path";
+import { fileURLToPath } from "url";
+// import HtmlWebpackPlugin from "html-webpack-plugin";
+import Dotenv from 'dotenv-webpack';
 
-module.exports = {
+// Recreate __dirname for ES Modules
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+export default {
   mode: "development",
-  entry: "./src/index.js",
+  entry: "./src/client/index.js", // Updated to match src/client structure
   output: {
     filename: "main.js",
     path: path.resolve(__dirname, "dist"),
     clean: true,
   },
   plugins: [
-    new HtmlWebpackPlugin({
-        template: "./src/template.html",
-    }),
     new Dotenv()
   ],
   module: {
     rules: [
-        {
-            test: /\.css$/i,
-            use: ["style-loader", "css-loader"],
-        },
-        {
-            test: /\.html$/i,
-            use: ["html-loader"],
-        },
         {
           test: /\.(png|svg|jpg|jpeg|gif)$/i,
           type: "asset/resource",
@@ -33,6 +27,3 @@ module.exports = {
     ],
   },
 };
-
-// Don't need to add rules for image files if you just load url() in the css files.
-// Do need to add rules if you reference them in html or js files.

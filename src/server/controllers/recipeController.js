@@ -4,7 +4,7 @@ import { createRecipe, fetchRecipeInfo } from "../services/recipeService.js";
 import { getWeatherData, getTempCategory } from "../services/weatherService.js";
 
 // DEV
-const testing = 4;
+const testing = 5;
 
 function formatMealTime(time) {
     const [hour, min, sec] = time.split(':');
@@ -43,7 +43,6 @@ async function renderCalendar(req, res) {
         for (let i = 0; i < weekDays.length; i++) {
             dateTracker.setDate(startOfWeek.getDate() + i);
             weekDates[i] = dateTracker.toISOString();
-            //.toLocaleString('en-US');
         }
 
         // Fetch current plan from MongoDB
@@ -56,7 +55,6 @@ async function renderCalendar(req, res) {
         if (weeklyPlan.meals.length < 21) {
             // Get weather data for the next 7 days
             const weatherData = await getWeatherData();
-            // const dailyForecasts = weatherData.days;
 
             for (let i = 0; i < weekDays.length; i++) {
                 const dayName = weekDays[i];
@@ -84,8 +82,8 @@ async function renderCalendar(req, res) {
                                 recipe_id: null, // Acts as a flag
                                 recipe_title: "None",
                                 recipe_ready_time: "None",
-                                temp: "0"
-
+                                temp: "0",
+                                favorite: false
                             });
                         // Generate recipes for current and future days
                         } else {   
@@ -106,14 +104,12 @@ async function renderCalendar(req, res) {
                                 recipe_id: recipe.id,
                                 recipe_title: recipe.title,
                                 recipe_ready_time: recipe.readyInMinutes,
-                                temp: temp
+                                temp: temp,
+                                favorite: false
                             });
                         }
                     }
-
-
                 }
-
             }
             // Save the updated document to MongoDB
             await weeklyPlan.save();
