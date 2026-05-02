@@ -189,6 +189,7 @@ async function renderRecipeDetails(req, res) {
 };
 
 async function renderFavoritesList(req, res) {
+        console.log('hey');
     try {
         const userId = USER_ID;
         // Fetch favorites list from MongoDB

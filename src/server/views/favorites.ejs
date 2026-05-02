@@ -11,7 +11,7 @@
             <h1 id="faves-view-header">Your Favorites</h1>
             <div id="faves-view-content">
                 <% favorites.forEach(recipe => {    %>
-                    <div class="meal">
+                    <div class="meal" data-id="<%= recipe.recipe_id%>" >
                         <div class="actions">
                             <button class="favorite filled" data-action="favorite"></button>
                         </div>
