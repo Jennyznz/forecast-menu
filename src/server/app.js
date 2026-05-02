@@ -36,7 +36,7 @@ mongoose.connect(dbURI, {serverSelectionTimeoutMS: 5000 // Force fail after 5 se
 
 // Middleware
 app.use(express.static('public'));  // Images and CSS
-app.use(express.static('dist'));  // Bundled frontend JS
+app.use('/client', express.static('src/client'));
 app.use(morgan('dev'));
 app.use(express.json()); // Allows Express to read JSON sent from client
 

@@ -1,12 +1,16 @@
-const USER_ID = process.env.TEST_ID;
+const USER_ID = 15;
 
-    console.log('hey');
 const mainContainer = document.getElementById('main-container');
 mainContainer.addEventListener('click', async (e) => {
     // Capture clicks on action buttons within each recipe
-    const btn = e.target.closest('button');
-    console.log('hey');
+    const btn = e.target.closest('.actions button');
     if (btn) {
+            // Back button from favorites page
+        if (btn.id === 'back-btn') {
+            window.location.href = '/';
+            return;
+        }
+
         const meal = e.target.closest('.meal');
         const recipeId = meal.dataset.id;
 

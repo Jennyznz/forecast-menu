@@ -1,4 +1,4 @@
-const USER_ID = process.env.TEST_ID;
+const USER_ID = 15;
 
 const mainContainer = document.querySelector('#main-container');
 mainContainer.addEventListener('click', async (e) => {
@@ -57,7 +57,13 @@ mainContainer.addEventListener('click', async (e) => {
             console.error("Failed to load recipe page. ", err);
         }
         return;   
-    }
+    } 
+
+    // // Back button from recipeView and favoritesView
+    // if (e.target.id === 'back-btn') {
+    //     displayCalendarView();
+    //     return;
+    // }
 
     // // Favorite button in recipeView
     // if (e.target.id === 'recipe-view-fave-btn') {

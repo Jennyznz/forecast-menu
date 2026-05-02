@@ -4,7 +4,7 @@ import { createRecipe, fetchRecipeInfo } from "../services/recipeService.js";
 import { getWeatherData, getTempCategory } from "../services/weatherService.js";
 
 // DEV
-const USER_ID = process.env.TEST_ID;
+const USER_ID = 15;
 
 function formatMealTime(time) {
     const [hour, min, sec] = time.split(':');
