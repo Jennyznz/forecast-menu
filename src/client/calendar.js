@@ -2,7 +2,7 @@ const USER_ID = process.env.TEST_ID;
 
 const mainContainer = document.querySelector('#main-container');
 mainContainer.addEventListener('click', async (e) => {
-    // If the click is within a button
+    // Capture clicks on action buttons within each recipe
     const btn = e.target.closest('button');
     if (btn) {
         const meal = e.target.closest('.meal');
@@ -46,7 +46,7 @@ mainContainer.addEventListener('click', async (e) => {
         return;
     }
 
-    // Meal card in calendarView
+    // Capture clicks on recipes
     else if (e.target.closest('.meal')) {
         const meal = e.target.closest('.meal');
         const id = meal.getAttribute('data-id');
@@ -57,12 +57,6 @@ mainContainer.addEventListener('click', async (e) => {
             console.error("Failed to load recipe page. ", err);
         }
         return;   
-    } 
-
-    // Back button from recipeView and favoritesView
-    if (e.target.id === 'back-btn') {
-        displayCalendarView();
-        return;
     }
 
     // // Favorite button in recipeView

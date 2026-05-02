@@ -13,15 +13,15 @@
                 <% favorites.forEach(recipe => {    %>
                     <div class="meal">
                         <div class="actions">
-                            <div class="favorite filled" data-action="favorite"></div>
+                            <button class="favorite filled" data-action="favorite"></button>
                         </div>
                         <div class="recipe-title">
-                            <% recipe.title %>
+                            <%= recipe.recipe_title %>
                         </div>
                         <div class="ready-time-container">
-                            <img src="../public/images/clock.svg" alt="Clock Icon" class="clock-icon">
+                            <button class="clock-icon"> </button>
                             <div class="recipe-ready-time">
-                                <% recipe.readyTime %>
+                                <%= recipe.recipe_ready_time %>
                             </div>
                         </div>
                     </div> 

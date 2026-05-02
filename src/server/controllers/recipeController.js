@@ -193,6 +193,7 @@ async function renderFavoritesList(req, res) {
         const userId = USER_ID;
         // Fetch favorites list from MongoDB
         let favoritesList = await FavoritesList.findOne({ userId: userId });
+        console.log("FAVORITES", favoritesList);
         res.render('favorites', { favorites: favoritesList ? favoritesList.meals : []});
     } catch (err) {
         console.error('Error loading favorites list:', err);
