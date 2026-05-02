@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-    <%- include('./partials/head.ejs')%>
+    <%- include('./partials/head.ejs', { title: recipe.title }) %>
 <body>
     <%- include('./partials/header.ejs') %>
 
@@ -15,17 +15,19 @@
                 </div>
             </div>
             <h1 id="title">
-                <!-- ADD -->
+                <%= recipe.title %>
             </h1>
-            <img src="" alt="" id="recipe-view-photo">
-            <!-- ADD -->
-             <div id="description">
-                <!-- ADD -->
-             </div>
+            <img src=<%= recipe.image %> alt="Image of recipe" id="recipe-view-photo">
              <div id="ingredients-container">
                 <h2 id="ingredienets-label">Ingredients: </h2>
                 <ul id="ingredients-list">
-                    <!-- ADD -->
+                    <% recipe.ingredients.forEach(ingredient => { %>
+                        <li class="ingredient">
+                            <%= ingredient.name %>
+                            <%= ingredient.amount %>
+                            <%= ingredient.unit %>
+                        </li>
+                    <% }) %>
                 </ul>
              </div>
         </div>
