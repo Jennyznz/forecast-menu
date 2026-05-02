@@ -4,8 +4,9 @@ import express from 'express';
 import mongoose from 'mongoose';
 import morgan from 'morgan';
 
-// Import router
+// Import routes
 import mainRoutes from './routes/index.js';
+import favoritesRoutes from './routes/favorites.js';
 
 // Express app
 const app = express();
@@ -39,5 +40,6 @@ app.use(express.static('dist'));  // Bundled frontend JS
 app.use(morgan('dev'));
 app.use(express.json()); // Allows Express to read JSON sent from client
 
-// Routing
+// Mount routes
 app.use('/', mainRoutes);
+app.use('/api/favorites', favoritesRoutes);

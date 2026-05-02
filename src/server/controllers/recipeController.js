@@ -4,7 +4,7 @@ import { createRecipe, fetchRecipeInfo } from "../services/recipeService.js";
 import { getWeatherData, getTempCategory } from "../services/weatherService.js";
 
 // DEV
-const testing = 5;
+const USER_ID = process.env.TEST_ID;
 
 function formatMealTime(time) {
     const [hour, min, sec] = time.split(':');
@@ -20,7 +20,7 @@ function formatMealTime(time) {
 
 async function renderCalendar(req, res) {
     try {
-        const userId = testing;
+        const userId = USER_ID;
         const weekDays = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
         const mealTypes = ['Breakfast', 'Lunch', 'Dinner'];
 
@@ -190,7 +190,7 @@ async function renderRecipeDetails(req, res) {
 
 async function renderFavoritesList(req, res) {
     try {
-        const userId = testing;
+        const userId = USER_ID;
         // Fetch favorites list from MongoDB
         let favoritesList = await FavoritesList.findOne({ userId: userId });
         res.render('favorites', { favorites: favoritesList ? favoritesList.meals : []});

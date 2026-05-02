@@ -1,8 +1,8 @@
     <div class="meal" data-id="<%= meal.recipe_id %>">
         <% if (meal.recipe_id !== null) { %>
         <div class="actions">
-            <button class="single-regenerate" data-action="regenerate"></button>
-            <button class="favorite <%= meal.favorite ? filled : '' %>" data-action="favorite"></button>
+            <button class="single-regenerate" data-action="regenerate"> </button>
+            <button class="favorite <%= meal.favorite ? 'filled' : '' %>" data-action="favorite"> </button>
         </div>
         <div class="recipe-title"> <%= meal.recipe_title %> </div>
         <div class="ready-time-container">

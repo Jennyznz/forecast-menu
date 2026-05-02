@@ -1,51 +1,53 @@
-// import { FavoritesList } from "../server/models/favorite.js";
-// import { WeeklyPlan } from "../server/models/weeklyPlan.js";
-
-const testing = 5;
+const USER_ID = process.env.TEST_ID;
 
 const mainContainer = document.querySelector('#main-container');
 mainContainer.addEventListener('click', async (e) => {
-    // // Meal card actions in calendarView and favoritesView
-    if (e.target.closest('.actions')) {
+    // If the click is within a button
+    const btn = e.target.closest('button');
+    if (btn) {
+        const meal = e.target.closest('.meal');
+        const recipeId = meal.dataset.id;
 
-    //     const btn = e.target.closest('button');
-    //     if (!btn) return;
-
-    //     const meal = e.target.closest('.meal');
-    //     if (btn.dataset.action === 'regenerate') {
-    // //         await regenerateMeal(meal);
+        if (btn.dataset.action === 'regenerate') {
+    //         await regenerateMeal(meal);
             
-    //     } else if (btn.dataset.action === 'favorite') {
-    //         console.log("HEY");
-    //         const recipeId = meal.dataset.id;
+        } else if (btn.dataset.action === 'favorite') {
+            const faveBtn = meal.querySelector('.favorite');
 
-    //         const userPlan = await WeeklyPlan.findOne({ userId: testing });
-    //         const userFavorites = await FavoritesList.findOne({ userId: testing });
-
-    //         const mealFromPlan = await userPlan.findOne({ 'meals.recipe_id' : recipeId });
-    //         const isFavorite = await userFavorites.findOne({ 'meals.recipe_id': recipeId });
+            // Check if it's currently favorited by looking at the UI
+            const isCurrentlyFavorited = faveBtn.classList.contains('filled');
             
-    //         if (!isFavorite) {
-    //             // Add to Favorites database
-    //             userFavorites.meals.push({ mealFromPlan });
-    //             await userFavorites.save()
-    //             // Fill the favorite icon in the view
-    //             const faveBtn = meal.querySelector('.favorite');
-    //             faveBtn.classList.add('filled');
-    //         } else {
-    //             // Remove from Favorites database
-    //             userFavorites.meals.pull({ mealFromPlan });
-    //             await userFavorites.save()
-    //             // Empty the favorite icon in the view
-    //             const faveBtn = meal.querySelector('.favorite');
-    //             faveBtn.classList.remove('filled');
-    //         }
-    //     }
-    //     return;
+            try {
+                // Send a POST request to server
+                const response = await fetch('/api/favorites/toggle', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ 
+                        userId: USER_ID, 
+                        recipeId: Number(recipeId), // Cast to Number type since dataset values are always strings
+                        action: isCurrentlyFavorited ? 'remove' : 'add'
+                    })
+                });
+
+                if (response.ok) {
+                    // Update UI only if the database successfully updated
+                    if (isCurrentlyFavorited) {
+                        faveBtn.classList.remove('filled');
+                    } else {
+                        faveBtn.classList.add('filled');
+                    }
+                } else {
+                    console.error("Server failed to update favorites");
+                }
+            } catch (err) {
+                console.error("Network error:", err);
+            }
+        }
+        return;
     }
 
     // Meal card in calendarView
-    if (e.target.closest('.meal')) {
+    else if (e.target.closest('.meal')) {
         const meal = e.target.closest('.meal');
         const id = meal.getAttribute('data-id');
         console.log('Meal ID:', id);

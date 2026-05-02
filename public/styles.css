@@ -144,7 +144,7 @@ button:active {
 .day {
     display: grid;
     grid-template-rows: 35px auto auto auto;
-    gap: 10px;
+    gap: 15px;
     padding: 0 20px;
 }
 
@@ -180,22 +180,22 @@ button:active {
     gap: 10px;
 }
 
+.actions button {
+    width: 15px;  
+    height: 15px;
+    cursor: pointer;
+}
+
 .single-regenerate {
     background-image: url("./images/regenerate.svg");
-    width: 15px;
-    height: 15px;
 }
 
 .favorite {
     background-image: url('./images/heart.svg');
-    width: 15px;
-    height: 15px;
 }
 
 .filled.favorite {
     background-image: url('./images/filled-heart.svg');
-    width: 15px;
-    height: 15px;
 }
 
 .ready-time-container {
