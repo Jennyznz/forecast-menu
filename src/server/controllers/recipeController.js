@@ -46,10 +46,10 @@ async function renderCalendar(req, res) {
         }
 
         // Fetch current plan from MongoDB
-        let weeklyPlan = await WeeklyPlan.findOne({ userId: userId });
+        let weeklyPlan = await WeeklyPlan.findOne({ userId: USER_ID });
         // If no plan exists, create an empty one
         if (!weeklyPlan) {
-            weeklyPlan = new WeeklyPlan({ userId: userId, meals: [] });
+            weeklyPlan = new WeeklyPlan({ userId: USER_ID, meals: [] });
         }
         // If the plan is incomplete (less than 21 meals), fill it
         if (weeklyPlan.meals.length < 21) {
@@ -155,9 +155,9 @@ async function renderCalendar(req, res) {
         text += ` ${endOfWeek.getFullYear()}`;
 
         // Create a favorites list for user if it doesn't currently exist
-        let favoritesList = await FavoritesList.findOne({ userId: userId });
+        let favoritesList = await FavoritesList.findOne({ userId: USER_ID });
         if (!favoritesList) {
-            favoritesList = new FavoritesList({ userId: userId, meals: [] });
+            favoritesList = new FavoritesList({ userId: USER_ID, meals: [] });
             await favoritesList.save();
         }
 
@@ -179,9 +179,11 @@ async function renderRecipeDetails(req, res) {
         const id  = req.params.id;
         const fullRecipeDetails = await fetchRecipeInfo(id);
 
-        // Render the EJS view using the fully populated Recipe object
-        console.log("Clicked on this recipe:", fullRecipeDetails);
-        res.render('recipe', { recipe: fullRecipeDetails });
+        // Find recipe in user's weekly plan to find favorite status
+        let userPlan = await WeeklyPlan.findOne({ userId: USER_ID });
+        let isFavorited = userPlan?.meals.find(meal => meal.recipe_id === id)?.favorite;
+        // Render the EJS view using the fully populated Recipe object        
+        res.render('recipe', { recipe: fullRecipeDetails, isFavorited: isFavorited });
     } catch (error) {
         console.error("Error generating recipe:", error);   // Descriptive error message for development
         res.status(500).send("Error generating recipe.");   // Message for user's browser
@@ -193,7 +195,7 @@ async function renderFavoritesList(req, res) {
     try {
         const userId = USER_ID;
         // Fetch favorites list from MongoDB
-        let favoritesList = await FavoritesList.findOne({ userId: userId });
+        let favoritesList = await FavoritesList.findOne({ userId: USER_ID });
         console.log("FAVORITES", favoritesList);
         res.render('favorites', { favorites: favoritesList ? favoritesList.meals : []});
     } catch (err) {

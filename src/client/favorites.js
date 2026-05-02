@@ -2,14 +2,15 @@ const USER_ID = 15;
 
 const mainContainer = document.getElementById('main-container');
 mainContainer.addEventListener('click', async (e) => {
+    // Back button from favorites page
+    if (e.target.id === 'back-btn') {
+        window.location.href = '/';
+        return;
+    }
+
     // Capture clicks on action buttons within each recipe
     const btn = e.target.closest('.actions button');
     if (btn) {
-            // Back button from favorites page
-        if (btn.id === 'back-btn') {
-            window.location.href = '/';
-            return;
-        }
 
         const meal = e.target.closest('.meal');
         const recipeId = meal.dataset.id;
@@ -60,10 +61,5 @@ mainContainer.addEventListener('click', async (e) => {
             console.error("Failed to load recipe page. ", err);
         }
         return;   
-    }
-    // Back button from favorites page
-    if (e.target.id === 'back-btn') {
-        window.location.href = '/';
-        return;
     }
 });

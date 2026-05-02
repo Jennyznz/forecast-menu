@@ -11,7 +11,7 @@
                     <button id="back-btn">< Back</button>
                 </div>
                 <div id="toolbar-right">
-                    <button id="recipe-view-fave-btn"></button>
+                    <button data-id="<%= recipe.id %>" id="recipe-view-fave-btn" class="favorite <%= isFavorited ? 'filled': '' %>"></button>
                 </div>
             </div>
             <h1 id="title">
