@@ -4,7 +4,7 @@ import { createRecipe, fetchRecipeInfo } from "../services/recipeService.js";
 import { getWeatherData, getTempCategory } from "../services/weatherService.js";
 
 // DEV
-const USER_ID = 15;
+const USER_ID = 16;
 
 function formatMealTime(time) {
     const [hour, min, sec] = time.split(':');
@@ -115,6 +115,19 @@ async function renderCalendar(req, res) {
             await weeklyPlan.save();
         }
 
+        // Create a favorites list for user if it doesn't currently exist
+        let favoritesList = await FavoritesList.findOne({ userId: USER_ID });
+        if (!favoritesList) {
+            favoritesList = new FavoritesList({ userId: USER_ID, meals: [] });
+            await favoritesList.save();
+        }
+
+        // Update favorite status for each meal in user's weekly plan based on whether it's present in user's favorite list
+        weeklyPlan.meals.forEach(meal => {
+            meal.favorite = favoritesList.meals.some(fav => fav.recipe_id === meal.recipe_id);
+        });
+        await weeklyPlan.save();
+
         // Transform the flat array from the database into a nested object for EJS injection
         const formattedPlan = {};
         weeklyPlan.meals.forEach(meal => {
@@ -153,19 +166,6 @@ async function renderCalendar(req, res) {
         }
         // Otherwise, ex: Jan 2026
         text += ` ${endOfWeek.getFullYear()}`;
-
-        // Create a favorites list for user if it doesn't currently exist
-        let favoritesList = await FavoritesList.findOne({ userId: USER_ID });
-        if (!favoritesList) {
-            favoritesList = new FavoritesList({ userId: USER_ID, meals: [] });
-            await favoritesList.save();
-        }
-
-        // Update favorite status for each meal in user's weekly plan based on whether it's present in user's favorite list
-        weeklyPlan.meals.forEach(meal => {
-            meal.favorite = favoritesList.meals.some(fav => fav.recipe_id === meal.recipe_id);
-        });
-        await weeklyPlan.save();
 
         res.render('calendar', { 
             weekLabel: text,
@@ -213,11 +213,99 @@ async function renderFavoritesList(req, res) {
 
 // async function regenerateFullWeek(req, res) {
 //     try {
-//         const userId = req.session.userId;
-//         // Delete all rows for this user
-//         await WeeklyPlan.clearEntirePlan(userId);
-//         // Redirect to the main route, which will see the plan is empty and re-generate
-//         res.redirect('/');
+//         // Clear weekly plan
+//         await WeeklyPlan.updateOne({ userId: USER_ID }, { $set: { meals: [] } });
+
+//         // Fill user's weekly plan
+//         let weeklyPlan = await WeeklyPlan.findOne({ userId: USER_ID });
+//         if (weeklyPlan.meals.length < 21) {
+//             // Get weather data for the next 7 days
+//             const weatherData = await getWeatherData();
+
+//             for (let i = 0; i < weekDays.length; i++) {
+//                 const dayName = weekDays[i];
+
+//                 // Check if the day of the week has already passed
+//                 const currentDate = new Date(startOfWeek);
+//                 currentDate.setDate(startOfWeek.getDate() + i);
+//                 const isPastDay = currentDate.getTime() < midnightToday;
+
+//                 // Create breakfast, lunch, and dinner, in that order, for each weekday
+//                 for (const mealType of mealTypes) {
+//                     const exists = weeklyPlan.meals.find(m => // Check if this specific slot already exists in the meals array
+//                         m.day_name === dayName && m.meal_type === mealType
+//                     );
+
+//                     const mealTime = mealTimes[mealType];
+
+//                     if (!exists) {
+//                         if (isPastDay) {
+//                             // Push a dummy placeholder for past days
+//                             weeklyPlan.meals.push({
+//                                 day_name: dayName,
+//                                 meal_type: mealType,
+//                                 meal_time: mealTime,
+//                                 recipe_id: null, // Acts as a flag
+//                                 recipe_title: "None",
+//                                 recipe_ready_time: "None",
+//                                 temp: "0",
+//                                 favorite: false
+//                             });
+//                         // Generate recipes for current and future days
+//                         } else {   
+//                             // Find the exact date in the API response
+//                             const dateString = currentDate.toISOString().split('T')[0]; // Visual Crossing uses YYYY-MM-DD for datetime fields
+//                             const dayForecast = weatherData.days.find(d => d.datetime === dateString);
+
+//                             // Find temperature for the time of the meal
+//                             const temp = dayForecast.hours.find(h => h.datetime === mealTime).temp;
+//                             const tempCategory = getTempCategory(temp);
+
+//                             const recipe = await createRecipe(tempCategory, mealType);
+//                             // Push new meal into the document's array
+//                             weeklyPlan.meals.push({
+//                                 day_name: dayName,
+//                                 meal_type: mealType,
+//                                 meal_time: formatMealTime(mealTime),
+//                                 recipe_id: recipe.id,
+//                                 recipe_title: recipe.title,
+//                                 recipe_ready_time: recipe.readyInMinutes,
+//                                 temp: temp,
+//                                 favorite: false
+//                             });
+//                         }
+//                     }
+//                 }
+//             }
+//             // Save the updated document to MongoDB
+//             await weeklyPlan.save();
+//         }
+
+//         // Update favorite status for each meal in user's weekly plan based on whether it's present in user's favorite list
+//         const favoritesList = await FavoritesList.findOne({ userId: USER_ID });
+//         weeklyPlan.meals.forEach(meal => {
+//             meal.favorite = favoritesList.meals.some(fav => fav.recipe_id === meal.recipe_id);
+//         });
+//         await weeklyPlan.save();
+
+//         // Transform the flat array from the database into a nested object for EJS injection
+//         const formattedPlan = {};
+//         weeklyPlan.meals.forEach(meal => {
+//             if (!formattedPlan[meal.day_name]) {
+//                 formattedPlan[meal.day_name] = {};
+//             }
+//             formattedPlan[meal.day_name][meal.meal_type] = meal;
+//         });
+
+//         // console.log(formattedPlan);
+
+//         res.render('calendar', { 
+//             weekLabel: text,
+//             weekDays: weekDays, 
+//             weekDates: weekDates, 
+//             mealPlan: formattedPlan 
+//         });
+
 //     } catch (err) {
 //         res.status(500).send("Failed to reset week.");
 //     }
@@ -225,10 +313,11 @@ async function renderFavoritesList(req, res) {
 
 // async function regenerateIndividualMeal(req, res) {
 //     try {
-//     const userId = req.session.userId;
-//     const { day, mealType } = req.body; // Sent via a form or fetch request
+//     const userId = USER_ID;
+//     const { recipeId, temp } = req.body; // Sent via a form or fetch request
 
-//     const weather = await getCurrentWeather('New York');
+//     const userPlan = await WeeklyPlan.findOne({ userId: USER_ID });
+    
 //     const recipe = await createRecipe('random', mealType);
 //     await WeeklyPlan.saveMeal(userId, day, mealType, recipe, weather.temp);
 //     res.redirect('/');

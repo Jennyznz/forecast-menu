@@ -1,4 +1,4 @@
-const USER_ID = 15;
+const USER_ID = 16;
 
 const mainContainer = document.querySelector('#main-container');
 mainContainer.addEventListener('click', async (e) => {
@@ -8,8 +8,42 @@ mainContainer.addEventListener('click', async (e) => {
         const meal = e.target.closest('.meal');
         const recipeId = meal.dataset.id;
 
+        // Regenerate a single recipe
         if (btn.dataset.action === 'regenerate') {
-    //         await regenerateMeal(meal);
+            try {
+                // Send a POST request to server to update weeklyPlan data stored for the user
+                const response = await fetch('/api/meals/regenerate', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ 
+                        userId: USER_ID, 
+                        dayName: meal.dataset.day,
+                        mealType: meal.dataset.type
+                    })
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    const newMeal = data.newMeal; 
+
+                    // Update the DOM elements inside .meal
+                    meal.dataset.id = newMeal.recipe_id;
+                    const favBtn = meal.querySelector('.favorite');
+                    favBtn.className= 'favorite';   // Resets class of .favorite button to just contain favorite
+                    if (newMeal.favorite) {
+                        favBtn.classList.add('filled');
+                    }
+                    const title = meal.querySelector('.recipe-title');
+                    title.textContent = newMeal.recipe_title;
+                    const readyTime = meal.querySelector('.recipe-ready-time');
+                    readyTime.textContent = newMeal.recipe_ready_time;
+
+                } else {
+                    console.error("Server failed to regenerate recipe");
+                }
+            } catch (err) {
+                console.error("Network error:", err);
+            }
             
         } else if (btn.dataset.action === 'favorite') {
             const faveBtn = meal.querySelector('.favorite');
@@ -58,48 +92,6 @@ mainContainer.addEventListener('click', async (e) => {
         }
         return;   
     } 
-
-    // // Back button from recipeView and favoritesView
-    // if (e.target.id === 'back-btn') {
-    //     displayCalendarView();
-    //     return;
-    // }
-
-    // // Favorite button in recipeView
-    // if (e.target.id === 'recipe-view-fave-btn') {
-    //     const container = e.target.closest('#recipe-view-container');
-    //     const faveBtn = e.target;
-    //     if (container.dataset.favorite === 'true') {
-    //         // Remove from favorites array
-    //         favorites = favorites.filter(item => item.id !== container.dataset.id);
-    //         faveBtn.classList.remove('filled');
-    //         container.dataset.favorite = 'false'
-    //         // Update weeklyRecipes array
-    //         updateFavoriteStatus(Number(container.dataset.id), 'false');
-    //     } else {
-    //         // Add to favorites
-    //         const basicInfo = {
-    //                 id: container.dataset.id,
-    //                 title: container.dataset.title,
-    //                 readyTime: container.dataset.readyTime
-    //             };
-    //         if (!favorites.some(item => item.id == basicInfo.id)) {
-    //             favorites.push(basicInfo);
-    //         }
-    //         faveBtn.classList.add('filled');
-    //         container.dataset.favorite = 'true'
-    //         // Update weeklyRecipes array
-    //         updateFavoriteStatus(Number(container.dataset.id), 'true');  
-    //     }
-    //     return;
-    // }
-
-    // // Meal card in favoritesView
-    // if (e.target.closest('.meal')) {    // *
-    //     const meal = e.target.closest('.meal')
-    //     await displayRecipe(meal);   
-    //     return;
-    // }
 });
 
 // const regenerateBtn = document.querySelector('#regenerate');

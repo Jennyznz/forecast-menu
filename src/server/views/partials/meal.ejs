@@ -1,4 +1,4 @@
-    <div class="meal" data-id="<%= meal.recipe_id %>">
+    <div class="meal" data-id="<%= meal.recipe_id %>" data-day="<%= meal.day_name%>" data-type="<%= meal.meal_type%>"">
         <% if (meal.recipe_id !== null) { %>
         <div class="actions">
             <button class="single-regenerate" data-action="regenerate"> </button>
