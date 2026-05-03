@@ -94,10 +94,46 @@ mainContainer.addEventListener('click', async (e) => {
     } 
 });
 
-// const regenerateBtn = document.querySelector('#regenerate');
-// regenerateBtn.addEventListener('click', async () => {
-//     await regenerateMealCards();
-// });
+const regenerateBtn = document.querySelector('#regenerate');
+regenerateBtn.addEventListener('click', async () => {
+    const allMeals = document.querySelectorAll('.meal');
+    for (const meal of allMeals) {
+        try {
+            // Send a POST request to server to update weeklyPlan data stored for the user
+            const response = await fetch('/api/meals/regenerate', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ 
+                    userId: USER_ID, 
+                    dayName: meal.dataset.day,
+                    mealType: meal.dataset.type
+                })
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+                const newMeal = data.newMeal; 
+
+                // Update the DOM elements inside .meal
+                meal.dataset.id = newMeal.recipe_id;
+                const favBtn = meal.querySelector('.favorite');
+                favBtn.className = 'favorite';   // Resets class of .favorite button to just contain favorite
+                if (newMeal.favorite) {
+                    favBtn.classList.add('filled');
+                }
+                const title = meal.querySelector('.recipe-title');
+                title.textContent = newMeal.recipe_title;
+                const readyTime = meal.querySelector('.recipe-ready-time');
+                readyTime.textContent = newMeal.recipe_ready_time;
+
+            } else {
+                console.error("Server failed to regenerate recipe");
+            }
+        } catch (err) {
+                console.error("Network error:", err);
+        }
+    }
+});
 
 const favoritesBtn = document.querySelector('#all-favorites');
 favoritesBtn.addEventListener('click', () => {
@@ -115,6 +151,7 @@ lightDarkBtn.addEventListener('click', () => {
     const nextTheme = currentTheme === 'dark' ? 'light' : 'dark';
     root.setAttribute('data-theme', nextTheme);
 });
+
 // const userProfileBtn = document.querySelector('#user-profile');
 // userProfileBtn.addEventListener('click', () => {
 //     displayForms();
