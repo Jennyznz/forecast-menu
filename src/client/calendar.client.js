@@ -152,9 +152,6 @@ lightDarkBtn.addEventListener('click', () => {
     root.setAttribute('data-theme', nextTheme);
 });
 
-// const userProfileBtn = document.querySelector('#user-profile');
-// userProfileBtn.addEventListener('click', () => {
-//     displayForms();
-// });
-
-// export { favorites }
+const userProfileBtn = document.querySelector('#user-profile');
+userProfileBtn.addEventListener('click', () => {
+});

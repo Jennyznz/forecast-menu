@@ -1,7 +1,7 @@
-import { FavoritesList } from "../models/favorite.js";
-import { WeeklyPlan } from "../models/weeklyPlan.js";
-import { createRecipe, fetchRecipeInfo } from "../services/recipeService.js";
-import { getWeatherData, getTempCategory } from "../services/weatherService.js";
+import { FavoritesList } from "../models/Favorite.model.js";
+import { WeeklyPlan } from "../models/WeeklyPlan.model.js";
+import { createRecipe, fetchRecipeInfo } from "../services/recipe.service.js";
+import { getWeatherData, getTempCategory } from "../services/weather.service.js";
 
 // DEV
 const USER_ID = 16;

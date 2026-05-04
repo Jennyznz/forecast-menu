@@ -1,6 +1,6 @@
 import express from 'express';
-import { FavoritesList } from '../models/favorite.js';
-import { WeeklyPlan } from '../models/weeklyPlan.js';
+import { FavoritesList } from '../models/Favorite.model.js';
+import { WeeklyPlan } from '../models/WeeklyPlan.model.js';
 
 const router = express.Router();
 

@@ -1,8 +1,8 @@
 import express from 'express';
-import { FavoritesList } from '../models/favorite.js';
-import { WeeklyPlan } from '../models/weeklyPlan.js';
-import { createRecipe } from '../services/recipeService.js';
-import { getTempCategory } from '../services/weatherService.js';
+import { FavoritesList } from '../models/Favorite.model.js';
+import { WeeklyPlan } from '../models/WeeklyPlan.model.js';
+import { createRecipe } from '../services/recipe.service.js';
+import { getTempCategory } from '../services/weather.service.js';
 
 const router = express.Router();
 

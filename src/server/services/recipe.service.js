@@ -1,5 +1,5 @@
-import Recipe from '../models/Recipe.js';
-import { searchCategory } from './categorizationService.js';
+import Recipe from '../models/Recipe.model.js';
+import { searchCategory } from './categorization.service.js';
 
 const apiKey = process.env.SPOONACULAR_API_KEY;
 

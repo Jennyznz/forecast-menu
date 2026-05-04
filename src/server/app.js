@@ -5,9 +5,9 @@ import mongoose from 'mongoose';
 import morgan from 'morgan';
 
 // Import routes
-import mainRoutes from './routes/index.js';
-import favoritesRoutes from './routes/favorites.js';
-import mealRoutes from './routes/meals.js';
+import mainRoutes from './routes/pages.routes.js';
+import favoritesRoutes from './routes/favorites.api.routes.js';
+import mealRoutes from './routes/meals.api.routes.js';
 
 // Express app
 const app = express();

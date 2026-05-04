@@ -1,6 +1,5 @@
 import path from "path";
 import { fileURLToPath } from "url";
-// import HtmlWebpackPlugin from "html-webpack-plugin";
 import Dotenv from 'dotenv-webpack';
 
 // Recreate __dirname for ES Modules
@@ -9,7 +8,7 @@ const __dirname = path.dirname(__filename);
 
 export default {
   mode: "development",
-  entry: "./src/client/index.js", // Updated to match src/client structure
+  entry: "./src/client/main.client.js", 
   output: {
     filename: "main.js",
     path: path.resolve(__dirname, "dist"),

@@ -1,5 +1,5 @@
 import express from 'express';
-import { renderCalendar, renderRecipeDetails, renderFavoritesList } from '../controllers/recipeController.js';
+import { renderCalendar, renderRecipeDetails, renderFavoritesList } from '../controllers/recipe.controller.js';
 
 const router = express.Router();
 
