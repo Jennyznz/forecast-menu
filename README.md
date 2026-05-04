@@ -53,7 +53,7 @@ mongodb+srv://<username>:<password>@cluster.mongodb.net/<dbname>
   - Spoonacular: https://spoonacular.com/food-api/console#Dashboard
 ### 5. Configure Environmental Variables
   - Create a `.env` file in the project root
-  - User `.env.example` as a template.
+  - Use `.env.example` as a template.
   - Configure variables using your MongoDB Atlas connection string and API keys.
 ### 6. Run the App
 ```bash
