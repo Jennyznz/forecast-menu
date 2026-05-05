@@ -1,3 +1,5 @@
+const USER_ID = 17;
+
 const calendarView = document.querySelector('#main-container.calendar-view');
 if (calendarView) {
     calendarView.addEventListener('click', async (e) => {
@@ -92,7 +94,7 @@ if (calendarView) {
             return;   
         } 
     });
-    
+
     const regenerateBtn = document.querySelector('#regenerate');
     regenerateBtn.addEventListener('click', async () => {
     const allMeals = document.querySelectorAll('.meal');

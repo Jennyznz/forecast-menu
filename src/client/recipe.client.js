@@ -1,3 +1,5 @@
+const USER_ID = 17;
+
 const recipeView = document.querySelector('#main-container.recipe-view');
 
 if (recipeView) {

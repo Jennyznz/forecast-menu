@@ -1,3 +1,5 @@
+const USER_ID = 17;
+
 const favesView = document.querySelector('#main-container.favorites-view');
 
 if (favesView) {

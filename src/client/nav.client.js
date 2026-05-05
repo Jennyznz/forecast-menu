@@ -1,4 +1,4 @@
-const USER_ID = 16;
+const USER_ID = 17;
 
 const favoritesBtn = document.querySelector('#all-favorites');
 favoritesBtn.addEventListener('click', () => {

@@ -4,8 +4,9 @@ import { createRecipe, fetchRecipeInfo } from "../services/recipe.service.js";
 import { getWeatherData, getTempCategory } from "../services/weather.service.js";
 
 // DEV
-const USER_ID = 16;
+const USER_ID = 17;
 
+// Formats the time of a meal
 function formatMealTime(time) {
     const [hour, min, sec] = time.split(':');
     const date = new Date();
@@ -16,6 +17,17 @@ function formatMealTime(time) {
         minute: 'numeric',
         hour12: true,
     }).format(date);
+}
+
+// Converts recipe ready time from minutes to Hh Mm form
+function formatReadyTime(time) {
+    const hrs = Math.floor(time / 60);
+    const mins = time % 60;
+
+    if (hrs === 0) return `${mins}m`;
+    if (mins === 0) return `${hrs}h`;
+
+    return `${hrs}h ${mins}m`;
 }
 
 async function renderCalendar(req, res) {
@@ -81,7 +93,7 @@ async function renderCalendar(req, res) {
                                 meal_time: mealTime,
                                 recipe_id: null, // Acts as a flag
                                 recipe_title: "None",
-                                recipe_ready_time: "None",
+                                recipe_ready_time: "Zerio",
                                 temp: "0",
                                 favorite: false
                             });
@@ -103,7 +115,7 @@ async function renderCalendar(req, res) {
                                 meal_time: formatMealTime(mealTime),
                                 recipe_id: recipe.id,
                                 recipe_title: recipe.title,
-                                recipe_ready_time: recipe.readyInMinutes,
+                                recipe_ready_time: formatReadyTime(recipe.readyInMinutes),
                                 temp: temp,
                                 favorite: false
                             });
