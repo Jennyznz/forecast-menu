@@ -1,7 +1,7 @@
-const USER_ID = 16;
+const favesView = document.querySelector('#main-container.favorites-view');
 
-const mainContainer = document.getElementById('main-container');
-mainContainer.addEventListener('click', async (e) => {
+if (favesView) {
+    favesView.addEventListener('click', async (e) => {
     // Back button from favorites page
     if (e.target.id === 'back-btn') {
         window.location.href = '/';
@@ -14,7 +14,7 @@ mainContainer.addEventListener('click', async (e) => {
         const meal = e.target.closest('.meal');
         const recipeId = meal.dataset.id;
 
-         if (btn.dataset.action === 'favorite') {
+            if (btn.dataset.action === 'favorite') {
             // Check if it's currently favorited by looking at the UI
             const isCurrentlyFavorited = btn.classList.contains('filled');
             
@@ -59,4 +59,5 @@ mainContainer.addEventListener('click', async (e) => {
         }
         return;   
     }
-});
+    });
+}
