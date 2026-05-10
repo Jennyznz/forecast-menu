@@ -4,7 +4,23 @@
 <body>
     <%- include('./partials/header.ejs') %>
     <div id="main-container">
-        
+        <div id="login-container">
+            <div id="form-options">
+                <button id="sign-up-option">Sign Up</button>
+                <button id="login-option">Login</button>
+            </div>
+            <form action="/login" method="POST" id="login-form">
+                <h2 id="login-header">Login</h2>
+                
+                <label for="username">Username</label>
+                <input id="username" name="username" type="text" required>
+
+                <label for="password">Password</label>
+                <input type="text" id="password" name="password" required>
+
+                <button id="sign-up-btn">Submit</button>
+            </form>
+        </div>
     </div>
 </body>
-</html>
+</html> 
