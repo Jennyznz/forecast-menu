@@ -20,7 +20,7 @@ lightDarkBtn.addEventListener('click', () => {
 const userProfileBtn = document.querySelector('#user-profile');
 userProfileBtn.addEventListener('click', () => {
     try {
-        window.location.href = ('/user');
+        window.location.href = ('/user/login');
     } catch (err) {
         console.error("Failed to load forms or user profile. ", err);
     }

@@ -4,10 +4,10 @@
 <body>
     <%- include('./partials/header.ejs') %>
     <div id="main-container">
-        <div id="login-container">
-            <div id="form-options">
-                <button id="sign-up-option">Sign Up</button>
-                <button id="login-option">Login</button>
+        <div id="login-container"> 
+            <div id="form-switch">
+                <div>Don't have an account?</div>
+                <div>Click <a href="/user/signup">here</a> to sign up</div>
             </div>
             <form action="/login" method="POST" id="login-form">
                 <h2 id="login-header">Login</h2>
