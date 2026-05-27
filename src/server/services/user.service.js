@@ -9,7 +9,6 @@ function renderLogin(req, res) {
 
 function renderSignUp(req, res) {
     try {
-        console.log('SIGNUP');
         res.render('signupForm');
     } catch (error) {
         console.log('Error loading signup form');

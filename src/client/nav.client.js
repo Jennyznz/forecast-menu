@@ -25,3 +25,12 @@ userProfileBtn.addEventListener('click', () => {
         console.error("Failed to load forms or user profile. ", err);
     }
 });
+
+const projectName = document.getElementById('project-name');
+projectName.addEventListener('click', () => {
+    try {
+        window.location.href = ('/');
+    } catch (err) {
+        console.error("Failed to load homepage. ", err);
+    }
+});
