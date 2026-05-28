@@ -1,7 +1,12 @@
 const USER_ID = 17;
 
 const favoritesBtn = document.querySelector('#all-favorites');
-favoritesBtn.addEventListener('click', () => {
+const lightDarkBtn = document.querySelector('#light-dark-mode');
+const root = document.documentElement;
+const userProfileBtn = document.querySelector('#user-profile');
+const projectName = document.getElementById('project-name');
+
+favoritesBtn?.addEventListener('click', () => {
     try {
         window.location.href = ('/favorites');
     } catch (err) {
@@ -9,16 +14,13 @@ favoritesBtn.addEventListener('click', () => {
     }
 });
 
-const lightDarkBtn = document.querySelector('#light-dark-mode');
-const root = document.documentElement;
-lightDarkBtn.addEventListener('click', () => {
+lightDarkBtn?.addEventListener('click', () => {
     const currentTheme = root.getAttribute('data-theme');
     const nextTheme = currentTheme === 'dark' ? 'light' : 'dark';
     root.setAttribute('data-theme', nextTheme);
 });
 
-const userProfileBtn = document.querySelector('#user-profile');
-userProfileBtn.addEventListener('click', () => {
+userProfileBtn?.addEventListener('click', () => {
     try {
         window.location.href = ('/user/login');
     } catch (err) {
@@ -26,8 +28,7 @@ userProfileBtn.addEventListener('click', () => {
     }
 });
 
-const projectName = document.getElementById('project-name');
-projectName.addEventListener('click', () => {
+projectName?.addEventListener('click', () => {
     try {
         window.location.href = ('/');
     } catch (err) {
