@@ -316,12 +316,16 @@ input[type='password'] {
     margin: 35px;
 }
 
-#sign-up-btn,
-#login-btn {
+#sign-up-submit,
+#login-submit {
     height: 50px;
     border-radius: 20px;
 }
 
 label {
     margin-bottom: 5px;
+}
+
+#login-submit {
+    margin-top: 20px;
 }

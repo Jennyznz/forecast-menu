@@ -8,6 +8,7 @@ import morgan from 'morgan';
 import mainRoutes from './routes/pages.routes.js';
 import favoritesRoutes from './routes/favorites.api.routes.js';
 import mealRoutes from './routes/meals.api.routes.js';
+import userRoutes from './routes/forms.api.routes.js';
 
 // Express app
 const app = express();
@@ -45,3 +46,4 @@ app.use(express.json()); // Allows Express to read JSON sent from client
 app.use('/', mainRoutes);
 app.use('/api/favorites', favoritesRoutes);
 app.use('/api/meals', mealRoutes);
+app.use('/user', userRoutes);

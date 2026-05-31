@@ -13,7 +13,7 @@ router.post('/toggle', async (req, res) => {
             return res.status(400).json({ error: "Missing required data" });
         }
 
-        // // Find the user's favorite list and weekly plan
+        // Find the user's favorite list and weekly plan
         const userFavorites = await FavoritesList.findOne({ userId: userId });
         
         // Extract the specific meal object from the plan's array

@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-    <%- include('./partials/head.ejs', { title: "Log In Form"})%>
+    <%- include('./partials/head.ejs', { title: "Log In Form" })%>
 <body>
     <%- include('./partials/header.ejs') %>
     <div id="main-container">
@@ -9,16 +9,17 @@
                 <span>Don't have an account?</span>
                 <span>Click <a href="/user/signup">here</a> to sign up</span>
             </div>
-            <form action="/login" method="POST" id="login-form">
+            <form action="/login" method="POST" id="login-form" novalidate>
                 <h2 id="login-header">Login</h2>
                 
-                <label for="username">Username</label> <br>
+                <label for="username">Username</label>
                 <input id="username" name="username" type="text" required> <br>
                 <br>
-                <label for="password">Password</label> <br>
+                <label for="password">Password</label>
                 <input type="text" id="password" name="password" required> <br>
                 <br>
-                <button id="login-btn">Submit</button>
+                <span id="login-err-msg"></span>
+                <button id="login-submit">Submit</button>
             </form>
         </div>
     </div>
