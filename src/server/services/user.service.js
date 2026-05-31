@@ -36,5 +36,20 @@ async function addUser(un, pw) {
     return user;
 }
 
+async function verifyLogin(un, pwAttempt) {
+    let user = await User.findOne({ username: un });
+    if (!user) {
+        throw new Error('Username does not exist');
+    }
 
-export { renderLogin, renderSignUp, addUser }
+    const isMatch = await bcrypt.compare(pwAttempt, user.password_hash);
+
+    if (!isMatch) {
+        throw new Error('Incorrect password');
+    }
+
+    return user;
+}
+
+
+export { renderLogin, renderSignUp, addUser, verifyLogin }

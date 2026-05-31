@@ -60,8 +60,8 @@ signUpForm?.addEventListener('submit', async (e) => {
             document.getElementById('failure-details').textContent = errorMsg.error;
         }
 
-    } catch {
-        console.log('Error submitting sign up form.', error);
+    } catch (err) {
+        console.log('Error submitting sign up form.', err);
     }
 
 

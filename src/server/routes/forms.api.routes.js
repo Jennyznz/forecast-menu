@@ -1,5 +1,5 @@
 import express from 'express';
-import { addUser } from '../services/user.service.js';
+import { addUser, verifyLogin } from '../services/user.service.js';
 
 const router = express.Router();
 
@@ -24,5 +24,28 @@ router.post('/add', async (req, res) => {
         return res.status(500).json({ error: error.message });
     }
 });
+
+
+router.post('/login', async (req, res) => {
+    try {
+        const { username, password } = req.body;
+
+        if (!username || !password) {
+            return res.status(400).json({ error: "Missing required data" });
+        }
+
+        await verifyLogin(username, password);
+        return res.status(200).json({ message: "Login successful" });
+
+    } catch (error) {
+        console.error('Failed login attempt', error.message);
+
+        if (error.message === 'Username does not exist' || error.message === 'Incorrect password') {
+            return res.status(400).json({ error: error.message });
+        }
+
+        return res.status(500).json({ error: "Internal Server Error" });
+    }
+})
 
 export default router;
