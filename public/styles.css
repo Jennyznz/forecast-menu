@@ -329,3 +329,16 @@ label {
 #login-submit {
     margin-top: 20px;
 }
+
+#login-err-msg,
+#username-err-msg,
+#pw-err-msg,
+#confirm-pw-err-msg {
+    color: red;
+    font-size: small;
+}
+
+#success-message, 
+#failure-message {
+    margin-top: 30px;
+}

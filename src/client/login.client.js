@@ -2,22 +2,23 @@ const loginForm = document.getElementById('login-form');
 
 loginForm?.addEventListener('submit', async (e) => {
     e.preventDefault();
-    console.log('HEY');
     const username = loginForm.querySelector('#username').value;
     const password = loginForm.querySelector('#password').value;
+    const usernameErrMsg = loginForm.querySelector('#username-err-msg');
+    const pwErrMsg = loginForm.querySelector('#pw-err-msg');
     const errMsg = loginForm.querySelector('#login-err-msg');
-    console.log(username);
-    console.log(password);
 
     errMsg.textContent = '';
+    usernameErrMsg.textContent = '';
+    pwErrMsg.textContent = '';
 
     if (username.length < 1) {
-        errMsg.textContent = 'Username field cannot be empty.';
+        usernameErrMsg.textContent = 'Username field cannot be empty';
         return;
     }
 
     if (password.length < 1) {
-        errMsg.textContent = 'Password field cannot be empty.';
+        pwErrMsg.textContent = 'Password field cannot be empty';
         return;
     }
 

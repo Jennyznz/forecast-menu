@@ -9,21 +9,21 @@
                 <span>Already have an account?</span>
                 <span>Click <a href="/user/login">here</a> to login</span>
             </div>
-            <form action="" method="POST" id="sign-up-form">
+            <form action="" method="POST" id="sign-up-form" novalidate>
                 <h2 id="sign-up-header">Sign Up</h2>
 
                 <label for="username">Username</label> 
                 <input id="username" name="username" type="text" required> <br>
-                <br>
                 <span id="username-err-msg"></span>
+                <br>
                 <label for="password">Password</label> 
                 <input type="text" id="password" name="password" required> <br>
-                <br>
                 <span id="pw-err-msg"></span>
+                <br>
                 <label for="confirm-password">Confirm Password</label>
                 <input type="text" id="confirm-password" name="confirm-password" required> <br>
-                <br>
                 <span id="confirm-pw-err-msg"></span>
+                <br>
                 <br>
                 <button id="sign-up-submit">Submit</button>
             </form>

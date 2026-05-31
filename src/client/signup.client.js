@@ -1,4 +1,5 @@
 const signUpForm = document.getElementById('sign-up-form');
+const formSwitch = document.getElementById('form-switch');
 
 signUpForm?.addEventListener('submit', async (e) => {
     e.preventDefault();
@@ -52,10 +53,13 @@ signUpForm?.addEventListener('submit', async (e) => {
         if (response.ok) {
             console.log(await response.json());
             signUpForm.style.display = 'none';
+            formSwitch.style.display = 'none';
             document.getElementById('success-message').style.display = 'block';
         } else {
             const errorMsg = await response.json();
+
             signUpForm.style.display = 'none';
+            formSwitch.style.display = 'none';
             document.getElementById('failure-message').style.display = 'block';
             document.getElementById('failure-details').textContent = errorMsg.error;
         }
