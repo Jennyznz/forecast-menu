@@ -1,5 +1,3 @@
-const USER_ID = 17;
-
 const recipeView = document.querySelector('#main-container.recipe-view');
 
 if (recipeView) {
@@ -21,7 +19,6 @@ if (recipeView) {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ 
-                        userId: USER_ID, 
                         recipeId: Number(recipeId), // Cast to Number type since dataset values are always strings
                         action: isCurrentlyFavorited ? 'remove' : 'add'
                     })

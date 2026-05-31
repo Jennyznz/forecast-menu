@@ -3,6 +3,8 @@ import 'dotenv/config';
 import express from 'express';
 import mongoose from 'mongoose';
 import morgan from 'morgan';
+import session from 'express-session';
+import MongoStore from 'connect-mongo';
 
 // Import routes
 import mainRoutes from './routes/pages.routes.js';
@@ -41,6 +43,21 @@ app.use(express.static('public'));  // Access to images and CSS
 app.use(express.static('dist')); // Access to bundled JS
 app.use(morgan('dev'));
 app.use(express.json()); // Allows Express to read JSON sent from client
+app.use(  // Check and attach session if one exists
+  session({
+    secret: process.env.SESSION_SECRET,
+    resave: false,  // does not resave after every request. Only for changes.
+    saveUninitialized: false, // does not create empty sessions when users aren't logged in
+    store: MongoStore.create({
+      mongoUrl: process.env.MONGODB_URI,  // sessions survive server restarts
+    }),
+    cookie: {
+      maxAge: 1000 * 60 * 60 * 24 * 7, // session is stored for a week
+      httpOnly: true, // security
+    }
+  })
+)
+
 
 // Mount routes
 app.use('/', mainRoutes);

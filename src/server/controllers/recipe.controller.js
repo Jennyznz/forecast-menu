@@ -3,9 +3,6 @@ import { WeeklyPlan } from "../models/WeeklyPlan.model.js";
 import { createRecipe, fetchRecipeInfo } from "../services/recipe.service.js";
 import { getWeatherData, getTempCategory } from "../services/weather.service.js";
 
-// DEV
-const USER_ID = 17;
-
 // Formats the time of a meal
 function formatMealTime(time) {
     const [hour, min, sec] = time.split(':');
@@ -32,7 +29,7 @@ function formatReadyTime(time) {
 
 async function renderCalendar(req, res) {
     try {
-        const userId = USER_ID;
+        const userId = req.session.userId;
         const weekDays = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
         const mealTypes = ['Breakfast', 'Lunch', 'Dinner'];
 
@@ -58,10 +55,10 @@ async function renderCalendar(req, res) {
         }
 
         // Fetch current plan from MongoDB
-        let weeklyPlan = await WeeklyPlan.findOne({ userId: USER_ID });
+        let weeklyPlan = await WeeklyPlan.findOne({ userId: userId });
         // If no plan exists, create an empty one
         if (!weeklyPlan) {
-            weeklyPlan = new WeeklyPlan({ userId: USER_ID, meals: [] });
+            weeklyPlan = new WeeklyPlan({ userId: userId, meals: [] });
         }
         // If the plan is incomplete (less than 21 meals), fill it
         if (weeklyPlan.meals.length < 21) {
@@ -81,7 +78,6 @@ async function renderCalendar(req, res) {
                     const exists = weeklyPlan.meals.find(m => // Check if this specific slot already exists in the meals array
                         m.day_name === dayName && m.meal_type === mealType
                     );
-
                     const mealTime = mealTimes[mealType];
 
                     if (!exists) {
@@ -93,7 +89,7 @@ async function renderCalendar(req, res) {
                                 meal_time: mealTime,
                                 recipe_id: null, // Acts as a flag
                                 recipe_title: "None",
-                                recipe_ready_time: "Zerio",
+                                recipe_ready_time: "Zero",
                                 temp: "0",
                                 favorite: false
                             });
@@ -128,9 +124,9 @@ async function renderCalendar(req, res) {
         }
 
         // Create a favorites list for user if it doesn't currently exist
-        let favoritesList = await FavoritesList.findOne({ userId: USER_ID });
+        let favoritesList = await FavoritesList.findOne({ userId: userId });
         if (!favoritesList) {
-            favoritesList = new FavoritesList({ userId: USER_ID, meals: [] });
+            favoritesList = new FavoritesList({ userId: userId, meals: [] });
             await favoritesList.save();
         }
 
@@ -148,8 +144,6 @@ async function renderCalendar(req, res) {
             }
             formattedPlan[meal.day_name][meal.meal_type] = meal;
         });
-
-        console.log(formattedPlan);
 
         // Find the end date of current week
         const endOfWeek = new Date(startOfWeek);
@@ -198,7 +192,7 @@ async function renderRecipeDetails(req, res) {
         const fullRecipeDetails = await fetchRecipeInfo(id);
 
         // Check if recipe is in favorites
-        const userFavorites = await FavoritesList.findOne({ userId: USER_ID });
+        const userFavorites = await FavoritesList.findOne({ userId: req.session.userId });
         const isFavorited = userFavorites?.meals.some(meal => meal.recipe_id === Number(id));
 
         // Render the EJS view using the fully populated Recipe object        
@@ -211,10 +205,8 @@ async function renderRecipeDetails(req, res) {
 
 async function renderFavoritesList(req, res) {
     try {
-        const userId = USER_ID;
         // Fetch favorites list from MongoDB
-        let favoritesList = await FavoritesList.findOne({ userId: USER_ID });
-        console.log("FAVORITES", favoritesList);
+        let favoritesList = await FavoritesList.findOne({ userId: req.session.userId });
         res.render('favorites', { favorites: favoritesList ? favoritesList.meals : []});
     } catch (err) {
         console.error('Error loading favorites list:', err);

@@ -1,5 +1,3 @@
-const USER_ID = 17;
-
 const calendarView = document.querySelector('#main-container.calendar-view');
 if (calendarView) {
     calendarView.addEventListener('click', async (e) => {
@@ -17,7 +15,6 @@ if (calendarView) {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify({ 
-                            userId: USER_ID, 
                             dayName: meal.dataset.day,
                             mealType: meal.dataset.type
                         })
@@ -58,7 +55,6 @@ if (calendarView) {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify({ 
-                            userId: USER_ID, 
                             recipeId: Number(recipeId), // Cast to Number type since dataset values are always strings
                             action: isCurrentlyFavorited ? 'remove' : 'add'
                         })
@@ -105,7 +101,6 @@ if (calendarView) {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ 
-                    userId: USER_ID, 
                     dayName: meal.dataset.day,
                     mealType: meal.dataset.type
                 })

@@ -14,7 +14,7 @@ const mealSchema = new Schema({
 
 const favoriteListSchema = new Schema({
     userId: {
-        type: Number,
+        type: String,
         required: true,
         unique: true // Only one favorites list per user
     },

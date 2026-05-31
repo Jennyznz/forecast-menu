@@ -7,17 +7,17 @@ const router = express.Router();
 router.post('/toggle', async (req, res) => {
     try {
         // Unpack data sent from the frontend's JSON body
-        const { userId, recipeId, action } = req.body;
+        const { recipeId, action } = req.body;
         // Safety check
-        if (!userId || !recipeId || !action) {
+        if (!recipeId || !action) {
             return res.status(400).json({ error: "Missing required data" });
         }
 
         // Find the user's favorite list and weekly plan
-        const userFavorites = await FavoritesList.findOne({ userId: userId });
+        const userFavorites = await FavoritesList.findOne({ userId: req.session.userId });
         
         // Extract the specific meal object from the plan's array
-        const userPlan = await WeeklyPlan.findOne({ userId: userId });
+        const userPlan = await WeeklyPlan.findOne({ userId: req.session.userId });
         const mealFromPlan = userPlan.meals.find(m => m.recipe_id === recipeId);
 
         // Handle 'add' logic

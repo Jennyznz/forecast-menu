@@ -7,19 +7,15 @@ import { getTempCategory } from '../services/weather.service.js';
 const router = express.Router();
 
 router.post('/regenerate', async (req, res) => {
-    console.log('inside the api router!');
     try {
          // Unpack data sent from the frontend's JSON body
-        const { userId, dayName, mealType } = req.body;
-        console.log(userId, dayName, mealType);
+        const { dayName, mealType } = req.body;
 
-        const userPlan = await WeeklyPlan.findOne({ userId: userId });
+        const userPlan = await WeeklyPlan.findOne({ userId: req.session.userId });
         const mealIndex = userPlan.meals.findIndex(
             (meal) => meal.day_name === dayName && meal.meal_type === mealType
         );
-        console.log(mealIndex);
-        console.log(userPlan.meals[mealIndex]);
-
+     
         const currentMeal = userPlan.meals[mealIndex];
         const temp = currentMeal.temp;
 
@@ -27,10 +23,10 @@ router.post('/regenerate', async (req, res) => {
         const recipe = await createRecipe(tempCategory, mealType);
 
         // Check if the newly genereated recipe is in the user's favorites list, just in case
-        const userFavorites = await FavoritesList.findOne({ userId: userId });
+        const userFavorites = await FavoritesList.findOne({ userId: req.session.userId });
         const isFavorited = userFavorites?.meals.some(meal => meal.recipe_id === recipe.id);
 
-        // Directly mutate recipe-specific properties in user's weekly plan
+        // Update recipe-specific properties in user's weekly plan
         userPlan.meals[mealIndex].recipe_id          = recipe.id;
         userPlan.meals[mealIndex].recipe_title       = recipe.title;
         userPlan.meals[mealIndex].recipe_ready_time  = recipe.readyInMinutes;

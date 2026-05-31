@@ -47,7 +47,6 @@ async function verifyLogin(un, pwAttempt) {
     if (!isMatch) {
         throw new Error('Incorrect password');
     }
-
     return user;
 }
 

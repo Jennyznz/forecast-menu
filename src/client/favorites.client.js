@@ -1,5 +1,3 @@
-const USER_ID = 17;
-
 const favesView = document.querySelector('#main-container.favorites-view');
 
 if (favesView) {
@@ -26,7 +24,6 @@ if (favesView) {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ 
-                        userId: USER_ID, 
                         recipeId: Number(recipeId), // Cast to Number type since dataset values are always strings
                         action: isCurrentlyFavorited ? 'remove' : 'add'
                     })

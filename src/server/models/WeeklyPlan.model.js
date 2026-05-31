@@ -14,7 +14,7 @@ const mealSchema = new Schema({
 
 const weeklyPlanSchema = new Schema({
     userId: {
-        type: Number,
+        type: String,
         required: true,
         unique: true // One weekly plan per user
     },

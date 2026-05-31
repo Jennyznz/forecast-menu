@@ -1,5 +1,3 @@
-const USER_ID = 17;
-
 const favoritesBtn = document.querySelector('#all-favorites');
 const lightDarkBtn = document.querySelector('#light-dark-mode');
 const root = document.documentElement;

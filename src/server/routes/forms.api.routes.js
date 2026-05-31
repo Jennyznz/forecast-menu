@@ -34,7 +34,8 @@ router.post('/login', async (req, res) => {
             return res.status(400).json({ error: "Missing required data" });
         }
 
-        await verifyLogin(username, password);
+        const user = await verifyLogin(username, password);
+        req.session.userId = user.id;
         return res.status(200).json({ message: "Login successful" });
 
     } catch (error) {
