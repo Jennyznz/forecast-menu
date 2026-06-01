@@ -1,15 +1,15 @@
 import express from 'express';
-import { renderCalendar, renderRecipeDetails, renderFavoritesList } from '../controllers/recipe.controller.js';
-import { renderLogin, renderSignUp } from '../services/user.service.js';
+import * as mealsController from '../controllers/meals.controller.js';
+import * as formsController from '../controllers/forms.controller.js';
 
 const router = express.Router();
 
 // Routes using 'router' instead of 'app'
-router.get('/', renderCalendar);
-router.get('/recipe/:id', renderRecipeDetails);
-router.get('/favorites', renderFavoritesList);
-router.get('/user/login', renderLogin);
-router.get('/user/signup', renderSignUp);
+router.get('/', mealsController.renderCalendar);
+router.get('/recipe/:id', mealsController.renderRecipeDetails);
+router.get('/favorites', mealsController.renderFavoritesList);
+router.get('/user/login', formsController.renderLogin);
+router.get('/user/signup', formsController.renderSignUp);
 
 // Export router for app.js
 export default router;

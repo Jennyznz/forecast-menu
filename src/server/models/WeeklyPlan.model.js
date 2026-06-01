@@ -31,4 +31,4 @@ const weeklyPlanSchema = new Schema({
 
 const WeeklyPlan = mongoose.model('weeklyPlan', weeklyPlanSchema);    // Finds plural of param1 and bases it on param2
 
-export { WeeklyPlan }
+export default WeeklyPlan;

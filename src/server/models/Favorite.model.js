@@ -26,4 +26,4 @@ const favoriteListSchema = new Schema({
 
 const FavoritesList = mongoose.model('favorite', favoriteListSchema);    // Finds plural of param1 and bases it on param2
 
-export { FavoritesList }
+export default FavoritesList;

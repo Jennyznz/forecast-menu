@@ -28,4 +28,7 @@ async function getWeatherData() {
     }
 }
 
-export { getWeatherData, getTempCategory }
+export { 
+    getTempCategory, 
+    getWeatherData 
+};

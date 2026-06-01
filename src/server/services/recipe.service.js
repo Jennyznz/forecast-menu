@@ -1,5 +1,5 @@
 import Recipe from '../models/Recipe.model.js';
-import { searchCategory } from './categorization.service.js';
+import categorizationService from './categorization.service.js';
 
 const apiKey = process.env.SPOONACULAR_API_KEY;
 
@@ -28,8 +28,6 @@ async function createRecipe(category, mealType) {
         res = await fetchRecipes(url);
         rand = randRecipe(res);
         recipe = new Recipe(rand);
-
-        console.log('recipe not found');
         attempts++;
     }
 
@@ -78,4 +76,7 @@ function randRecipe(res) {
     return res[randIndex];
 }
 
-export { createRecipe, fetchRecipeInfo }
+export { 
+    fetchRecipeInfo, 
+    createRecipe 
+}

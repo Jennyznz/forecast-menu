@@ -1,4 +1,4 @@
-export const searchCategory = {
+const categorizationService = {
   Breakfast: {
     Hot: [
       { query: "smoothie bowl" },
@@ -218,3 +218,5 @@ export const searchCategory = {
     ]
   }
 };
+
+export default categorizationService;

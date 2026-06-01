@@ -18,4 +18,4 @@ const userSchema = new Schema({
 
 const User = mongoose.model('User', userSchema);    // Finds plural of param1 and bases it on param2
 
-export { User }
+export default User;

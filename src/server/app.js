@@ -58,7 +58,6 @@ app.use(  // Check and attach session if one exists
   })
 )
 
-
 // Mount routes
 app.use('/', mainRoutes);
 app.use('/api/favorites', favoritesRoutes);
