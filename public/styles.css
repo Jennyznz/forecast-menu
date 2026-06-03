@@ -93,7 +93,7 @@ button:active {
     width: 30px;
 }
 
-#shopping-cart {
+#shopping-list {
     background-image: url("./images/shopping_cart.svg");
     height: 30px;
     width: 30px;

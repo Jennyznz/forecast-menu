@@ -70,9 +70,14 @@ async function renderFavoritesList(req, res) {
     }
 }
 
+async function renderShoppingList(req, res) {
+
+}
+
 export {
     regenerateMeal,
     renderCalendar,
     renderRecipeDetails,
-    renderFavoritesList
+    renderFavoritesList,
+    renderShoppingList
 };

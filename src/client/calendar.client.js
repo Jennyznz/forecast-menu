@@ -91,6 +91,7 @@ if (calendarView) {
         } 
     });
 
+    // Regenerate weekly plan
     const regenerateBtn = document.querySelector('#regenerate');
     regenerateBtn.addEventListener('click', async () => {
     const allMeals = document.querySelectorAll('.meal');
@@ -129,6 +130,22 @@ if (calendarView) {
                 console.error("Network error:", err);
         }
     }
+
+    const shoppingListBtn = document.getElementById('shopping-list');
+    shoppingListBtn.addEventListener('click', async () =>{
+        try {
+            const startDate = document.querySelector('.date'); // Get first date from the weekly plan
+            const response = await fetch('/api/meals/shopping-cart', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    startDate: startDate,
+                })
+            });
+        } catch (err) {
+            console.error('Network error:', err);
+        }
+    });
 });
 }
 

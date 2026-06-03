@@ -1,4 +1,6 @@
 import mongoose from "mongoose";
+import ShoppingList from "./ShoppingList.model";
+
 const Schema = mongoose.Schema; 
 
 const mealSchema = new Schema({
