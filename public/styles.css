@@ -212,7 +212,8 @@ button:active {
 }
 
 
-#recipe-view-container, #faves-view-container {
+#recipe-view-container, 
+#faves-view-container, #shopping-list-view-container {
     width: 50vw;
     margin: 0 auto;
     display: grid;
