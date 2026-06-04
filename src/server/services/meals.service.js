@@ -19,8 +19,8 @@ async function regenerateMeal(dayName, mealType, userId) {
     const currentMeal = userPlan.meals[mealIndex];
     const temp = currentMeal.temp;
 
-    const tempCategory = getTempCategory(temp);
-    const recipe = await createRecipe(tempCategory, mealType);
+    const tempCategory = weatherService.getTempCategory(temp);
+    const recipe = await recipeService.createRecipe(tempCategory, mealType);
     if (!recipe) {
         throw new Error('Error creating recipe object');
     }
@@ -40,6 +40,9 @@ async function regenerateMeal(dayName, mealType, userId) {
 
     userPlan.markModified("meals"); // Tells Mongoose to look into the top-level field "meals" for modifications
     await userPlan.save();
+
+    // Send new meal data for display on the frontend
+    return userPlan.meals[mealIndex];
 }
 
 // Formats the time of a meal

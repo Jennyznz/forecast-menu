@@ -95,7 +95,7 @@ if (calendarView) {
     const regenerateBtn = document.querySelector('#regenerate');
     regenerateBtn.addEventListener('click', async () => {
     const allMeals = document.querySelectorAll('.meal');
-    for (const meal of allMeals) {
+    for (let meal of allMeals) {
         try {
             // Send a POST request to server to update weeklyPlan data stored for the user
             const response = await fetch('/api/meals/regenerate', {
@@ -123,6 +123,8 @@ if (calendarView) {
                 const readyTime = meal.querySelector('.recipe-ready-time');
                 readyTime.textContent = newMeal.recipe_ready_time;
 
+                return;
+
             } else {
                 console.error("Server failed to regenerate recipe");
             }
@@ -131,8 +133,9 @@ if (calendarView) {
         }
     }
 
-    const shoppingListBtn = document.getElementById('shopping-list');
-    shoppingListBtn.addEventListener('click', async () =>{
+    const shoppingListBtn = document.querySelector('#shopping-list');
+    shoppingListBtn.addEventListener('click', async () => {
+        console.log('HM');
         try {
             const startDate = document.querySelector('.date'); // Get first date from the weekly plan
             const response = await fetch('/api/meals/shopping-cart', {
