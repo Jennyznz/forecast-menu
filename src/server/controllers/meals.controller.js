@@ -2,17 +2,19 @@ import * as weatherService from "../services/weather.service.js";
 import * as recipeService from "../services/recipe.service.js";
 import * as mealsService from "../services/meals.service.js";
 import * as favoritesService from "../services/favorites.service.js";
+import * as shoppingListService from "../services/shoppingList.service.js";
 
 async function regenerateMeal(req, res) {
     try {
         // Unpack data sent from the frontend's JSON body
         const { dayName, mealType } = req.body;
+        const userId = req.session.userId;
 
-        await mealsService.regenerateMeal;
+        const newRecipe = await mealsService.regenerateMeal(dayName, mealType, userId);
 
         // Send new recipe data to client-side, to be displayed
         return res.status(200).json({
-            newMeal: userPlan.meals[mealIndex]
+            newMeal: newRecipe
         });
 
      } catch (error) {
@@ -70,9 +72,24 @@ async function renderFavoritesList(req, res) {
     }
 }
 
+async function renderShoppingList(req, res) {
+    try {
+        const userId = req.session.userId;
+        
+        const ingredients = await shoppingListService.updateUserShoppingList(userId);
+        console.log(ingredients);
+        res.render('shoppingList', { ingredients: ingredients });
+        console.log("1");
+    } catch (err) {
+        console.error('Error loading shopping list: ', err);
+        res.status(500).send('Could not load shopping list.');
+    }
+}
+
 export {
     regenerateMeal,
     renderCalendar,
     renderRecipeDetails,
-    renderFavoritesList
+    renderFavoritesList,
+    renderShoppingList
 };

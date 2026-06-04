@@ -81,7 +81,6 @@ if (calendarView) {
         else if (e.target.closest('.meal')) {
             const meal = e.target.closest('.meal');
             const id = meal.getAttribute('data-id');
-            console.log('Meal ID:', id);
             try {
                 window.location.href = (`/recipe/${id}`);
             } catch (err) {
@@ -91,45 +90,54 @@ if (calendarView) {
         } 
     });
 
+    // Regenerate weekly plan
     const regenerateBtn = document.querySelector('#regenerate');
     regenerateBtn.addEventListener('click', async () => {
     const allMeals = document.querySelectorAll('.meal');
-    for (const meal of allMeals) {
-        try {
-            // Send a POST request to server to update weeklyPlan data stored for the user
-            const response = await fetch('/api/meals/regenerate', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ 
-                    dayName: meal.dataset.day,
-                    mealType: meal.dataset.type
-                })
-            });
+        for (let meal of allMeals) {
+            try {
+                // Send a POST request to server to update weeklyPlan data stored for the user
+                const response = await fetch('/api/meals/regenerate', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ 
+                        dayName: meal.dataset.day,
+                        mealType: meal.dataset.type
+                    })
+                });
 
-            if (response.ok) {
-                const data = await response.json();
-                const newMeal = data.newMeal; 
+                if (response.ok) {
+                    const data = await response.json();
+                    const newMeal = data.newMeal; 
 
-                // Update the DOM elements inside .meal
-                meal.dataset.id = newMeal.recipe_id;
-                const favBtn = meal.querySelector('.favorite');
-                favBtn.className = 'favorite';   // Resets class of .favorite button to just contain favorite
-                if (newMeal.favorite) {
-                    favBtn.classList.add('filled');
+                    // Update the DOM elements inside .meal
+                    meal.dataset.id = newMeal.recipe_id;
+                    const favBtn = meal.querySelector('.favorite');
+                    favBtn.className = 'favorite';   // Resets class of .favorite button to just contain favorite
+                    if (newMeal.favorite) {
+                        favBtn.classList.add('filled');
+                    }
+                    const title = meal.querySelector('.recipe-title');
+                    title.textContent = newMeal.recipe_title;
+                    const readyTime = meal.querySelector('.recipe-ready-time');
+                    readyTime.textContent = newMeal.recipe_ready_time;
+                } else {
+                    console.error("Server failed to regenerate recipe");
                 }
-                const title = meal.querySelector('.recipe-title');
-                title.textContent = newMeal.recipe_title;
-                const readyTime = meal.querySelector('.recipe-ready-time');
-                readyTime.textContent = newMeal.recipe_ready_time;
-
-            } else {
-                console.error("Server failed to regenerate recipe");
+            } catch (err) {
+                    console.error("Network error:", err);
             }
-        } catch (err) {
-                console.error("Network error:", err);
         }
-    }
-});
+    });
+
+    const shoppingListBtn = document.querySelector('#shopping-list');
+    shoppingListBtn.addEventListener('click', async () => {
+        try {
+            window.location.href = (`/api/meals/shopping-list`);
+        } catch (err) {
+            console.error('Network error:', err);
+        }
+    });
 }
 
 

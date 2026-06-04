@@ -18,6 +18,7 @@ export default class Recipe {
                 name: i.name,
                 amount: i.amount,
                 unit: i.unit,
+                aisle: i.aisle,
                 original: i.original
             })) || [];
             // Store important/basic information about available nutrients

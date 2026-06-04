@@ -1,0 +1,22 @@
+ <!DOCTYPE html>
+<html lang="en">
+    <%- include('./partials/head.ejs', { title: "Shopping List" }) %>
+<body>
+    <%- include('./partials/header.ejs') %>
+    <div id="main-container" class="shopping-list-view">
+        <div id="shopping-list-view-container">
+            <h1 id="title">Shopping List</h1>
+            <ul id="shopping-list-ingredients">
+                <% ingredients.forEach(ingredient => { %>
+                    <li class="ingredient">
+                        <%= ingredient.name %>
+                        <%= ingredient.amount %>
+                        <%= ingredient.unit %>
+                    </li>
+                <% }) %>
+            </ul>
+        </div>
+    </div>
+    <script src="/main.js"></script>
+</body>
+</html>

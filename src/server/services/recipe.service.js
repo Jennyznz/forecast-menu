@@ -42,7 +42,7 @@ function buildSearchRecipeQuery(category, mealType) {
     console.log('category:', category);
     console.log('meal type:', mealType);
     // Fetch a random search category
-    const profiles = searchCategory[mealType][category];
+    const profiles = categorizationService[mealType][category];
     const randProfile = profiles[Math.floor(Math.random() * profiles.length)];
 
     // Build API parameters
