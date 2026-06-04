@@ -81,7 +81,6 @@ if (calendarView) {
         else if (e.target.closest('.meal')) {
             const meal = e.target.closest('.meal');
             const id = meal.getAttribute('data-id');
-            console.log('Meal ID:', id);
             try {
                 window.location.href = (`/recipe/${id}`);
             } catch (err) {
@@ -134,12 +133,7 @@ if (calendarView) {
     const shoppingListBtn = document.querySelector('#shopping-list');
     shoppingListBtn.addEventListener('click', async () => {
         try {
-            // const startDate = document.querySelector('.date'); // Get first date from the weekly plan
-            // console.log(startDate.textContent);
-            const response = await fetch('/api/meals/shopping-cart', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' }
-            });
+            window.location.href = (`/api/meals/shopping-list`);
         } catch (err) {
             console.error('Network error:', err);
         }

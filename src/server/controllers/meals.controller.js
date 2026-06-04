@@ -76,9 +76,10 @@ async function renderShoppingList(req, res) {
     try {
         const userId = req.session.userId;
         
-        const shoppingList = await shoppingListService.updateUserShoppingList(userId);
-        // console.log(shoppingList);
-
+        const ingredients = await shoppingListService.updateUserShoppingList(userId);
+        console.log(ingredients);
+        res.render('shoppingList', { ingredients: ingredients });
+        console.log("1");
     } catch (err) {
         console.error('Error loading shopping list: ', err);
         res.status(500).send('Could not load shopping list.');
