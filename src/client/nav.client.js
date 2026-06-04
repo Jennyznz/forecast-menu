@@ -4,6 +4,13 @@ const root = document.documentElement;
 const userProfileBtn = document.querySelector('#user-profile');
 const projectName = document.getElementById('project-name');
 
+// Load user's light/dark
+const savedTheme = localStorage.getItem('theme');
+
+if (savedTheme) {
+    root.setAttribute('data-theme', savedTheme);
+}
+
 favoritesBtn?.addEventListener('click', () => {
     try {
         window.location.href = ('/favorites');
@@ -16,6 +23,7 @@ lightDarkBtn?.addEventListener('click', () => {
     const currentTheme = root.getAttribute('data-theme');
     const nextTheme = currentTheme === 'dark' ? 'light' : 'dark';
     root.setAttribute('data-theme', nextTheme);
+    localStorage.setItem('theme', nextTheme);
 });
 
 userProfileBtn?.addEventListener('click', () => {
