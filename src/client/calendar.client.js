@@ -95,61 +95,55 @@ if (calendarView) {
     const regenerateBtn = document.querySelector('#regenerate');
     regenerateBtn.addEventListener('click', async () => {
     const allMeals = document.querySelectorAll('.meal');
-    for (let meal of allMeals) {
-        try {
-            // Send a POST request to server to update weeklyPlan data stored for the user
-            const response = await fetch('/api/meals/regenerate', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ 
-                    dayName: meal.dataset.day,
-                    mealType: meal.dataset.type
-                })
-            });
+        for (let meal of allMeals) {
+            try {
+                // Send a POST request to server to update weeklyPlan data stored for the user
+                const response = await fetch('/api/meals/regenerate', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ 
+                        dayName: meal.dataset.day,
+                        mealType: meal.dataset.type
+                    })
+                });
 
-            if (response.ok) {
-                const data = await response.json();
-                const newMeal = data.newMeal; 
+                if (response.ok) {
+                    const data = await response.json();
+                    const newMeal = data.newMeal; 
 
-                // Update the DOM elements inside .meal
-                meal.dataset.id = newMeal.recipe_id;
-                const favBtn = meal.querySelector('.favorite');
-                favBtn.className = 'favorite';   // Resets class of .favorite button to just contain favorite
-                if (newMeal.favorite) {
-                    favBtn.classList.add('filled');
+                    // Update the DOM elements inside .meal
+                    meal.dataset.id = newMeal.recipe_id;
+                    const favBtn = meal.querySelector('.favorite');
+                    favBtn.className = 'favorite';   // Resets class of .favorite button to just contain favorite
+                    if (newMeal.favorite) {
+                        favBtn.classList.add('filled');
+                    }
+                    const title = meal.querySelector('.recipe-title');
+                    title.textContent = newMeal.recipe_title;
+                    const readyTime = meal.querySelector('.recipe-ready-time');
+                    readyTime.textContent = newMeal.recipe_ready_time;
+                } else {
+                    console.error("Server failed to regenerate recipe");
                 }
-                const title = meal.querySelector('.recipe-title');
-                title.textContent = newMeal.recipe_title;
-                const readyTime = meal.querySelector('.recipe-ready-time');
-                readyTime.textContent = newMeal.recipe_ready_time;
-
-                return;
-
-            } else {
-                console.error("Server failed to regenerate recipe");
+            } catch (err) {
+                    console.error("Network error:", err);
             }
-        } catch (err) {
-                console.error("Network error:", err);
         }
-    }
+    });
 
     const shoppingListBtn = document.querySelector('#shopping-list');
     shoppingListBtn.addEventListener('click', async () => {
-        console.log('HM');
         try {
-            const startDate = document.querySelector('.date'); // Get first date from the weekly plan
+            // const startDate = document.querySelector('.date'); // Get first date from the weekly plan
+            // console.log(startDate.textContent);
             const response = await fetch('/api/meals/shopping-cart', {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    startDate: startDate,
-                })
+                headers: { 'Content-Type': 'application/json' }
             });
         } catch (err) {
             console.error('Network error:', err);
         }
     });
-});
 }
 
 

@@ -74,11 +74,10 @@ async function renderFavoritesList(req, res) {
 
 async function renderShoppingList(req, res) {
     try {
-        const startDate = req.params.startDate;
         const userId = req.session.userId;
         
-        const shoppingList = await shoppingListService.updateUserShoppingList(startDate, userId);
-        console.log(shoppingList);
+        const shoppingList = await shoppingListService.updateUserShoppingList(userId);
+        // console.log(shoppingList);
 
     } catch (err) {
         console.error('Error loading shopping list: ', err);
