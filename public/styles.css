@@ -67,9 +67,13 @@ body {
 }
 
 #user-profile {
-    background-image: url("./images/user-profile.svg");
     height: 35px;
     width: 35px;
+
+    background-color: var(--text-color);
+
+    -webkit-mask: url("./images/user-profile.svg") center / contain no-repeat;
+    mask: url("./images/user-profile.svg") center / contain no-repeat;
 }
 
 button, 
@@ -88,27 +92,43 @@ button:active {
 }
 
 #regenerate {
-    background-image: url("./images/regenerate.svg");
     height: 30px;
     width: 30px;
+
+    background-color: var(--text-color);
+
+    -webkit-mask: url("./images/regenerate.svg") center / contain no-repeat;
+    mask: url("./images/regenerate.svg") center / contain no-repeat;
 }
 
 #shopping-list {
-    background-image: url("./images/shopping_cart.svg");
     height: 30px;
     width: 30px;
+
+    background-color: var(--text-color);
+
+    -webkit-mask: url("./images/shopping_cart.svg") center / contain no-repeat;
+    mask: url("./images/shopping_cart.svg") center / contain no-repeat;
 }
 
 #light-dark-mode {
-    background-image: url("./images/light-mode.svg");
     height: 20px;
     width: 20px;
+
+    background-color: var(--text-color);
+
+    -webkit-mask: url("./images/light-mode.svg") center / contain no-repeat;
+    mask: url("./images/light-mode.svg") center / contain no-repeat;
 }
 
 #all-favorites {
-    background-image: url("./images/heart.svg");
     height: 20px;
     width: 20px;
+
+    background-color: var(--text-color);
+
+    -webkit-mask: url("./images/heart.svg") center / contain no-repeat;
+    mask: url("./images/heart.svg") center / contain no-repeat;
 }
 
 #content-area {
@@ -187,15 +207,24 @@ button:active {
 }
 
 .single-regenerate {
-    background-image: url("./images/regenerate.svg");
+    background-color: var(--text-color);
+
+    -webkit-mask: url("./images/regenerate.svg") center / contain no-repeat;
+    mask: url("./images/regenerate.svg") center / contain no-repeat;
 }
 
 .favorite {
-    background-image: url('./images/heart.svg');
+    background-color: var(--text-color);
+
+    -webkit-mask: url("./images/heart.svg") center / contain no-repeat;
+    mask: url("./images/heart.svg") center / contain no-repeat;
 }
 
 .filled.favorite {
-    background-image: url('./images/filled-heart.svg');
+    background-color: var(--text-color);
+
+    -webkit-mask: url("./images/filled-heart.svg") center / contain no-repeat;
+    mask: url("./images/filled-heart.svg") center / contain no-repeat;
 }
 
 .ready-time-container {
@@ -208,7 +237,10 @@ button:active {
 .clock-icon {
     width: 15px;
     height: 15px;
-    background-image: url('./images/clock.svg');
+    background-color: var(--text-color);
+
+    -webkit-mask: url("./images/clock.svg") center / contain no-repeat;
+    mask: url("./images/clock.svg") center / contain no-repeat;
 }
 
 
